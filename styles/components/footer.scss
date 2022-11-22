@@ -1,0 +1,33 @@
+.footer,
+.footerSub {
+    display: flex;
+    gap: 0.8rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer {
+    flex-direction: column;
+    flex: 1;
+    padding: 2rem 0;
+    border-top: 1px solid #eaeaea;
+    font-size: 0.8rem;
+}
+
+.footerLink {
+    transition: color 0.3s ease-in-out;
+    border: 1px solid transparent;
+    outline: none;
+    padding: 0.3rem;
+}
+
+.footerLink:hover {
+    color: #0070f3;
+}
+
+.footerLink:focus,
+.footerLink:active {
+    color: #0070f3;
+    border: 1px solid #0070f3;
+    border-radius: 1rem;
+}
