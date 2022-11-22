@@ -31,3 +31,24 @@
     border: 1px solid #0070f3;
     border-radius: 1rem;
 }
+
+@media (max-width: 600px) {
+    .footerSub:first-child {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        justify-items: center;
+    }
+    .footerSub:nth-child(2) {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        justify-items: center;
+    }
+}
+
+@media (max-width: 300px) {
+    .footerSub {
+        column-gap: 0rem;
+        row-gap: 0.5rem;
+        font-size: 0.5rem;
+    }
+}
