@@ -155,15 +155,67 @@
     color: #ff314b;
 }
 
-/* Section 3 - Etc */
-.homeEtc {
-    width: 100vw;
-    height: 100vh;
+/* Section 3 - Strongth */
+.homeStrongth,
+.homeStrongthSub {
     display: flex;
-    align-items: center;
     justify-content: center;
 }
 
+.homeStrongth {
+    width: 100vw;
+    min-width: 15rem;
+    height: 100vh;
+    gap: 5rem;
+    align-items: center;
+    padding: 0 3rem;
+}
+
+.homeStrongthSub {
+    flex-direction: column;
+}
+
+.homeStrongthSub:first-child {
+    align-items: center;
+}
+
+.homeStrongthSub:last-child {
+    gap: 5rem;
+}
+
+.homeStrongthSub > li {
+    list-style: none;
+}
+
+/* Section 4 - Submit */
+.homeSubmit {
+    width: 100vw;
+    margin: 3rem 0;
+    display: flex;
+    justify-content: center;
+}
+
+.homeSubmitButton {
+    width: 80vw;
+    padding: 2rem 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #0070f3;
+    border-radius: 1rem;
+    background-color: #0070f3;
+    color: white;
+    font-weight: 700;
+    font-size: 3rem;
+    transition: scale 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.homeSubmitButton:hover {
+    scale: 1.05;
+}
+
+/* Mobile Layout */
 @media (max-width: 1024px) {
     .homeImageTextTitle {
         font-size: 1rem;
@@ -174,6 +226,24 @@
     .homeImageTextPrice2 {
         font-size: 1.5rem;
         color: #ff314b;
+    }
+
+    .homeStrongth {
+        gap: 1rem;
+    }
+    .homeStrongthSub:last-child {
+        gap: 2rem;
+    }
+    .homeStrongthLogo {
+        width: 10rem;
+        height: 10rem;
+    }
+    .homeStrongthSub > h2 {
+        font-size: 1.2rem;
+    }
+
+    .homeSubmitButton {
+        font-size: 2rem;
     }
 }
 
@@ -244,10 +314,38 @@
         justify-content: center;
         margin-top: 17rem;
     }
+
+    .homeStrongth {
+        flex-direction: column;
+    }
+
+    .homeSubmitButton {
+        font-size: 1.5rem;
+        padding: 1rem 2.5rem;
+    }
+}
+
+@media (max-width: 500px) {
+    .homeSubmitButton {
+        font-size: 1rem;
+        padding: 1rem 2rem;
+    }
 }
 
 @media (max-width: 400px) {
     .homeImg > h2 {
         font-size: 1rem;
+    }
+
+    .homeStrongth {
+        padding: 0 1rem;
+    }
+    .homeStrongth,
+    .homeStrongthSub:last-child {
+        gap: 0;
+    }
+
+    .homeSubmitButton {
+        width: 100vw;
     }
 }

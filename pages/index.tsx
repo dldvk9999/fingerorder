@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import styles from "../styles/Home.module.scss";
 
@@ -7,7 +8,7 @@ export default function Home() {
 
     // Intro 부분에 0원 상품 클릭 시 아래로 스크롤
     function scrollDown() {
-        document.querySelector("." + styles.homeEtc)?.scrollIntoView({
+        document.querySelector("." + styles.homeStrongth)?.scrollIntoView({
             behavior: "smooth",
         });
     }
@@ -115,13 +116,55 @@ export default function Home() {
                             기기 설치 및 유지보수 비용
                         </div>
                         <div className={styles.homeImageTextPrice2}>
-                            2,000,000원 ~
+                            1,500,000원 ~
                         </div>
                     </div>
                 </div>
             </section>
 
-            <section className={styles.homeEtc}>여백</section>
+            <section className={styles.homeStrongth}>
+                <div className={styles.homeStrongthSub}>
+                    <Image
+                        src={"/fingerorder.webp"}
+                        alt={"fingerorder"}
+                        width={200}
+                        height={200}
+                        className={styles.homeStrongthLogo}
+                        loading="lazy"
+                    />
+                    <h2>핑거오더의 장점</h2>
+                </div>
+                <ul className={styles.homeStrongthSub}>
+                    <li>
+                        <h3>1. 키오스크를 대체 할 수 있다.</h3>
+                        <p>
+                            테이블에 앉아서 키오스크를 대신해 메뉴를 주문할 수
+                            있어 기다림이 없고 간편하다.
+                        </p>
+                    </li>
+                    <li>
+                        <h3>2. POS기를 대체 할 수 있다.</h3>
+                        <p>
+                            핑거오더의 결제 시스템을 이용해 테이블에서 메뉴를
+                            고르고 선결제를 통해 주문하기 때문에 후불 결제를
+                            하지 않아도 된다.
+                        </p>
+                    </li>
+                    <li>
+                        <h3>3. 비용을 아낄 수 있다.</h3>
+                        <p>
+                            키오스크 비용 최소 100만원과 POS기 비용 최소
+                            30만원을 아낄 수 있고 무료로 이용 가능하다.
+                        </p>
+                    </li>
+                </ul>
+            </section>
+
+            <section className={styles.homeSubmit}>
+                <div className={styles.homeSubmitButton}>
+                    <Link href={"/store"}>지금 매장 등록하러 가기</Link>
+                </div>
+            </section>
         </main>
     );
 }
