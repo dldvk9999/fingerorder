@@ -3,13 +3,13 @@ import Link from "next/link";
 import { useState } from "react";
 import styles from "../../styles/Home.module.scss";
 
-export default function Login() {
+export default function Signup() {
     const [email, setEmail] = useState("");
-    const [pass, setPass] = useState("");
+    const [pass1, setPass1] = useState("");
+    const [pass2, setPass2] = useState("");
 
-    function login() {
-        localStorage["login"] = "true";
-        alert("login function complete");
+    function signup() {
+        alert("signup function complete");
     }
 
     return (
@@ -30,23 +30,18 @@ export default function Login() {
                     <input
                         type="password"
                         placeholder="비밀번호"
-                        onChange={(e) => setPass(e.target.value)}
+                        onChange={(e) => setPass1(e.target.value)}
                     />
-                    <div className={styles.loginFormSub}>
-                        <Link
-                            className={styles.loginFormFunc}
-                            href={"/findpassword"}
-                        >
-                            비밀번호 찾기
-                        </Link>
-                        /
-                        <Link className={styles.loginFormFunc} href={"/signup"}>
+                    <input
+                        type="password"
+                        placeholder="비밀번호 확인"
+                        onChange={(e) => setPass2(e.target.value)}
+                    />
+                    <Link href={"/login"}>
+                        <button type="submit" onClick={signup}>
                             회원가입
-                        </Link>
-                    </div>
-                    <button type="submit" onClick={login}>
-                        로그인
-                    </button>
+                        </button>
+                    </Link>
                 </form>
             </section>
         </main>
