@@ -1,0 +1,351 @@
+/* Section 1 - Intro */
+.homeInto,
+.homeIntroSub {
+    display: flex;
+    justify-content: center;
+}
+
+.homeInto {
+    width: 100vw;
+    height: calc(100vh - 4.4rem);
+    min-height: 10rem;
+    gap: 1rem;
+    align-items: center;
+    padding: 0 3rem;
+    transition: height 0.7s ease-in-out;
+}
+
+.homeIntroSub {
+    flex-direction: column;
+    line-height: 4rem;
+    font-size: 2rem;
+}
+
+.homeIntroSub > * {
+    margin: 0;
+}
+
+.homeIntroSub > h1 {
+    font-weight: 700;
+    word-break: keep-all;
+}
+
+.homeIntroImage,
+.homeIntroP,
+.homeIntroH1 {
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+    opacity: 0;
+}
+
+.homeIntroImage {
+    transform: translateX(-10%);
+}
+.homeIntroP {
+    transform: translateY(10%);
+}
+.homeIntroP > span {
+    color: #ff314b;
+}
+.homeIntroH1 {
+    transform: translateY(-10%);
+}
+.homeIntroH1 > span {
+    color: #0070f3;
+}
+
+.homeShow1 {
+    opacity: 1;
+    transform: translateX(0%);
+}
+.homeShow2 {
+    opacity: 1;
+    transform: translateY(0%);
+}
+.homeShow3 {
+    opacity: 1;
+    transform: translateY(0%);
+}
+
+/* Section 2 - Images */
+.homeImg {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.homeImg > h2 {
+    font-size: 2rem;
+    min-width: 14.625rem;
+}
+
+.homeImages {
+    display: flex;
+    align-items: center;
+    width: 100vw;
+    max-width: 100vw;
+    box-shadow: 0px -6px 20px -10px grey;
+}
+
+.homeImage {
+    width: 60vw;
+    height: 17rem;
+    transition: transform 0.5s ease-in-out;
+}
+
+.homeImage:first-child {
+    z-index: 1;
+    -webkit-mask-image: -webkit-gradient(
+        linear,
+        left,
+        right,
+        from(rgba(0, 0, 0, 1)),
+        to(rgba(0, 0, 0, 0))
+    );
+    mask-image: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+    transform: translateX(-100%);
+}
+.homeImage:nth-child(3) {
+    z-index: 0;
+    filter: brightness(0.2);
+    -webkit-mask-image: -webkit-gradient(
+        linear,
+        right,
+        left,
+        from(rgba(0, 0, 0, 1)),
+        to(rgba(0, 0, 0, 0))
+    );
+    mask-image: linear-gradient(to left, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+    transform: translateX(100%);
+}
+
+.homeImageText {
+    position: absolute;
+    z-index: 1;
+    cursor: pointer;
+    transition: scale 0.3s ease-in-out;
+}
+
+.homeImageText:hover {
+    scale: 1.1;
+}
+
+.homeImageLeft {
+    left: 20%;
+}
+.homeImageRight {
+    right: 10%;
+}
+
+.homeImageTextTitle {
+    font-size: 1.5rem;
+    line-height: 1rem;
+    font-weight: 700;
+    word-break: keep-all;
+    min-width: 8.5rem;
+}
+
+.homeImageTextPrice {
+    font-size: 4rem;
+    color: #0070f3;
+    min-width: 8.5rem;
+}
+
+.homeImageTextPrice2 {
+    font-size: 2.5rem;
+    color: #ff314b;
+}
+
+/* Section 3 - Strongth */
+.homeStrongth,
+.homeStrongthSub {
+    display: flex;
+    justify-content: center;
+}
+
+.homeStrongth {
+    width: 100vw;
+    min-width: 15rem;
+    height: 100vh;
+    gap: 5rem;
+    align-items: center;
+    padding: 0 3rem;
+}
+
+.homeStrongthSub {
+    flex-direction: column;
+}
+
+.homeStrongthSub:first-child {
+    align-items: center;
+}
+
+.homeStrongthSub:last-child {
+    gap: 5rem;
+}
+
+.homeStrongthSub > li {
+    list-style: none;
+}
+
+/* Section 4 - Submit */
+.homeSubmit {
+    width: 100vw;
+    margin: 3rem 0;
+    display: flex;
+    justify-content: center;
+}
+
+.homeSubmitButton {
+    width: 80vw;
+    padding: 2rem 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #0070f3;
+    border-radius: 1rem;
+    background-color: #0070f3;
+    color: white;
+    font-weight: 700;
+    font-size: 3rem;
+    transition: scale 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.homeSubmitButton:hover {
+    scale: 1.05;
+}
+
+/* Mobile Layout */
+@media (max-width: 1024px) {
+    .homeImageTextTitle {
+        font-size: 1rem;
+    }
+    .homeImageTextPrice {
+        font-size: 3rem;
+    }
+    .homeImageTextPrice2 {
+        font-size: 1.5rem;
+        color: #ff314b;
+    }
+
+    .homeStrongth {
+        gap: 1rem;
+    }
+    .homeStrongthSub:last-child {
+        gap: 2rem;
+    }
+    .homeStrongthLogo {
+        width: 10rem;
+        height: 10rem;
+    }
+    .homeStrongthSub > h2 {
+        font-size: 1.2rem;
+    }
+
+    .homeSubmitButton {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 650px) {
+    .homeIntroImage {
+        width: 7.5rem;
+        height: 7.5rem;
+    }
+    .homeIntroP {
+        font-size: 1.2rem;
+        line-height: 2rem;
+    }
+    .homeIntroH1 {
+        font-size: 2rem;
+        line-height: 3rem;
+    }
+
+    .homeImg > h2 {
+        font-size: 1.5rem;
+    }
+
+    .homeImages {
+        flex-direction: column;
+    }
+    .homeImage {
+        width: 100vw;
+    }
+    .homeImage:first-child {
+        -webkit-mask-image: -webkit-gradient(
+            linear,
+            top,
+            bottom,
+            from(rgba(0, 0, 0, 1)),
+            to(rgba(0, 0, 0, 0))
+        );
+        mask-image: linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 1),
+            rgba(0, 0, 0, 0)
+        );
+        transform: translateX(-100%);
+    }
+    .homeImage:nth-child(3) {
+        -webkit-mask-image: -webkit-gradient(
+            linear,
+            bottom,
+            top,
+            from(rgba(0, 0, 0, 1)),
+            to(rgba(0, 0, 0, 0))
+        );
+        mask-image: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+        transform: translateX(100%);
+    }
+    .homeImageLeft {
+        left: 50%;
+        transform: translateX(-50%);
+        height: 17rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .homeImageRight {
+        right: 50%;
+        transform: translateX(50%);
+        height: 17rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-top: 17rem;
+    }
+
+    .homeStrongth {
+        flex-direction: column;
+    }
+
+    .homeSubmitButton {
+        font-size: 1.5rem;
+        padding: 1rem 2.5rem;
+    }
+}
+
+@media (max-width: 500px) {
+    .homeSubmitButton {
+        font-size: 1rem;
+        padding: 1rem 2rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .homeImg > h2 {
+        font-size: 1rem;
+    }
+
+    .homeStrongth {
+        padding: 0 1rem;
+    }
+    .homeStrongth,
+    .homeStrongthSub:last-child {
+        gap: 0;
+    }
+
+    .homeSubmitButton {
+        width: 100vw;
+    }
+}
