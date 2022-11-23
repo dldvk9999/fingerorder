@@ -27,8 +27,15 @@ export default function Home() {
         let images = document.querySelectorAll<HTMLElement>(
             "." + styles.homeImage
         );
-        images[0].style.transform = "translateX(0%)";
-        images[1].style.transform = "translateX(0%)";
+        try {
+            images[0].style.transform = "translateX(0%)";
+            images[1].style.transform = "translateX(0%)";
+        } catch (e) {
+            setTimeout(() => {
+                images[0].style.transform = "translateX(0%)";
+                images[1].style.transform = "translateX(0%)";
+            }, 500);
+        }
     }
 
     useEffect(() => {
