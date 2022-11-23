@@ -45,3 +45,19 @@
 .findpasswordText {
     text-align: center;
 }
+
+@media (max-width: 400px) {
+    .login {
+        padding: 5rem 2rem;
+    }
+    .loginForm > input {
+        width: 13rem;
+    }
+    .loginForm > button,
+    .loginForm > a > button {
+        width: 10rem;
+    }
+    .loginFormFunc {
+        font-size: 0.8rem;
+    }
+}
