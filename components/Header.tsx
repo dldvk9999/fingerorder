@@ -18,9 +18,14 @@ export default function Header() {
         nav?.classList.remove("active");
     }
 
+    function logout() {
+        localStorage["login"] = "false";
+        location.reload();
+    }
+
     useEffect(() => {
-        // 로그이니 체크(추후 함수 구현)
-        setLogin(false);
+        // 로그인 체크(추후 함수 구현)
+        setLogin(localStorage["login"] === "true" ? true : false);
     }, []);
 
     return (
@@ -48,7 +53,7 @@ export default function Header() {
             </div>
             <div className={`${styles.headerRight} ${styles.headerItems}`}>
                 {isLogin ? (
-                    <Link href={"/"}>
+                    <Link href={"/"} onClick={logout}>
                         <div>로그아웃</div>
                     </Link>
                 ) : (
@@ -103,7 +108,13 @@ export default function Header() {
                         </Link>
                         <hr />
                         {isLogin ? (
-                            <Link href={"/"} onClick={closeNav}>
+                            <Link
+                                href={"/"}
+                                onClick={() => {
+                                    closeNav();
+                                    logout();
+                                }}
+                            >
                                 로그아웃
                             </Link>
                         ) : (
