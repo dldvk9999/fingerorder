@@ -41,22 +41,6 @@ export default function Home() {
         intro!.style.paddingTop = "4.4rem";
     }
 
-    // Images의 Image들을 slide-in 시키는 함수
-    function showImages() {
-        let images = document.querySelectorAll<HTMLElement>(
-            "." + styles.homeImage
-        );
-        try {
-            images[0].style.transform = "translateX(0%)";
-            images[1].style.transform = "translateX(0%)";
-        } catch (e) {
-            setTimeout(() => {
-                images[0].style.transform = "translateX(0%)";
-                images[1].style.transform = "translateX(0%)";
-            }, 500);
-        }
-    }
-
     useEffect(() => {
         setTimeout(() => {
             window.scrollTo(0, 0);

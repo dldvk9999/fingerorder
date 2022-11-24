@@ -31,7 +31,7 @@ export default function Header() {
     // sample logout
     function logout() {
         localStorage["login"] = "false";
-        location.reload();
+        location.href = "/";
     }
 
     // router 가능한 주소 목록 (재사용 가능 함수)
@@ -55,39 +55,31 @@ export default function Header() {
     function routerListLogin(printWhere: string) {
         let result = [];
         for (let i = 0; i < routerLogin.length; i++) {
-            if (i === routerLogin.length - 1) {
-                result.push(
-                    <Link
-                        href={"/" + routerLogin[i][0]}
-                        onClick={() => {
-                            routerLogin[i][0] === "" && logout();
-                            printWhere === "nav" && closeNav();
-                        }}
-                        className={styles.headerProfile}
-                        key={"header-login-profile"}
-                    >
-                        <Image
-                            src={"/profile.webp"}
-                            alt={"profile"}
-                            width={40}
-                            height={40}
-                        />
-                    </Link>
+            const inner =
+                i === routerLogin.length - 1 ? (
+                    <Image
+                        src={"/profile.webp"}
+                        alt={"profile"}
+                        width={40}
+                        height={40}
+                    />
+                ) : (
+                    <div>{routerLogin[i][1]}</div>
                 );
-            } else {
-                result.push(
-                    <Link
-                        href={"/" + routerLogin[i][0]}
-                        onClick={() => {
-                            routerLogin[i][0] === "" && logout();
-                            printWhere === "nav" && closeNav();
-                        }}
-                        key={"header-login-" + i}
-                    >
-                        <div>{routerLogin[i][1]}</div>
-                    </Link>
-                );
-            }
+
+            result.push(
+                <Link
+                    href={"/" + routerLogin[i][0]}
+                    onClick={() => {
+                        routerLogin[i][0] === "" && logout();
+                        printWhere === "nav" && closeNav();
+                    }}
+                    className={styles.headerProfile}
+                    key={"header-login-profile-" + i}
+                >
+                    {inner}
+                </Link>
+            );
         }
         return result;
     }
