@@ -9,7 +9,7 @@ export default function Mypage() {
                 <div key={"mypage-buylist-" + i}>
                     <div className={styles.mypageVisitStoreName}>가게 이름</div>
                     <div>매장 위치 : xxxxx</div>
-                    <div>구매 일 : 2022.11.24</div>
+                    <div>구매 일자 : 2022.11.24</div>
                     <div className={styles.mypageReviewButton}>
                         <Link href={"/review"}>
                             <button>리뷰</button>
