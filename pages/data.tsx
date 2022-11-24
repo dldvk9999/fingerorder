@@ -1,4 +1,4 @@
-export const data = [
+const data = [
     {
         name: "A모델",
         price: "1,500,000원 ~",
@@ -56,3 +56,5 @@ export const data = [
         price: "1,550,000원 ~",
     },
 ];
+
+export default { data };

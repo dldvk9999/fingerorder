@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Router from "next/router";
 import { useEffect, useState } from "react";
-import { data } from "./data";
+import data from "./data";
 import styles from "../styles/Home.module.scss";
 
 export default function Home() {
@@ -11,15 +11,15 @@ export default function Home() {
     // carousel에서 background에 있는 카드 생성
     function compareLayout() {
         let result = [];
-        for (let i = 0; i < data.length; i++) {
+        for (let i = 0; i < data.data.length; i++) {
             result.push(
                 <div
                     className={styles.homeCompareBackItem}
                     key={"home-compare-" + i}
                 >
-                    <div>{data[i].name}</div>
+                    <div>{data.data[i].name}</div>
                     <div>?</div>
-                    <div>{data[i].price}</div>
+                    <div>{data.data[i].price}</div>
                 </div>
             );
         }
