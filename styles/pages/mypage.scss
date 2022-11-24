@@ -27,14 +27,6 @@
     gap: 2rem;
 }
 
-.mypageChangeInfo {
-    position: absolute;
-    padding: 0.3rem;
-    border: 1px solid #eaeaea;
-    border-radius: 1rem;
-    background-color: #eaeaea;
-}
-
 .mypageChangePassword,
 .mypageWithdrawal {
     padding: 1rem;
@@ -67,6 +59,16 @@
     border-radius: 1rem;
     padding: 0.5rem 1rem;
     text-align: center;
+    height: 3.5rem;
+}
+
+.mypageChangeInfo {
+    height: 3.5rem;
+    position: absolute;
+    padding: 0.3rem;
+    border: 1px solid #eaeaea;
+    border-radius: 0 1rem 1rem 0;
+    background-color: #eaeaea;
 }
 
 .mypageNickname:focus,
@@ -145,6 +147,9 @@
 }
 
 @media (max-width: 400px) {
+    .mypageNickname {
+        width: 15rem;
+    }
     .mypageChangePassword,
     .mypageWithdrawal {
         font-size: 0.9rem;
