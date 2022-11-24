@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Router from "next/router";
 import { useEffect, useState } from "react";
-import data from "./data";
+import data from "../data/data";
 import styles from "../styles/Home.module.scss";
 
 export default function Home() {
