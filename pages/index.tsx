@@ -57,17 +57,22 @@ export default function Home() {
         }, 2000);
 
         if (path.pathname === "/") {
+            document.documentElement.style.overflowY = "hidden";
             let header = document.querySelector<HTMLElement>("header");
             header!.style.opacity = "0";
+            header!.style.transform = "translateY(-4.4rem)";
 
             setTimeout(() => {
                 header!.style.opacity = "1";
+                header!.style.transform = "translateY(0)";
+                document.documentElement.style.overflowY = "overlay";
             }, 2000);
         }
     }, []);
 
     return (
         <main className={styles.homeMain}>
+            {/* Section 1. */}
             <section className={styles.homeInto}>
                 <Image
                     src={"/fingerorder.webp"}
@@ -97,6 +102,7 @@ export default function Home() {
                 </div>
             </section>
 
+            {/* Section 2. */}
             <section className={styles.homeWhitebox}>
                 <div className={styles.homeWhiteboxBackground}>
                     <div className={styles.homeWhiteboxItems}>
@@ -129,6 +135,7 @@ export default function Home() {
                 </div>
             </section>
 
+            {/* Section 3. */}
             <section className={styles.homeCompare}>
                 <div className={styles.homeCompareBackground}>
                     {compareLayout()}
@@ -150,6 +157,7 @@ export default function Home() {
                 <p>사장님을 위한 현명한 선택!</p>
             </section>
 
+            {/* Section 4. */}
             <section className={styles.homeStrongth}>
                 <div className={styles.homeStrongthCard}>
                     <div className={styles.homeStrongthSub}>
@@ -190,6 +198,7 @@ export default function Home() {
                 </div>
             </section>
 
+            {/* Section 5. */}
             <section className={styles.homeSubmit}>
                 <Link href={"/store"}>
                     <div className={styles.homeSubmitButton}>

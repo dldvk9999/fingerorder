@@ -15,7 +15,7 @@
     display: flex;
     align-items: center;
     gap: 2rem;
-    padding: 3rem 2rem;
+    padding: 3rem 0 3rem 2rem;
     animation: carousel-infinite 30s linear infinite;
 }
 
@@ -24,7 +24,7 @@
         transform: translateX(0%);
     }
     100% {
-        transform: translateX(-49.5%);
+        transform: translateX(-50%);
     }
 }
 

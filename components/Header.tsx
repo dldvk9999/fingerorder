@@ -55,18 +55,6 @@ export default function Header() {
     function routerListLogin(printWhere: string) {
         let result = [];
         for (let i = 0; i < routerLogin.length; i++) {
-            const inner =
-                i === routerLogin.length - 1 ? (
-                    <Image
-                        src={"/profile.webp"}
-                        alt={"profile"}
-                        width={40}
-                        height={40}
-                    />
-                ) : (
-                    <div>{routerLogin[i][1]}</div>
-                );
-
             result.push(
                 <Link
                     href={"/" + routerLogin[i][0]}
@@ -77,7 +65,16 @@ export default function Header() {
                     className={styles.headerProfile}
                     key={"header-login-profile-" + i}
                 >
-                    {inner}
+                    {i === routerLogin.length - 1 ? (
+                        <Image
+                            src={"/profile.webp"}
+                            alt={"profile"}
+                            width={40}
+                            height={40}
+                        />
+                    ) : (
+                        <div>{routerLogin[i][1]}</div>
+                    )}
                 </Link>
             );
         }
