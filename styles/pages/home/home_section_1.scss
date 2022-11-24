@@ -1,0 +1,67 @@
+/* Section 1 - Intro */
+.homeInto,
+.homeIntroSub {
+    display: flex;
+    justify-content: center;
+}
+
+.homeInto {
+    width: 100vw;
+    height: 100vh;
+    min-height: 10rem;
+    gap: 1rem;
+    align-items: center;
+    padding: 0 3rem;
+    transition: height 0.7s ease-in-out, padding-top 0.7s ease-in-out;
+}
+
+.homeIntroSub {
+    flex-direction: column;
+    line-height: 4rem;
+    font-size: 2rem;
+}
+
+.homeIntroSub > * {
+    margin: 0;
+}
+
+.homeIntroSub > h1 {
+    font-weight: 700;
+    word-break: keep-all;
+}
+
+.homeIntroImage,
+.homeIntroP,
+.homeIntroH1 {
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+    opacity: 0;
+}
+
+.homeIntroImage {
+    transform: translateX(-10%);
+}
+.homeIntroP {
+    transform: translateY(10%);
+}
+.homeIntroP > span {
+    color: #ff314b;
+}
+.homeIntroH1 {
+    transform: translateY(-10%);
+}
+.homeIntroH1 > span {
+    color: #0070f3;
+}
+
+.homeShow1 {
+    opacity: 1;
+    transform: translateX(0%);
+}
+.homeShow2 {
+    opacity: 1;
+    transform: translateY(0%);
+}
+.homeShow3 {
+    opacity: 1;
+    transform: translateY(0%);
+}

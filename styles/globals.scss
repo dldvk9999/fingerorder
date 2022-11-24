@@ -55,6 +55,7 @@ header {
     box-shadow: 0 4px 15px -8px gray;
     position: fixed;
     z-index: 999;
+    transition: transform 0.7s ease-in-out, opacity 0.7s ease-in-out;
 }
 
 ul {

@@ -3,6 +3,16 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import styles from "../styles/Home.module.scss";
 
+const router = [
+    ["store", "매장 등록"],
+    ["menu", "메뉴 등록"],
+];
+const routerLogin = [
+    ["order", "주문목록"],
+    ["", "로그아웃"],
+    ["mypage", "마이페이지"],
+];
+
 export default function Header() {
     const [isLogin, setLogin] = useState(false);
 
@@ -18,9 +28,57 @@ export default function Header() {
         nav?.classList.remove("active");
     }
 
+    // sample logout
     function logout() {
         localStorage["login"] = "false";
-        location.reload();
+        location.href = "/";
+    }
+
+    // router 가능한 주소 목록 (재사용 가능 함수)
+    function routerList(printWhere: string) {
+        let result = [];
+        for (let i = 0; i < router.length; i++) {
+            result.push(
+                <Link
+                    href={"/" + router[i][0]}
+                    onClick={() => (printWhere === "nav" ? closeNav : "")}
+                    key={"header-router-" + i}
+                >
+                    {router[i][1]}
+                </Link>
+            );
+        }
+        return result;
+    }
+
+    // 로그인 후 접근 가능한 주소 목록 (재사용 가능 함수)
+    function routerListLogin(printWhere: string) {
+        let result = [];
+        for (let i = 0; i < routerLogin.length; i++) {
+            result.push(
+                <Link
+                    href={"/" + routerLogin[i][0]}
+                    onClick={() => {
+                        routerLogin[i][0] === "" && logout();
+                        printWhere === "nav" && closeNav();
+                    }}
+                    className={styles.headerProfile}
+                    key={"header-login-profile-" + i}
+                >
+                    {i === routerLogin.length - 1 ? (
+                        <Image
+                            src={"/profile.webp"}
+                            alt={"profile"}
+                            width={40}
+                            height={40}
+                        />
+                    ) : (
+                        <div>{routerLogin[i][1]}</div>
+                    )}
+                </Link>
+            );
+        }
+        return result;
     }
 
     useEffect(() => {
@@ -45,17 +103,11 @@ export default function Header() {
                         </div>
                     </div>
                 </Link>
-                <div className={styles.headerItems}>
-                    <Link href={"/store"}>매장 등록</Link>
-                    <Link href={"/menu"}>메뉴 등록</Link>
-                    <Link href={"/review"}>매장 리뷰</Link>
-                </div>
+                <div className={styles.headerItems}>{routerList("header")}</div>
             </div>
             <div className={`${styles.headerRight} ${styles.headerItems}`}>
                 {isLogin ? (
-                    <Link href={"/"} onClick={logout}>
-                        <div>로그아웃</div>
-                    </Link>
+                    routerListLogin("header")
                 ) : (
                     <Link href={"/login"}>
                         <div>로그인</div>
@@ -97,26 +149,10 @@ export default function Header() {
                 </div>
                 <div className={styles.headerNavList}>
                     <div>
-                        <Link href={"/store"} onClick={closeNav}>
-                            매장 등록
-                        </Link>
-                        <Link href={"/menu"} onClick={closeNav}>
-                            메뉴 등록
-                        </Link>
-                        <Link href={"/review"} onClick={closeNav}>
-                            매장 리뷰
-                        </Link>
+                        {routerList("nav")}
                         <hr />
                         {isLogin ? (
-                            <Link
-                                href={"/"}
-                                onClick={() => {
-                                    closeNav();
-                                    logout();
-                                }}
-                            >
-                                로그아웃
-                            </Link>
+                            routerListLogin("nav")
                         ) : (
                             <Link href={"/login"} onClick={closeNav}>
                                 로그인
