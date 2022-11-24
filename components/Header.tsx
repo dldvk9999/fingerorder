@@ -65,7 +65,7 @@ export default function Header() {
                     className={styles.headerProfile}
                     key={"header-login-profile-" + i}
                 >
-                    {i === routerLogin.length - 1 ? (
+                    {i === routerLogin.length - 1 && printWhere !== "nav" ? (
                         <Image
                             src={"/profile.webp"}
                             alt={"profile"}
