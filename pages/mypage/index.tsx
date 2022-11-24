@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useState } from "react";
+import LoginCheck from "../login_check";
 import styles from "../../styles/Home.module.scss";
 
 export default function Mypage() {
@@ -35,7 +36,7 @@ export default function Mypage() {
         alert("withdrawal is complete");
     }
 
-    return (
+    return LoginCheck() ? (
         <main>
             <section className={styles.mypage}>
                 <h1>마이 페이지</h1>
@@ -83,5 +84,5 @@ export default function Mypage() {
                 </div>
             </section>
         </main>
-    );
+    ) : null;
 }

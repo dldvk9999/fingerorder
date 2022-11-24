@@ -1,9 +1,10 @@
+import LoginCheck from "../login_check";
 import styles from "../styles/Home.module.scss";
 
 export default function Store() {
-    return (
+    return LoginCheck() ? (
         <main>
             <div>This is Store page.</div>
         </main>
-    );
+    ) : null;
 }
