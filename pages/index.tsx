@@ -1,11 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { data } from "./data";
 import styles from "../styles/Home.module.scss";
 
 export default function Home() {
     const [showIntro, setShowIntro] = useState([false, false, false]);
+    const path = useRouter();
 
     // carousel에서 background에 있는 카드 생성
     function compareLayout() {
@@ -70,12 +72,14 @@ export default function Home() {
             upIntro();
         }, 2000);
 
-        let header = document.querySelector<HTMLElement>("header");
-        header!.style.opacity = "0";
+        if (path.pathname === "/") {
+            let header = document.querySelector<HTMLElement>("header");
+            header!.style.opacity = "0";
 
-        setTimeout(() => {
-            header!.style.opacity = "1";
-        }, 2000);
+            setTimeout(() => {
+                header!.style.opacity = "1";
+            }, 2000);
+        }
     }, []);
 
     return (
