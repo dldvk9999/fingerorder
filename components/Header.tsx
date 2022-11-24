@@ -26,6 +26,11 @@ export default function Header() {
     useEffect(() => {
         // 로그인 체크(추후 함수 구현)
         setLogin(localStorage["login"] === "true" ? true : false);
+
+        setTimeout(() => {
+            let header = document.querySelector<HTMLElement>("header");
+            header!.style.opacity = "1";
+        }, 2000);
     }, []);
 
     return (

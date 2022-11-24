@@ -1,0 +1,178 @@
+/* Mobile Layout */
+@media (max-width: 1024px) {
+    .homeImageTextTitle {
+        font-size: 1rem;
+    }
+    .homeImageTextPrice,
+    .homeImageTextPrice2 {
+        font-size: 1.5rem;
+    }
+
+    .homeStrongth {
+        gap: 1rem;
+    }
+    .homeStrongthSub:last-child {
+        gap: 2rem;
+    }
+    .homeStrongthLogo {
+        width: 10rem;
+        height: 10rem;
+    }
+    .homeStrongthSub > h2 {
+        font-size: 1.2rem;
+    }
+
+    .homeSubmitButton {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 800px) {
+    .homeWhitebox > * {
+        height: 28rem;
+    }
+    .homeWhiteboxItems {
+        flex-direction: column;
+    }
+    .homeWhiteboxLeft {
+        width: 100%;
+        border-radius: 0 0 10rem 10rem;
+        flex-direction: column;
+    }
+    .homeWhiteboxRight {
+        height: 11rem;
+        width: 100%;
+    }
+}
+
+@media (max-width: 650px) {
+    .homeIntroImage {
+        width: 7.5rem;
+        height: 7.5rem;
+    }
+    .homeIntroP {
+        font-size: 1.2rem;
+        line-height: 2rem;
+    }
+    .homeIntroH1 {
+        font-size: 2rem;
+        line-height: 3rem;
+    }
+
+    .homeCompareBackItem {
+        width: 8rem;
+        height: 18rem;
+    }
+    .homeCompareFront {
+        width: 12rem;
+        height: 22rem;
+    }
+    .homeCompareBackItem > div:nth-child(1) {
+        font-size: 1.2rem;
+        margin-top: 2rem;
+    }
+    .homeCompareBackItem > div:nth-child(2) {
+        font-size: 5rem;
+    }
+    .homeCompareBackItem > div:nth-child(3) {
+        font-size: 1rem;
+        margin-bottom: 2rem;
+    }
+    .homeCompareFront > div:nth-child(1) {
+        font-size: 1.5rem;
+        margin-top: 2rem;
+    }
+    .homeCompareFrontImage {
+        width: 8rem;
+        height: 8rem;
+    }
+    .homeCompareFront > div:nth-child(3) {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
+    .homeCompare > p {
+        font-size: 1.2rem;
+        transform: translate(-50%, 28vh);
+    }
+
+    .homeStrongth {
+        height: fit-content;
+    }
+    .homeStrongthCard {
+        flex-direction: column;
+    }
+
+    .homeSubmitButton {
+        font-size: 1.5rem;
+        padding: 1rem 2.5rem;
+    }
+}
+
+@media (max-width: 500px) {
+    .homeInto {
+        flex-direction: column;
+    }
+    .homeIntroImage {
+        width: 6rem;
+        height: 6rem;
+    }
+    .homeIntroP {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+    .homeIntroH1 {
+        font-size: 1.5rem;
+        line-height: 2rem;
+    }
+    .homeWhiteboxItem > *,
+    .homeWhiteboxItem > div,
+    .homeWhiteboxItemHighlight {
+        font-size: 1.1rem;
+    }
+
+    .homeStrongthCard {
+        gap: 0;
+    }
+
+    .homeSubmitButton {
+        font-size: 1rem;
+        padding: 1rem 2rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .homeIntroH1 {
+        font-size: 1.2rem;
+    }
+
+    .homeWhiteboxItem > *,
+    .homeWhiteboxItem > div,
+    .homeWhiteboxItemHighlight {
+        font-size: 0.9rem;
+    }
+
+    .homeStrongth {
+        padding: 0 1rem;
+    }
+    .homeStrongth,
+    .homeStrongthSub:last-child {
+        gap: 0;
+    }
+    .homeStrongthCard {
+        padding: 2rem 1.2rem;
+    }
+    .homeStrongthLogo {
+        width: 5rem;
+        height: 5rem;
+    }
+    .homeStrongthSub > li > h3 {
+        font-size: 1rem;
+    }
+    .homeStrongthSub > li > p {
+        font-size: 0.8rem;
+    }
+
+    .homeSubmitButton {
+        width: 100vw;
+    }
+}
