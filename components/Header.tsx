@@ -30,7 +30,7 @@ export default function Header() {
 
     // sample logout
     function logout() {
-        localStorage["login"] = "false";
+        localStorage.removeItem("login");
         location.href = "/";
     }
 
