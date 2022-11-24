@@ -12,6 +12,12 @@
     align-items: center;
 }
 
+.mypageInfoInput {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
 .mypageInfo {
     width: 50vw;
     display: flex;
@@ -21,8 +27,16 @@
     gap: 2rem;
 }
 
-.mypageInfo > a,
-.mypageInfo > button {
+.mypageChangeInfo {
+    position: absolute;
+    padding: 0.3rem;
+    border: 1px solid #eaeaea;
+    border-radius: 1rem;
+    background-color: #eaeaea;
+}
+
+.mypageChangePassword,
+.mypageWithdrawal {
     padding: 1rem;
     border-radius: 1rem;
     color: white;
@@ -35,14 +49,29 @@
     font-size: 1.5rem;
 }
 
-.mypageInfo > a {
+.mypageChangePassword {
     border: 1px solid #0070f3;
     background-color: #0070f3;
 }
 
-.mypageInfo > button {
+.mypageWithdrawal {
     border: 1px solid #ff314b;
     background-color: #ff314b;
+}
+
+.mypageNickname {
+    font-size: 2rem;
+    font-weight: 700;
+    width: 20rem;
+    border: 1px solid #eaeaea;
+    border-radius: 1rem;
+    padding: 0.5rem 1rem;
+    text-align: center;
+}
+
+.mypageNickname:focus,
+.mypageNickname:active {
+    outline: none;
 }
 
 .mypageBuyList {
@@ -116,8 +145,8 @@
 }
 
 @media (max-width: 400px) {
-    .mypageInfo > a,
-    .mypageInfo > button {
+    .mypageChangePassword,
+    .mypageWithdrawal {
         font-size: 0.9rem;
     }
 }
