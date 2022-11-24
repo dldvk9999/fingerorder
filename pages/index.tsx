@@ -69,9 +69,13 @@ export default function Home() {
         setTimeout(() => {
             upIntro();
         }, 2000);
-        // setTimeout(() => {
-        //     showImages();
-        // }, 2200);
+
+        let header = document.querySelector<HTMLElement>("header");
+        header!.style.opacity = "0";
+
+        setTimeout(() => {
+            header!.style.opacity = "1";
+        }, 2000);
     }, []);
 
     return (
