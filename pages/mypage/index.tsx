@@ -1,30 +1,36 @@
 import Link from "next/link";
-import { useState } from "react";
+import review from "../../data/review";
 import LoginCheck from "../login_check";
 import styles from "../../styles/Home.module.scss";
 
 export default function Mypage() {
-    const [nickname, setNickname] = useState("닉네임");
-
-    function changeNickname() {
-        if (confirm(nickname + "으로 변경하시겠습니까?"))
-            alert(nickname + "으로 변경 완료되었습니다.");
-    }
-
     // 구매 매장 목록 출력
     function printBuyList() {
         let result = [];
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < review.length; i++) {
             result.push(
                 <div key={"mypage-buylist-" + i}>
-                    <div className={styles.mypageVisitStoreName}>가게 이름</div>
-                    <div>매장 위치 : xxxxx</div>
-                    <div>구매 일자 : 2022.11.24</div>
-                    <div className={styles.mypageReviewButton}>
-                        <Link href={"/review"}>
-                            <button>리뷰</button>
-                        </Link>
+                    <div>
+                        <span className={styles.mypageReviewName}>
+                            {review[i].type === 1 ? "매장 리뷰" : "메뉴 좋아요"}
+                        </span>
+                        <span className={styles.mypageReviewDate}>
+                            {review[i].date}
+                        </span>
                     </div>
+                    <div className={styles.mypageReviewBody}>
+                        {review[i].type === 1 ? "" : "메뉴 : "}
+                        {review[i].type === 1
+                            ? review[i].comment
+                            : review[i].menu}
+                    </div>
+                    {review[i].type === 1 && (
+                        <div className={styles.mypageReviewButton}>
+                            <Link href={"/review"}>
+                                <button>답글달기</button>
+                            </Link>
+                        </div>
+                    )}
                 </div>
             );
         }
@@ -62,7 +68,7 @@ export default function Mypage() {
                         </button>
                     </div>
                     <div className={styles.mypageBuyList}>
-                        <h2>구매 내역</h2>
+                        <h2>리뷰 내역</h2>
                         <div className={styles.mypageBuyListItem}>
                             {printBuyList()}
                         </div>
