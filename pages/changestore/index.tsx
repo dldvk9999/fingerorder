@@ -1,21 +1,18 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { useRecoilState } from "recoil";
+import { editNumber } from "../../states";
+import store from "../../data/store";
 import LoginCheck from "../login_check";
 import styles from "../../styles/Home.module.scss";
 
 export default function ChangeStore() {
-    const [storeName, setStoreName] = useState("진짜 맛있는 집");
-    const [tableCount, setTableCount] = useState(35);
-    const [tmpTableCount, setTmpTableCount] = useState(35);
-    const [storeLocation, setStoreLocation] =
-        useState("서울특별시 어쩌구 저쩌구");
-    const [category, setCategory] = useState<Array<string>>([
-        "FRIED",
-        "SNACK",
-        "RICE",
-        "BEVERAGE",
-        "DRINK",
-    ]);
+    const [editPage, _] = useRecoilState(editNumber);
+    const [storeName, setStoreName] = useState("");
+    const [tableCount, setTableCount] = useState(0);
+    const [tmpTableCount, setTmpTableCount] = useState(0);
+    const [storeLocation, setStoreLocation] = useState("");
+    const [category, setCategory] = useState<Array<string>>([]);
     const [tmpCategory, setTmpCategory] = useState("");
     const [isShowQR, setShowQR] = useState(false);
     const [isSubmit, setSubmit] = useState(false);
@@ -201,9 +198,21 @@ export default function ChangeStore() {
         setStatusInput(
             document.querySelectorAll<HTMLElement>("." + styles.storeInput)
         );
+
+        // 마이페이지를 통해 접근했는지 확인
+        if (editPage === -1) {
+            alert("마이페이지를 통해 접근해주세요.");
+            location.href = "/mypage";
+        } else {
+            setStoreName(store[editPage].name);
+            setTableCount(store[editPage].table);
+            setTmpTableCount(store[editPage].table);
+            setStoreLocation(store[editPage].locate);
+            setCategory(store[editPage].category);
+        }
     }, []);
 
-    return LoginCheck() ? (
+    return LoginCheck() && editPage !== -1 ? (
         <main className={styles.store}>
             {/* Section 1. Store Info & Input */}
             <section className={styles.storeInfo}>

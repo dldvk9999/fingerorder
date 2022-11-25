@@ -75,28 +75,29 @@
     border-radius: 1rem;
 }
 
-.mypageReviewName {
+.mypageStoreName {
     font-size: 1.5rem;
     font-weight: 700;
 }
 
-.mypageReviewDate {
+.mypageStoreDate {
     font-size: 1rem;
     margin-left: 1rem;
     color: gray;
 }
 
-.mypageReviewBody {
+.mypageStoreBody {
     padding: 1rem 0;
 }
 
-.mypageReviewButton {
+.mypageStoreButton {
     display: flex;
     justify-content: flex-end;
     margin-top: 1rem;
+    gap: 1rem;
 }
 
-.mypageReviewButton > a > button {
+.mypageStoreButton > a > button {
     border: 1px solid #0070f3;
     border-radius: 1rem;
     background-color: #0070f3;

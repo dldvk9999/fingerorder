@@ -1,36 +1,38 @@
 import Link from "next/link";
-import review from "../../data/review";
+import { useRecoilState } from "recoil";
+import { editNumber } from "../../states";
+import store from "../../data/store";
 import LoginCheck from "../login_check";
 import styles from "../../styles/Home.module.scss";
 
 export default function Mypage() {
+    const [_, setPage] = useRecoilState(editNumber);
+
     // 구매 매장 목록 출력
-    function printBuyList() {
+    function printStoreList() {
         let result = [];
-        for (let i = 0; i < review.length; i++) {
+        for (let i = 0; i < store.length; i++) {
             result.push(
-                <div key={"mypage-buylist-" + i}>
+                <div key={"mypage-storelist-" + i}>
                     <div>
-                        <span className={styles.mypageReviewName}>
-                            {review[i].type === 1 ? "매장 리뷰" : "메뉴 좋아요"}
+                        <span className={styles.mypageStoreName}>
+                            {store[i].id}. {store[i].name}
                         </span>
-                        <span className={styles.mypageReviewDate}>
-                            {review[i].date}
+                        <span className={styles.mypageStoreDate}>
+                            최근수정 : {store[i].date}
                         </span>
                     </div>
-                    <div className={styles.mypageReviewBody}>
-                        {review[i].type === 1 ? "" : "메뉴 : "}
-                        {review[i].type === 1
-                            ? review[i].comment
-                            : review[i].menu}
+                    <div className={styles.mypageStoreBody}>
+                        {store[i].locate}
                     </div>
-                    {review[i].type === 1 && (
-                        <div className={styles.mypageReviewButton}>
-                            <Link href={"/review"}>
-                                <button>답글달기</button>
-                            </Link>
-                        </div>
-                    )}
+                    <div className={styles.mypageStoreButton}>
+                        <Link href={"/review"}>
+                            <button>리뷰보기</button>
+                        </Link>
+                        <Link href={"/changestore"}>
+                            <button onClick={() => setPage(i)}>수정</button>
+                        </Link>
+                    </div>
                 </div>
             );
         }
@@ -49,12 +51,6 @@ export default function Mypage() {
                 <div className={styles.mypageSub}>
                     <div className={styles.mypageInfo}>
                         <Link
-                            href={"/changestore"}
-                            className={styles.mypageChangePassword}
-                        >
-                            매장 수정
-                        </Link>
-                        <Link
                             href={"/findpassword"}
                             className={styles.mypageChangePassword}
                         >
@@ -68,9 +64,9 @@ export default function Mypage() {
                         </button>
                     </div>
                     <div className={styles.mypageBuyList}>
-                        <h2>리뷰 내역</h2>
+                        <h2>나의 매장</h2>
                         <div className={styles.mypageBuyListItem}>
-                            {printBuyList()}
+                            {printStoreList()}
                         </div>
                     </div>
                 </div>
