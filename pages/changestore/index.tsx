@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import LoginCheck from "../login_check";
 import styles from "../../styles/Home.module.scss";
@@ -19,6 +19,7 @@ export default function ChangeStore() {
     const [tmpCategory, setTmpCategory] = useState("");
     const [isShowQR, setShowQR] = useState(false);
     const [isSubmit, setSubmit] = useState(false);
+    const [isMobile, setMobile] = useState(true);
 
     // QR 리스트 다운로드
     function downloadQR() {
@@ -41,7 +42,6 @@ export default function ChangeStore() {
     function printQRList() {
         let result = [];
         for (let i = 0; i < Number(tableCount / 16); i++) {
-            console.log("QR:" + i);
             result.push(
                 <div key={"store-QR-list-" + i}>
                     <h2>QR 코드 리스트 - {i + 1}</h2>
@@ -57,7 +57,6 @@ export default function ChangeStore() {
         let result = [];
         const limit = index * 16 + 16;
         for (let i = index * 16; i < Math.min(limit, tableCount); i++) {
-            console.log(i);
             result.push(
                 <div className={styles.storeQRItem} key={"store-QR-" + i}>
                     <Image
@@ -177,6 +176,10 @@ export default function ChangeStore() {
         }
     };
 
+    useEffect(() => {
+        setMobile(window.innerWidth >= 1200);
+    }, []);
+
     return LoginCheck() ? (
         <main className={styles.store}>
             {/* Section 1. Store Info & Input */}
@@ -245,10 +248,19 @@ export default function ChangeStore() {
                     isShowQR && styles.storeQRActive
                 }`}
             >
-                {printQRList()}
-                <button className={styles.storeQRDownload} onClick={downloadQR}>
-                    QR 다운로드
-                </button>
+                {isMobile ? (
+                    <>
+                        {printQRList()}
+                        <button
+                            className={styles.storeQRDownload}
+                            onClick={downloadQR}
+                        >
+                            QR 다운로드
+                        </button>
+                    </>
+                ) : (
+                    <h2>QR 코드 리스트는 PC에서만 가능합니다.</h2>
+                )}
             </section>
         </main>
     ) : null;

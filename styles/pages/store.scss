@@ -97,6 +97,7 @@
     font-size: 1.5rem;
     display: flex;
     justify-content: center;
+    margin: 2rem 0 3rem;
 }
 
 /* Section 2. QR */
@@ -137,4 +138,23 @@
 
 .storeQRDownload {
     display: block;
+}
+
+@media (max-width: 1200px) {
+    .store {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 400px) {
+    .storeInput {
+        width: 13rem;
+    }
+    .storeUseButton > p {
+        width: 12rem;
+        transform: translate(-7px, 45px);
+    }
+    .storeCategoryBlocks {
+        width: 14rem;
+    }
 }

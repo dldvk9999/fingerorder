@@ -1,17 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import LoginCheck from "../login_check";
 import styles from "../../styles/Home.module.scss";
 
 export default function Store() {
-    const [storeName, setStoreName] = useState("");
-    const [tableCount, setTableCount] = useState(0);
-    const [tmpTableCount, setTmpTableCount] = useState(0);
-    const [storeLocation, setStoreLocation] = useState("");
-    const [category, setCategory] = useState<Array<string>>([]);
-    const [tmpCategory, setTmpCategory] = useState("");
-    const [isShowQR, setShowQR] = useState(false);
-    const [isSubmit, setSubmit] = useState(false);
+    const [storeName, setStoreName] = useState(""); // 매장 이름
+    const [tableCount, setTableCount] = useState(0); // 매장 테이블 수
+    const [tmpTableCount, setTmpTableCount] = useState(0); // 입력중인 매장 테이블 수
+    const [storeLocation, setStoreLocation] = useState(""); // 매장 위치
+    const [category, setCategory] = useState<Array<string>>([]); // 매장의 메뉴 카테고리
+    const [tmpCategory, setTmpCategory] = useState(""); // 입력중인 매장의 메뉴 카테고리
+    const [isShowQR, setShowQR] = useState(false); // QR 레이아웃을 보여줄 것인지
+    const [isSubmit, setSubmit] = useState(false); // 매장 등록 or 수정 버튼을 클릭했는지
+    const [isMobile, setMobile] = useState(true); // 모바일인지 (가로길이 1200 이하)
 
     // QR 리스트 다운로드
     function downloadQR() {
@@ -30,10 +31,25 @@ export default function Store() {
         window.print();
     }
 
-    // QR 리스트 출력
-    function printQR() {
+    // QR 리스트 출력 (헤더 포함)
+    function printQRList() {
         let result = [];
-        for (let i = 0; i < tableCount; i++) {
+        for (let i = 0; i < Number(tableCount / 16); i++) {
+            result.push(
+                <div key={"store-QR-list-" + i}>
+                    <h2>QR 코드 리스트 - {i + 1}</h2>
+                    <div className={styles.storeQRGrid}>{printQR(i)}</div>
+                </div>
+            );
+        }
+        return result;
+    }
+
+    // QR 리스트 출력
+    function printQR(index: number) {
+        let result = [];
+        const limit = index * 16 + 16;
+        for (let i = index * 16; i < Math.min(limit, tableCount); i++) {
             result.push(
                 <div className={styles.storeQRItem} key={"store-QR-" + i}>
                     <Image
@@ -51,7 +67,6 @@ export default function Store() {
         }
         return result;
     }
-
     // QR 코드 생성 시 레이아웃 변경 후 QR 생성
     function QRLayout() {
         setShowQR(true);
@@ -153,6 +168,10 @@ export default function Store() {
         }
     };
 
+    useEffect(() => {
+        setMobile(window.innerWidth >= 1200);
+    }, []);
+
     return LoginCheck() ? (
         <main className={styles.store}>
             {/* Section 1. Store Info & Input */}
@@ -218,11 +237,19 @@ export default function Store() {
                     isShowQR && styles.storeQRActive
                 }`}
             >
-                <h2>QR 코드 리스트</h2>
-                <div className={styles.storeQRGrid}>{printQR()}</div>
-                <button className={styles.storeQRDownload} onClick={downloadQR}>
-                    QR 다운로드
-                </button>
+                {isMobile ? (
+                    <>
+                        {printQRList()}
+                        <button
+                            className={styles.storeQRDownload}
+                            onClick={downloadQR}
+                        >
+                            QR 다운로드
+                        </button>
+                    </>
+                ) : (
+                    <h2>QR 코드 리스트는 PC에서만 가능합니다.</h2>
+                )}
             </section>
         </main>
     ) : null;
