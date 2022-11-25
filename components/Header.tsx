@@ -41,7 +41,7 @@ export default function Header() {
             result.push(
                 <Link
                     href={"/" + router[i][0]}
-                    onClick={() => (printWhere === "nav" ? closeNav : "")}
+                    onClick={() => (printWhere === "nav" ? closeNav() : "")}
                     key={"header-router-" + i}
                 >
                     {router[i][1]}
