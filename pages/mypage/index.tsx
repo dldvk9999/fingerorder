@@ -63,9 +63,9 @@ export default function Mypage() {
                             회원 탈퇴
                         </button>
                     </div>
-                    <div className={styles.mypageBuyList}>
+                    <div className={styles.mypageStoreList}>
                         <h2>나의 매장</h2>
-                        <div className={styles.mypageBuyListItem}>
+                        <div className={styles.mypageStoreListItem}>
                             {printStoreList()}
                         </div>
                     </div>
