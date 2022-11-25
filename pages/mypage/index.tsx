@@ -14,7 +14,7 @@ export default function Mypage() {
         for (let i = 0; i < store.length; i++) {
             result.push(
                 <div key={"mypage-storelist-" + i}>
-                    <div>
+                    <div className={styles.mypageStoreNameDate}>
                         <span className={styles.mypageStoreName}>
                             {store[i].id}. {store[i].name}
                         </span>

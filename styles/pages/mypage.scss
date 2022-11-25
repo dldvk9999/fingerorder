@@ -130,8 +130,33 @@
 }
 
 @media (max-width: 400px) {
+    .mypageStoreList {
+        padding: 1rem 0.5rem 3rem 0.5rem;
+    }
     .mypageChangePassword,
     .mypageWithdrawal {
         font-size: 0.9rem;
+    }
+    .mypageStoreName {
+        font-size: 1rem;
+    }
+    .mypageStoreDate {
+        font-size: 0.7rem;
+        margin: 0;
+    }
+    .mypageStoreNameDate {
+        display: flex;
+        flex-direction: column;
+    }
+    .mypageStoreBody {
+        font-size: 0.85rem;
+        padding: 0.5rem 0;
+    }
+    .mypageStoreButton {
+        gap: 0.5rem;
+    }
+    .mypageStoreButton > a > button {
+        font-size: 0.8rem;
+        padding: 0.5rem 0.7rem;
     }
 }
