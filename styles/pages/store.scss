@@ -1,0 +1,140 @@
+.store {
+    display: flex;
+    justify-content: center;
+    gap: 10rem;
+}
+
+/* Section 1. Store Info & Input */
+.storeInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.storeInfo > h1 {
+    font-size: 3rem;
+    font-weight: 700;
+}
+
+.storeUseButton {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    margin-bottom: 1rem;
+}
+
+.storeUseButton > p {
+    width: 22rem;
+    position: absolute;
+    font-size: 0.7rem;
+    transform: translate(40px, 31px);
+    display: flex;
+    justify-content: flex-start;
+}
+
+.storeInput {
+    width: 20rem;
+    height: 3.5rem;
+    border: 1px solid #eaeaea;
+    border-radius: 1rem;
+    padding: 0.5rem;
+}
+
+.storeInput:focus,
+.storeInput:active {
+    outline: none;
+}
+
+.storeInputButton,
+.storeButton {
+    height: 3.5rem;
+    display: flex;
+    justify-content: center;
+}
+
+.storeInputButton {
+    width: 4rem;
+    position: absolute;
+    padding: 0.3rem;
+    border: 1px solid #eaeaea;
+    border-radius: 0 1rem 1rem 0;
+    background-color: #eaeaea;
+}
+
+.storeCategoryBlocks {
+    width: 20rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.storeCategoryBlock {
+    height: 2rem;
+    padding: 1rem;
+    border: 1px solid #eaeaea;
+    border-radius: 1rem;
+    background-color: #eaeaea;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.storeCategoryBlock:hover {
+    background-color: #ff314b;
+    color: white;
+}
+
+.storeButton,
+.storeQR > button {
+    width: 13rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid #0070f3;
+    border-radius: 1rem;
+    background-color: #0070f3;
+    color: white;
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: center;
+}
+
+/* Section 2. QR */
+.storeQR {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.storeQRItem {
+    width: 10rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #eaeaea;
+    border-radius: 1rem;
+    padding: 1rem;
+    text-align: center;
+}
+
+.storeQRItemText {
+    font-size: 0.7rem;
+    word-break: keep-all;
+    margin: 0;
+}
+
+.storeQRActive {
+    display: flex !important;
+}
+
+.storeQRGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 1rem;
+}
+
+.storeQRDownload {
+    display: block;
+}
