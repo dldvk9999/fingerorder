@@ -42,26 +42,12 @@ export default function Mypage() {
                 <h1>마이 페이지</h1>
                 <div className={styles.mypageSub}>
                     <div className={styles.mypageInfo}>
-                        <div className={styles.mypageInfoInput}>
-                            <input
-                                type="text"
-                                placeholder={nickname}
-                                onChange={(e) =>
-                                    setNickname(
-                                        e.target.value !== ""
-                                            ? e.target.value
-                                            : "닉네임"
-                                    )
-                                }
-                                className={styles.mypageNickname}
-                            />
-                            <button
-                                className={styles.mypageChangeInfo}
-                                onClick={changeNickname}
-                            >
-                                수정
-                            </button>
-                        </div>
+                        <Link
+                            href={"/changestore"}
+                            className={styles.mypageChangePassword}
+                        >
+                            매장 수정
+                        </Link>
                         <Link
                             href={"/findpassword"}
                             className={styles.mypageChangePassword}
