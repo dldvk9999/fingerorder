@@ -105,8 +105,8 @@ export default function Store() {
             ];
         } else if (data === "") {
             return [false, "공백은 입력 할 수 없습니다."];
-        } else if (data.length > 20) {
-            return [false, "20자 이내로 입력해야 합니다."];
+        } else if (data.length > 40) {
+            return [false, "40자 이내로 입력해야 합니다."];
         } else {
             return [true, ""];
         }
