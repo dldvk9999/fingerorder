@@ -174,12 +174,6 @@ export default function Store() {
                         className={styles.storeInput}
                     />
                     <p>* QR 코드를 출력하여 각 테이블마다 붙여 사용하세요!</p>
-                    {/* <button
-                        className={styles.storeInputButton}
-                        onClick={QRLayout}
-                    >
-                        QR생성
-                    </button> */}
                 </div>
                 <input
                     type="text"
