@@ -42,7 +42,7 @@ export default function Footer() {
             </div>
             <div className={styles.footerSub}>
                 <div>Made by</div>
-                {makerPrint()}
+                <div className={styles.footerSubMaker}>{makerPrint()}</div>
             </div>
         </footer>
     );
