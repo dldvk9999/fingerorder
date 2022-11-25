@@ -271,7 +271,9 @@ export default function Store() {
                         </button>
                     </>
                 ) : (
-                    <h2>QR 코드 리스트는 PC에서만 가능합니다.</h2>
+                    <h2 className={styles.storeIsNotPC}>
+                        QR 코드 리스트는 PC에서만 가능합니다.
+                    </h2>
                 )}
             </section>
         </main>

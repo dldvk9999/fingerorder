@@ -140,6 +140,10 @@
     display: block;
 }
 
+.storeIsNotPC {
+    width: 80vw;
+}
+
 @media (max-width: 1200px) {
     .store {
         flex-direction: column;
@@ -156,5 +160,12 @@
     }
     .storeCategoryBlocks {
         width: 14rem;
+    }
+    .storeCategoryBlock {
+        font-size: 0.7rem;
+        padding: 0.5rem 0.7rem;
+    }
+    .storeIsNotPC {
+        font-size: 1rem;
     }
 }
