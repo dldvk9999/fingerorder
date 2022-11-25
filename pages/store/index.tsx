@@ -14,6 +14,7 @@ export default function Store() {
     const [isSubmit, setSubmit] = useState(false); // 매장 등록 or 수정 버튼을 클릭했는지
     const [isMobile, setMobile] = useState(true); // 모바일인지 (가로길이 1200 이하)
     const [inputList, setStatusInput] = useState<NodeListOf<HTMLElement>>(); // input 리스트
+    const [addBtn, setAddBtn] = useState<HTMLElement>(); // category add button
 
     // QR 리스트 다운로드
     function downloadQR() {
@@ -134,8 +135,18 @@ export default function Store() {
             result = [false, "테이블 수를 입력하여 주세요."];
         }
 
+        // 해당 input 테두리 빨간색으로 지정
         if (!result[0]) {
             inputList![index].style.border = "1px solid red";
+        }
+        // 카테고리에 추가 버튼 테두리 지정
+        if (index === 3) {
+            let addBtn = document.querySelector<HTMLElement>(
+                "." + styles.storeInputButton
+            );
+            addBtn!.style.borderTopColor = "red";
+            addBtn!.style.borderRightColor = "red";
+            addBtn!.style.borderBottomColor = "red";
         }
         return result;
     }
@@ -158,6 +169,9 @@ export default function Store() {
         for (let i = 0; i < inputList!.length; i++) {
             inputList![i].style.border = "1px solid #eaeaea";
         }
+        addBtn!.style.borderTopColor = "#eaeaea";
+        addBtn!.style.borderRightColor = "#eaeaea";
+        addBtn!.style.borderBottomColor = "#eaeaea";
 
         let name = inputDataCheck(storeName, 0);
         let table = inputDataCheck(tmpTableCount, 1, "table");
@@ -192,6 +206,10 @@ export default function Store() {
         // input 영역 변수로 저장
         setStatusInput(
             document.querySelectorAll<HTMLElement>("." + styles.storeInput)
+        );
+        // Category Add Btn
+        setAddBtn(
+            document.querySelector<HTMLElement>("." + styles.storeInputButton)!
         );
     }, []);
 
