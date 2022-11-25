@@ -27,7 +27,7 @@ export default function Mypage() {
                     </div>
                     <div className={styles.mypageStoreButton}>
                         <Link href={"/review"}>
-                            <button>리뷰보기</button>
+                            <button onClick={() => setPage(i)}>리뷰보기</button>
                         </Link>
                         <Link href={"/changestore"}>
                             <button onClick={() => setPage(i)}>수정</button>
