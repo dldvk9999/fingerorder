@@ -12,12 +12,6 @@
     align-items: center;
 }
 
-.mypageInfoInput {
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
-}
-
 .mypageInfo {
     width: 50vw;
     display: flex;
@@ -49,31 +43,6 @@
 .mypageWithdrawal {
     border: 1px solid #ff314b;
     background-color: #ff314b;
-}
-
-.mypageNickname {
-    font-size: 2rem;
-    font-weight: 700;
-    width: 20rem;
-    border: 1px solid #eaeaea;
-    border-radius: 1rem;
-    padding: 0.5rem 1rem;
-    text-align: center;
-    height: 3.5rem;
-}
-
-.mypageChangeInfo {
-    height: 3.5rem;
-    position: absolute;
-    padding: 0.3rem;
-    border: 1px solid #eaeaea;
-    border-radius: 0 1rem 1rem 0;
-    background-color: #eaeaea;
-}
-
-.mypageNickname:focus,
-.mypageNickname:active {
-    outline: none;
 }
 
 .mypageBuyList {
@@ -147,9 +116,6 @@
 }
 
 @media (max-width: 400px) {
-    .mypageNickname {
-        width: 15rem;
-    }
     .mypageChangePassword,
     .mypageWithdrawal {
         font-size: 0.9rem;
