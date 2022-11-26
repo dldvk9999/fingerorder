@@ -6,7 +6,7 @@ import store from "../../data/store";
 import LoginCheck from "../login_check";
 import styles from "../../styles/Home.module.scss";
 
-export default function QRCode() {
+export default function QRCode(props: { tableCount: number }) {
     const [editPage, _] = useRecoilState(editNumber);
     const [isStoreManager, setStoreManager] = useState(true);
     const [isMobile, setMobile] = useState(true);
@@ -71,11 +71,13 @@ export default function QRCode() {
         setMobile(window.innerWidth >= 1200);
 
         // 마이페이지를 통해 접근했는지 확인
-        if (editPage === -1) {
+        if (!props.tableCount && editPage === -1) {
             alert("마이페이지를 통해 접근해주세요.");
             location.href = "/mypage";
-        } else {
+        } else if (!props.tableCount) {
             setTableCount(store[editPage].table);
+        } else {
+            setTableCount(props.tableCount);
         }
     }, []);
 

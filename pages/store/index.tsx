@@ -1,9 +1,15 @@
-import { useEffect, useState } from "react";
-import Image from "next/image";
+import { SetStateAction, useEffect, useState } from "react";
+import QRCode from "../qrcode";
 import LoginCheck from "../login_check";
 import styles from "../../styles/Home.module.scss";
 
-export default function Store() {
+export default function Store(props: {
+    name: SetStateAction<string>;
+    tableCount: SetStateAction<number>;
+    tmpTableCount: SetStateAction<number>;
+    location: SetStateAction<string>;
+    category: SetStateAction<string[]>;
+}) {
     const [storeName, setStoreName] = useState(""); // 매장 이름
     const [tableCount, setTableCount] = useState(0); // 매장 테이블 수
     const [tmpTableCount, setTmpTableCount] = useState(0); // 입력중인 매장 테이블 수
@@ -12,68 +18,14 @@ export default function Store() {
     const [tmpCategory, setTmpCategory] = useState(""); // 입력중인 매장의 메뉴 카테고리
     const [isShowQR, setShowQR] = useState(false); // QR 레이아웃을 보여줄 것인지
     const [isSubmit, setSubmit] = useState(false); // 매장 등록 or 수정 버튼을 클릭했는지
-    const [isMobile, setMobile] = useState(true); // 모바일인지 (가로길이 1200 이하)
     const [inputList, setStatusInput] = useState<NodeListOf<HTMLElement>>(); // input 리스트
     const [addBtn, setAddBtn] = useState<HTMLElement>(); // category add button
     const [isSubmitDisable, setSubmitDisable] = useState(false); // Submit 버튼 disable 유뮤 (Require 미 입력으로 Submit시 4초 disable)
 
-    // QR 리스트 다운로드
-    function downloadQR() {
-        let qr = document.getElementById("QR");
-        let btn = document.querySelector<HTMLElement>(
-            "." + styles.storeQRDownload
-        );
-        btn!.style.display = "none";
-        let printDiv = qr!.innerHTML;
-        window.onbeforeprint = () => {
-            document.body.innerHTML = printDiv;
-        };
-        window.onafterprint = () => {
-            location.href = "/menu";
-        };
-        window.print();
-    }
-
-    // QR 리스트 출력 (헤더 포함)
-    function printQRList() {
-        let result = [];
-        for (let i = 0; i < Number(tableCount / 16); i++) {
-            result.push(
-                <div key={"store-QR-list-" + i}>
-                    <h2>QR 코드 리스트 - {i + 1}</h2>
-                    <div className={styles.storeQRGrid}>{printQR(i)}</div>
-                </div>
-            );
-        }
-        return result;
-    }
-
-    // QR 리스트 출력
-    function printQR(index: number) {
-        let result = [];
-        const limit = index * 16 + 16;
-        for (let i = index * 16; i < Math.min(limit, tableCount); i++) {
-            result.push(
-                <div className={styles.storeQRItem} key={"store-QR-" + i}>
-                    <Image
-                        src={"/QR_sample.webp"}
-                        alt={"QR_sample"}
-                        width={100}
-                        height={100}
-                    />
-                    <p>TABLE - {i + 1}</p>
-                    <p className={styles.storeQRItemText}>
-                        QR코드를 스캔하여 자리에서 메뉴를 주문하세요!
-                    </p>
-                </div>
-            );
-        }
-        return result;
-    }
     // QR 코드 생성 시 레이아웃 변경 후 QR 생성
     function QRLayout() {
-        setShowQR(true);
         setTableCount(tmpTableCount);
+        setShowQR(true);
     }
 
     // 추가한 카테고리에서 삭제
@@ -210,8 +162,6 @@ export default function Store() {
     };
 
     useEffect(() => {
-        // 모바일인지 체크
-        setMobile(window.innerWidth >= 1200);
         // input 영역 변수로 저장
         setStatusInput(
             document.querySelectorAll<HTMLElement>("." + styles.storeInput)
@@ -220,6 +170,13 @@ export default function Store() {
         setAddBtn(
             document.querySelector<HTMLElement>("." + styles.storeInputButton)!
         );
+
+        // Data init
+        setStoreName(props.name ? props.name : "");
+        setTableCount(props.tableCount ? props.tableCount : 0);
+        setTmpTableCount(props.tmpTableCount ? props.tmpTableCount : 0);
+        setStoreLocation(props.location ? props.location : "");
+        setCategory(props.category ? props.category : []);
     }, []);
 
     return LoginCheck() ? (
@@ -231,6 +188,7 @@ export default function Store() {
                     type="text"
                     placeholder="매장 명"
                     onChange={(e) => setStoreName(e.target.value)}
+                    value={storeName}
                     className={styles.storeInput}
                 />
                 <div className={styles.storeUseButton}>
@@ -240,6 +198,7 @@ export default function Store() {
                         onChange={(e) =>
                             setTmpTableCount(Number(e.target.value))
                         }
+                        value={tmpTableCount}
                         className={styles.storeInput}
                     />
                     <p>* QR 코드를 출력하여 각 테이블마다 붙여 사용하세요!</p>
@@ -248,6 +207,7 @@ export default function Store() {
                     type="text"
                     placeholder="매장 위치"
                     onChange={(e) => setStoreLocation(e.target.value)}
+                    value={storeLocation}
                     className={styles.storeInput}
                 />
                 <div className={styles.storeUseButton}>
@@ -286,35 +246,7 @@ export default function Store() {
             </section>
 
             {/* Section 2. QR */}
-            <section
-                id="QR"
-                className={`${styles.storeQR} ${
-                    isShowQR && styles.storeQRActive
-                }`}
-            >
-                {isMobile ? (
-                    <>
-                        {printQRList()}
-                        <button
-                            className={styles.storeQRDownload}
-                            onClick={downloadQR}
-                        >
-                            QR 다운로드
-                        </button>
-                    </>
-                ) : (
-                    <div className={styles.storeIsNotPCDiv}>
-                        <h2 className={styles.storeIsNotPC}>
-                            QR 코드 리스트는 PC에서만 가능합니다.
-                        </h2>
-                        <p>
-                            * 만약 QR코드 리스트를 재 출력하고싶으시면
-                            마이페이지 {">"} 나의 매장 {">"} 수정에서 변경하지
-                            않은 상태로 매장 수정버튼을 클릭해주시기 바랍니다.
-                        </p>
-                    </div>
-                )}
-            </section>
+            {isShowQR && <QRCode tableCount={tableCount} />}
         </main>
     ) : null;
 }
