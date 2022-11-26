@@ -129,6 +129,16 @@
     }
 }
 
+@media (max-width: 600px) {
+    .mypageStoreNameDate {
+        display: flex;
+        flex-direction: column;
+    }
+    .mypageStoreDate {
+        margin: 0;
+    }
+}
+
 @media (max-width: 400px) {
     .mypageStoreList {
         padding: 1rem 0.5rem 3rem 0.5rem;
@@ -142,11 +152,6 @@
     }
     .mypageStoreDate {
         font-size: 0.7rem;
-        margin: 0;
-    }
-    .mypageStoreNameDate {
-        display: flex;
-        flex-direction: column;
     }
     .mypageStoreBody {
         font-size: 0.85rem;
