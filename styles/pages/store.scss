@@ -42,6 +42,23 @@
     padding: 0.5rem;
 }
 
+.storeInput.storeRequire {
+    animation: Not-Write 1s linear;
+    animation-iteration-count: 3;
+}
+
+@keyframes Not-Write {
+    0% {
+        border-color: #eaeaea;
+    }
+    50% {
+        border-color: red;
+    }
+    100% {
+        border-color: #eaeaea;
+    }
+}
+
 .storeInput:focus,
 .storeInput:active {
     outline: none;
@@ -61,6 +78,29 @@
     border: 1px solid #eaeaea;
     border-radius: 0 1rem 1rem 0;
     background-color: #eaeaea;
+}
+
+.storeInputButton.storeRequireAddBtn {
+    animation: Not-Write-addBtn 1s linear;
+    animation-iteration-count: 3;
+}
+
+@keyframes Not-Write-addBtn {
+    0% {
+        border-top-color: #eaeaea;
+        border-right-color: #eaeaea;
+        border-bottom-color: #eaeaea;
+    }
+    50% {
+        border-top-color: red;
+        border-right-color: red;
+        border-bottom-color: red;
+    }
+    100% {
+        border-top-color: #eaeaea;
+        border-right-color: #eaeaea;
+        border-bottom-color: #eaeaea;
+    }
 }
 
 .storeCategoryBlocks {
@@ -140,8 +180,14 @@
     display: block;
 }
 
-.storeIsNotPC {
+.storeIsNotPC,
+.storeIsNotPCDiv {
     width: 80vw;
+    word-break: keep-all;
+}
+
+.storeIsNotPCDiv {
+    margin-bottom: 10rem;
 }
 
 @media (max-width: 1200px) {
@@ -167,5 +213,8 @@
     }
     .storeIsNotPC {
         font-size: 1rem;
+    }
+    .storeIsNotPCDiv {
+        font-size: 0.8rem;
     }
 }

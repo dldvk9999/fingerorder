@@ -15,6 +15,7 @@ export default function Store() {
     const [isMobile, setMobile] = useState(true); // 모바일인지 (가로길이 1200 이하)
     const [inputList, setStatusInput] = useState<NodeListOf<HTMLElement>>(); // input 리스트
     const [addBtn, setAddBtn] = useState<HTMLElement>(); // category add button
+    const [isSubmitDisable, setSubmitDisable] = useState(false); // Submit 버튼 disable 유뮤 (Require 미 입력으로 Submit시 4초 disable)
 
     // QR 리스트 다운로드
     function downloadQR() {
@@ -137,16 +138,24 @@ export default function Store() {
 
         // 해당 input 테두리 빨간색으로 지정
         if (!result[0]) {
-            inputList![index].style.border = "1px solid red";
+            setSubmitDisable(true);
+            inputList![index].classList.add(styles.storeRequire);
+            setTimeout(() => {
+                inputList![index].classList.remove(styles.storeRequire);
+                setSubmitDisable(false);
+            }, 4000);
         }
         // 카테고리에 추가 버튼 테두리 지정
-        if (index === 3) {
+        if (index === 3 && !result[0]) {
             let addBtn = document.querySelector<HTMLElement>(
                 "." + styles.storeInputButton
             );
-            addBtn!.style.borderTopColor = "red";
-            addBtn!.style.borderRightColor = "red";
-            addBtn!.style.borderBottomColor = "red";
+            setSubmitDisable(true);
+            addBtn?.classList.add(styles.storeRequireAddBtn);
+            setTimeout(() => {
+                addBtn?.classList.remove(styles.storeRequireAddBtn);
+                setSubmitDisable(false);
+            }, 4000);
         }
         return result;
     }
@@ -257,6 +266,7 @@ export default function Store() {
                     <button
                         className={styles.storeInputButton}
                         onClick={addCategory}
+                        disabled={isSubmitDisable}
                     >
                         추가
                     </button>
@@ -265,7 +275,11 @@ export default function Store() {
                     {blockCategory()}
                 </div>
                 {!isSubmit && (
-                    <button className={styles.storeButton} onClick={storeInput}>
+                    <button
+                        className={styles.storeButton}
+                        onClick={storeInput}
+                        disabled={isSubmitDisable}
+                    >
                         매장 등록
                     </button>
                 )}
@@ -289,9 +303,16 @@ export default function Store() {
                         </button>
                     </>
                 ) : (
-                    <h2 className={styles.storeIsNotPC}>
-                        QR 코드 리스트는 PC에서만 가능합니다.
-                    </h2>
+                    <div className={styles.storeIsNotPCDiv}>
+                        <h2 className={styles.storeIsNotPC}>
+                            QR 코드 리스트는 PC에서만 가능합니다.
+                        </h2>
+                        <p>
+                            * 만약 QR코드 리스트를 재 출력하고싶으시면
+                            마이페이지 {">"} 나의 매장 {">"} 수정에서 변경하지
+                            않은 상태로 매장 수정버튼을 클릭해주시기 바랍니다.
+                        </p>
+                    </div>
                 )}
             </section>
         </main>
