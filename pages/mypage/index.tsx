@@ -26,6 +26,9 @@ export default function Mypage() {
                         {store[i].locate}
                     </div>
                     <div className={styles.mypageStoreButton}>
+                        <Link href={"/qrcode"}>
+                            <button onClick={() => setPage(i)}>QR코드</button>
+                        </Link>
                         <Link href={"/review"}>
                             <button onClick={() => setPage(i)}>리뷰보기</button>
                         </Link>
