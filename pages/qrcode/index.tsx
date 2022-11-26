@@ -69,7 +69,9 @@ export default function QRCode(props: { tableCount: number }) {
     useEffect(() => {
         // 모바일인지 체크
         setMobile(window.innerWidth >= 1200);
+    }, []);
 
+    useEffect(() => {
         // 마이페이지를 통해 접근했는지 확인
         if (!props.tableCount && editPage === -1) {
             alert("마이페이지를 통해 접근해주세요.");
@@ -79,7 +81,7 @@ export default function QRCode(props: { tableCount: number }) {
         } else {
             setTableCount(props.tableCount);
         }
-    }, []);
+    }, [props.tableCount, editPage]);
 
     return LoginCheck() && isStoreManager ? (
         <main>

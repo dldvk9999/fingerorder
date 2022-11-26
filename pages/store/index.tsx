@@ -170,14 +170,22 @@ export default function Store(props: {
         setAddBtn(
             document.querySelector<HTMLElement>("." + styles.storeInputButton)!
         );
+    }, []);
 
+    useEffect(() => {
         // Data init
         setStoreName(props.name ? props.name : "");
         setTableCount(props.tableCount ? props.tableCount : 0);
         setTmpTableCount(props.tmpTableCount ? props.tmpTableCount : 0);
         setStoreLocation(props.location ? props.location : "");
         setCategory(props.category ? props.category : []);
-    }, []);
+    }, [
+        props.name,
+        props.tableCount,
+        props.tmpTableCount,
+        props.location,
+        props.category,
+    ]);
 
     return LoginCheck() ? (
         <main className={styles.store}>

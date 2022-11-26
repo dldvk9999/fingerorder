@@ -14,7 +14,7 @@ export default function ChangeStore() {
             alert("마이페이지를 통해 접근해주세요.");
             location.href = "/mypage";
         }
-    }, []);
+    }, [editPage]);
 
     return LoginCheck() && editPage !== -1 ? (
         <Store
