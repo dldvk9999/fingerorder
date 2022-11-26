@@ -44,12 +44,16 @@
 /* findPassword */
 .findpasswordText {
     text-align: center;
+    word-break: keep-all;
 }
 
-@media (max-width: 400px) {
+@media (max-width: 600px) {
     .login {
         padding: 5rem 2rem;
     }
+}
+
+@media (max-width: 400px) {
     .loginForm > input {
         width: 13rem;
     }
