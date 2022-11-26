@@ -1,5 +1,5 @@
 import LoginCheck from "../login_check";
-import styles from "../../styles/Home.module.scss";
+import styles from "../../styles/pages/Review.module.scss";
 
 export default function Review() {
     return LoginCheck() ? (

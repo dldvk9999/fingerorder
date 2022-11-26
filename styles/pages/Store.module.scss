@@ -126,8 +126,7 @@
     color: white;
 }
 
-.storeButton,
-.storeQR > button {
+.storeButton {
     width: 13rem;
     padding: 0.5rem 1rem;
     border: 1px solid #0070f3;
@@ -138,56 +137,6 @@
     display: flex;
     justify-content: center;
     margin: 2rem 0 3rem;
-}
-
-/* Section 2. QR */
-.storeQR {
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-}
-
-.storeQRItem {
-    width: 10rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border: 1px solid #eaeaea;
-    border-radius: 1rem;
-    padding: 1rem;
-    text-align: center;
-}
-
-.storeQRItemText {
-    font-size: 0.7rem;
-    word-break: keep-all;
-    margin: 0;
-}
-
-.storeQRActive {
-    display: flex !important;
-}
-
-.storeQRGrid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    gap: 0.5rem;
-}
-
-.storeQRDownload {
-    display: block;
-}
-
-.storeIsNotPC,
-.storeIsNotPCDiv {
-    width: 80vw;
-    word-break: keep-all;
-}
-
-.storeIsNotPCDiv {
-    margin-bottom: 10rem;
 }
 
 @media (max-width: 1200px) {
@@ -210,11 +159,5 @@
     .storeCategoryBlock {
         font-size: 0.7rem;
         padding: 0.5rem 0.7rem;
-    }
-    .storeIsNotPC {
-        font-size: 1rem;
-    }
-    .storeIsNotPCDiv {
-        font-size: 0.8rem;
     }
 }

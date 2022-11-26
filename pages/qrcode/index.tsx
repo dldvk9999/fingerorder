@@ -4,7 +4,7 @@ import { useRecoilState } from "recoil";
 import { editNumber } from "../../states";
 import store from "../../data/store";
 import LoginCheck from "../login_check";
-import styles from "../../styles/Home.module.scss";
+import styles from "../../styles/pages/QR.module.scss";
 
 export default function QRCode(props: { tableCount: number }) {
     const [editPage, _] = useRecoilState(editNumber);

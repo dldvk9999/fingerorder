@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import styles from "../../styles/Home.module.scss";
+import styles from "../../styles/pages/Login.module.scss";
 
 export default function Login() {
     const [email, setEmail] = useState("");

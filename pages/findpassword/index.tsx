@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { useState } from "react";
-import styles from "../../styles/Home.module.scss";
+import styles from "../../styles/pages/Login.module.scss";
 
 export default function FindPassword() {
     const [email, setEmail] = useState("");

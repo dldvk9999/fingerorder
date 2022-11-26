@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import styles from "../styles/Home.module.scss";
+import styles from "../styles/components/Header.module.scss";
 
 const router = [
     ["store", "매장 등록"],

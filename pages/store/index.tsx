@@ -1,7 +1,7 @@
 import { SetStateAction, useEffect, useState } from "react";
 import QRCode from "../qrcode";
 import LoginCheck from "../login_check";
-import styles from "../../styles/Home.module.scss";
+import styles from "../../styles/pages/Store.module.scss";
 
 export default function Store(props: {
     name: SetStateAction<string>;

@@ -3,7 +3,7 @@ import Link from "next/link";
 import Router from "next/router";
 import { useEffect, useState } from "react";
 import data from "../data/data";
-import styles from "../styles/Home.module.scss";
+import styles from "../styles/pages/Home.module.scss";
 
 export default function Home() {
     const [showIntro, setShowIntro] = useState([false, false, false]);

@@ -1,5 +1,5 @@
 import LoginCheck from "../login_check";
-import styles from "../../styles/Home.module.scss";
+import styles from "../../styles/pages/Menu.module.scss";
 
 export default function Menu() {
     return LoginCheck() ? (
