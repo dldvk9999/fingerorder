@@ -22,12 +22,6 @@ export default function Store(props: {
     const [addBtn, setAddBtn] = useState<HTMLElement>(); // category add button
     const [isSubmitDisable, setSubmitDisable] = useState(false); // Submit 버튼 disable 유뮤 (Require 미 입력으로 Submit시 4초 disable)
 
-    // QR 코드 생성 시 레이아웃 변경 후 QR 생성
-    function QRLayout() {
-        setTableCount(tmpTableCount);
-        setShowQR(true);
-    }
-
     // 추가한 카테고리에서 삭제
     function deleteCategory(index: number) {
         if (
@@ -69,18 +63,20 @@ export default function Store(props: {
         let result = [true, ""];
 
         // 카테고리나 매장 명, 매장 위치
-        if (type === "category" || type === "") {
-            if (type === "category" && category.indexOf(data) > -1) {
-                result = [false, "중복해서 생성할 수 없습니다."];
-            } else if (naming.exec(data)) {
+        if (type === "category" || type === "tmpcategory" || type === "") {
+            if (data === "") {
+                result = [false, "공백은 입력 할 수 없습니다."];
+            } else if (type !== "category" && naming.exec(data)) {
                 result = [
                     false,
                     "이름은 알파벳, 숫자, 한글, 공백, 소괄호로만 지을 수 있습니다.",
                 ];
-            } else if (data === "") {
-                result = [false, "공백은 입력 할 수 없습니다."];
             } else if (data.length > 40) {
                 result = [false, "40자 이내로 입력해야 합니다."];
+            } else if (type === "tmpcategory" && category.indexOf(data) > -1) {
+                result = [false, "중복해서 생성할 수 없습니다."];
+            } else if (type === "category" && category.length < 1) {
+                result = [false, "카테고리를 입력하여 주세요."];
             }
         }
         // 매장 테이블
@@ -115,7 +111,7 @@ export default function Store(props: {
     // 카테고리 추가 함수 - 알파벳, 한글, 숫자, 공백, 소괄호만 가능
     function addCategory() {
         const data = tmpCategory.trim();
-        const result = inputDataCheck(data, 3, "category");
+        const result = inputDataCheck(data, 3, "tmpcategory");
 
         if (!result[0]) {
             alert(result[1]);
@@ -137,20 +133,18 @@ export default function Store(props: {
         let name = inputDataCheck(storeName, 0);
         let table = inputDataCheck(tmpTableCount, 1, "table");
         let location = inputDataCheck(storeLocation, 2);
-        if (!name[0] || !location[0] || !table[0]) {
-            alert(name[1] || location[1] || table[1]);
-            return;
-        } else if (category.length < 1) {
-            alert("카테고리를 입력하여 주세요.");
+        let cate = inputDataCheck(category, 3, "category");
+        if (!name[0] || !location[0] || !table[0] || !cate[0]) {
+            alert(name[1] || location[1] || table[1] || cate[1]);
             return;
         }
 
         setTmpCategory("");
-
+        setTableCount(tmpTableCount);
         setSubmit(true);
 
         // QR 코드 생성
-        QRLayout();
+        setShowQR(true);
         alert("store input complete");
     }
 
@@ -191,12 +185,15 @@ export default function Store(props: {
         <main className={styles.store}>
             {/* Section 1. Store Info & Input */}
             <section className={styles.storeInfo}>
-                <h1>매장 등록</h1>
+                <h1>{props.name ? "매장 수정" : "매장 등록"}</h1>
                 <input
                     type="text"
                     placeholder="매장 명"
                     onChange={(e) => setStoreName(e.target.value)}
                     value={storeName}
+                    disabled={isSubmit}
+                    minLength={1}
+                    maxLength={40}
                     className={styles.storeInput}
                 />
                 <div className={styles.storeUseButton}>
@@ -207,6 +204,7 @@ export default function Store(props: {
                             setTmpTableCount(Number(e.target.value))
                         }
                         value={tmpTableCount}
+                        disabled={isSubmit}
                         className={styles.storeInput}
                     />
                     <p>* QR 코드를 출력하여 각 테이블마다 붙여 사용하세요!</p>
@@ -216,6 +214,9 @@ export default function Store(props: {
                     placeholder="매장 위치"
                     onChange={(e) => setStoreLocation(e.target.value)}
                     value={storeLocation}
+                    disabled={isSubmit}
+                    minLength={1}
+                    maxLength={40}
                     className={styles.storeInput}
                 />
                 <div className={styles.storeUseButton}>
@@ -225,6 +226,9 @@ export default function Store(props: {
                         onKeyPress={onKeyPress}
                         onChange={(e) => setTmpCategory(e.target.value)}
                         value={tmpCategory}
+                        disabled={isSubmit}
+                        minLength={1}
+                        maxLength={40}
                         className={styles.storeInput}
                     />
                     <p>
@@ -234,7 +238,7 @@ export default function Store(props: {
                     <button
                         className={styles.storeInputButton}
                         onClick={addCategory}
-                        disabled={isSubmitDisable}
+                        disabled={isSubmitDisable || isSubmit}
                     >
                         추가
                     </button>
@@ -248,7 +252,7 @@ export default function Store(props: {
                         onClick={storeInput}
                         disabled={isSubmitDisable}
                     >
-                        매장 등록
+                        {props.name ? "매장 수정" : "매장 등록"}
                     </button>
                 )}
             </section>
