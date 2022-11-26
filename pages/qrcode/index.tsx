@@ -24,7 +24,7 @@ export default function QRCode() {
             document.body.innerHTML = printDiv;
         };
         window.onafterprint = () => {
-            location.href = "/menu";
+            location.href = "/mypage";
         };
         window.print();
     }

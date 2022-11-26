@@ -6,6 +6,10 @@
     padding: 2rem 7rem;
 }
 
+.mypage > h1 {
+    white-space: nowrap;
+}
+
 .mypageSub {
     width: 100%;
     display: flex;
@@ -107,7 +111,17 @@
     padding: 0.5rem 1rem;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 1180px) {
+    .mypageStoreNameDate {
+        display: flex;
+        flex-direction: column;
+    }
+    .mypageStoreDate {
+        margin: 0;
+    }
+}
+
+@media (max-width: 1000px) {
     .mypage {
         padding: 2rem 4rem;
     }
@@ -125,21 +139,11 @@
         padding: 2rem 2rem;
     }
     .mypageStoreList {
-        width: 80vw;
+        width: 100%;
     }
 }
 
-@media (max-width: 600px) {
-    .mypageStoreNameDate {
-        display: flex;
-        flex-direction: column;
-    }
-    .mypageStoreDate {
-        margin: 0;
-    }
-}
-
-@media (max-width: 400px) {
+@media (max-width: 500px) {
     .mypageStoreList {
         padding: 1rem 0.5rem 3rem 0.5rem;
     }
@@ -163,5 +167,15 @@
     .mypageStoreButton > a > button {
         font-size: 0.8rem;
         padding: 0.5rem 0.7rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .mypage {
+        padding: 2rem 1rem;
+    }
+    .mypageStoreButton > a > button {
+        font-size: 0.5rem;
+        padding: 0.3rem 0.4rem;
     }
 }
