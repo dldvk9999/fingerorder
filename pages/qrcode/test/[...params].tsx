@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import LoginCheck from "../../login_check";
 
 export default function Test() {
     const router = useRouter();
@@ -15,12 +14,12 @@ export default function Test() {
         setTableID(Number(params ? params[2] : 0));
     }, [params]);
 
-    return LoginCheck() ? (
+    return (
         <main>
             <div>This is {params} page.</div>
             <div>사장님 번호 : {managerID}</div>
             <div>매장 번호 : {storeID}</div>
             <div>테이블 번호 : {tableID}</div>
         </main>
-    ) : null;
+    );
 }
