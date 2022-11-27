@@ -69,7 +69,7 @@ export default function Mypage() {
                                     width="25"
                                 >
                                     <g transform="matrix(1,0,0,-1,-362.26358,234.09895)">
-                                        <g clip-path="url(#clipPath692)">
+                                        <g clipPath="url(#clipPath692)">
                                             <g transform="translate(163.2612,376.6777)">
                                                 <path
                                                     className={
