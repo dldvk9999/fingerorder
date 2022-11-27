@@ -32,6 +32,7 @@ export default function Header() {
     function logout() {
         localStorage.removeItem("login");
         localStorage.removeItem("email");
+        localStorage.removeItem("kakao");
         location.href = "/";
     }
 

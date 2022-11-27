@@ -7,6 +7,14 @@ export default function Login() {
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
 
+    function loginDefault() {
+        localStorage["kakao"] = "false";
+    }
+
+    function loginKakao() {
+        localStorage["kakao"] = "true";
+    }
+
     function login(e: { preventDefault: () => void }) {
         if (!email || !pass) {
             alert("이메일과 비밀번호를 입력해주세요.");
@@ -42,7 +50,7 @@ export default function Login() {
                         minLength={8}
                         onChange={(e) => setPass(e.target.value)}
                     />
-                    <button type="submit">
+                    <button onClick={loginKakao} type="submit">
                         <Image
                             src={"/kakao_login.png"}
                             alt={"kakao_login"}
@@ -50,7 +58,9 @@ export default function Login() {
                             height={50}
                         />
                     </button>
-                    <button type="submit">로그인</button>
+                    <button onClick={loginDefault} type="submit">
+                        로그인
+                    </button>
                     <div className={styles.loginFormSub}>
                         <Link
                             className={styles.loginFormFunc}
