@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import { useQRCode } from "next-qrcode";
 import { useRecoilState } from "recoil";
 import { editNumber } from "../../states";
@@ -14,7 +13,7 @@ export default function QRCode(props: { tableCount: number }) {
     const [tableCount, setTableCount] = useState(0);
     const { Canvas } = useQRCode();
     const STORE_MANAGER_ID = 0;
-    const STORE_ID = 0;
+    const STORE_ID = store[editPage].id;
 
     // QR 리스트 다운로드
     function downloadQR() {
