@@ -52,10 +52,11 @@ export default function Login() {
                     />
                     <button onClick={loginKakao} type="submit">
                         <Image
-                            src={"/kakao_login.png"}
+                            src={"/kakao_login.webp"}
                             alt={"kakao_login"}
                             width={240}
                             height={50}
+                            priority
                         />
                     </button>
                     <button onClick={loginDefault} type="submit">
