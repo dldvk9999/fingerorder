@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { useQRCode } from "next-qrcode";
 import { useRecoilState } from "recoil";
 import { editNumber } from "../../states";
 import store from "../../data/store";
@@ -11,6 +12,9 @@ export default function QRCode(props: { tableCount: number }) {
     const [isStoreManager, setStoreManager] = useState(true);
     const [isMobile, setMobile] = useState(true);
     const [tableCount, setTableCount] = useState(0);
+    const { Canvas } = useQRCode();
+    const STORE_MANAGER_ID = 0;
+    const STORE_ID = 0;
 
     // QR 리스트 다운로드
     function downloadQR() {
@@ -48,13 +52,20 @@ export default function QRCode(props: { tableCount: number }) {
         let result = [];
         const limit = index * 16 + 16;
         for (let i = index * 16; i < Math.min(limit, tableCount); i++) {
+            const url =
+                "https://fingerorder.vercel.app/qrcode/test/" +
+                STORE_MANAGER_ID +
+                "/" +
+                STORE_ID +
+                "/" +
+                Number(i + 1);
             result.push(
                 <div className={styles.storeQRItem} key={"store-QR-" + i}>
-                    <Image
-                        src={"/QR_sample.webp"}
-                        alt={"QR_sample"}
-                        width={100}
-                        height={100}
+                    <Canvas
+                        text={url}
+                        options={{
+                            width: 100,
+                        }}
                     />
                     <p>TABLE - {i + 1}</p>
                     <p className={styles.storeQRItemText}>
