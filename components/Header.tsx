@@ -31,6 +31,7 @@ export default function Header() {
     // sample logout
     function logout() {
         localStorage.removeItem("login");
+        localStorage.removeItem("email");
         location.href = "/";
     }
 

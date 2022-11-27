@@ -7,9 +7,18 @@ export default function Login() {
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
 
-    function login() {
-        localStorage["login"] = "true";
-        alert("login function complete");
+    function login(e: { preventDefault: () => void }) {
+        if (!email || !pass) {
+            alert("이메일과 비밀번호를 입력해주세요.");
+            e.preventDefault();
+        } else if (pass.length < 8) {
+            alert("비밀번호를 8자 이상 입력해주세요.");
+            e.preventDefault();
+        } else {
+            localStorage["login"] = "true";
+            localStorage["email"] = email;
+            alert("login function complete");
+        }
     }
 
     return (
@@ -21,7 +30,7 @@ export default function Login() {
                     width={150}
                     height={150}
                 />
-                <form className={styles.loginForm} action="/">
+                <form className={styles.loginForm} onSubmit={login} action="/">
                     <input
                         type="email"
                         placeholder="이메일"
@@ -30,8 +39,18 @@ export default function Login() {
                     <input
                         type="password"
                         placeholder="비밀번호"
+                        minLength={8}
                         onChange={(e) => setPass(e.target.value)}
                     />
+                    <button type="submit">
+                        <Image
+                            src={"/kakao_login.png"}
+                            alt={"kakao_login"}
+                            width={240}
+                            height={50}
+                        />
+                    </button>
+                    <button type="submit">로그인</button>
                     <div className={styles.loginFormSub}>
                         <Link
                             className={styles.loginFormFunc}
@@ -44,9 +63,6 @@ export default function Login() {
                             회원가입
                         </Link>
                     </div>
-                    <button type="submit" onClick={login}>
-                        로그인
-                    </button>
                 </form>
             </section>
         </main>
