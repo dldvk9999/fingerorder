@@ -64,7 +64,6 @@ export default function Header() {
                         routerLogin[i][0] === "" && logout();
                         printWhere === "nav" && closeNav();
                     }}
-                    className={styles.headerProfile}
                     key={"header-login-profile-" + i}
                 >
                     {i === routerLogin.length - 1 && printWhere !== "nav" ? (
@@ -73,6 +72,8 @@ export default function Header() {
                             alt={"profile"}
                             width={40}
                             height={40}
+                            className={styles.headerProfile}
+                            priority
                         />
                     ) : (
                         <div>{routerLogin[i][1]}</div>
@@ -98,6 +99,7 @@ export default function Header() {
                             alt={"fingerorder"}
                             width={30}
                             height={30}
+                            priority
                         />
                         <div className={styles.headerLogoText}>
                             <div>FINGER</div>
