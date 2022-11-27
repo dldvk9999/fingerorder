@@ -53,7 +53,7 @@
 }
 
 .headerMobileMenu {
-    display: none;
+    display: flex;
 }
 
 .headerNavClose,
@@ -83,14 +83,4 @@
 
 .headerProfile {
     display: flex;
-}
-
-@media (max-width: 800px) {
-    .headerItems {
-        display: none;
-    }
-
-    .headerMobileMenu {
-        display: flex;
-    }
 }
