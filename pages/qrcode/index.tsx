@@ -11,7 +11,7 @@ export default function QRCode(props: { tableCount: number }) {
     const [isStoreManager, setStoreManager] = useState(true);
     const [isMobile, setMobile] = useState(true);
     const [tableCount, setTableCount] = useState(0);
-    const { Canvas } = useQRCode();
+    const { Image } = useQRCode();
     const STORE_MANAGER_ID = 0;
     const [STORE_ID, setStoreID] = useState(0);
 
@@ -22,9 +22,8 @@ export default function QRCode(props: { tableCount: number }) {
             "." + styles.storeQRDownload
         );
         btn!.style.display = "none";
-        let printDiv = qr!.innerHTML;
         window.onbeforeprint = () => {
-            document.body.innerHTML = printDiv;
+            document.body.innerHTML = qr!.innerHTML;
         };
         window.onafterprint = () => {
             location.href = "/mypage";
@@ -60,7 +59,7 @@ export default function QRCode(props: { tableCount: number }) {
                 Number(i + 1);
             result.push(
                 <div className={styles.storeQRItem} key={"store-QR-" + i}>
-                    <Canvas
+                    <Image
                         text={url}
                         options={{
                             width: 100,
@@ -82,7 +81,7 @@ export default function QRCode(props: { tableCount: number }) {
     }, []);
 
     useEffect(() => {
-        setStoreID(store[editPage].id);
+        setStoreID(store[editPage]?.id);
     }, [editPage]);
 
     useEffect(() => {

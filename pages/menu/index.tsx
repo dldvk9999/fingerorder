@@ -305,7 +305,15 @@ export default function Menu() {
                         disabled={storeID === -1 || category === ""}
                         className={`${styles.menuInput} ${styles.menuInputTextarea}`}
                     />
-                    <button className={styles.menuAddBtn}>메뉴 추가</button>
+                    <button
+                        className={styles.menuAddBtn}
+                        onClick={() => {
+                            editReset();
+                            alert("메뉴 추가 완료하였습니다.");
+                        }}
+                    >
+                        메뉴 추가
+                    </button>
                 </section>
 
                 <section className={styles.menuList}>
