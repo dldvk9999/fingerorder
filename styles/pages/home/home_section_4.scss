@@ -112,9 +112,9 @@
 }
 
 .homeFlowItem > p {
-    padding: 0 2rem;
+    padding: 0 1rem;
     word-break: keep-all;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    text-align: center;
+    cursor: default;
 }
