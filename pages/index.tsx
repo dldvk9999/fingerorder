@@ -3,10 +3,16 @@ import Link from "next/link";
 import Router from "next/router";
 import { useEffect, useState } from "react";
 import data from "../data/data";
+import flow from "../data/flow";
 import styles from "../styles/pages/Home.module.scss";
 
 export default function Home() {
     const [showIntro, setShowIntro] = useState([false, false, false]);
+    const [isMobile, setMobile] = useState(false);
+    const [edgeShow, setEdgeShow] = useState(
+        Array.from({ length: flow.length - 1 }, () => false)
+    );
+    let isEdgeInit = false;
 
     // carousel에서 background에 있는 카드 생성
     function compareLayout() {
@@ -40,7 +46,65 @@ export default function Home() {
         intro!.style.paddingTop = "4.4rem";
     }
 
+    // Flow의 Node 그리는 함수
+    function printNodes(index: number) {
+        return (
+            <div
+                className={styles.homeFlowItem}
+                onMouseOver={() =>
+                    setEdgeShow(
+                        Array.from({ length: index }, () => true).concat(
+                            Array.from(
+                                { length: flow.length - 1 - index },
+                                () => false
+                            )
+                        )
+                    )
+                }
+                onMouseLeave={() => setEdgeShow([true, true, true, true, true])}
+            >
+                <Image
+                    src={"/" + flow[index].name + ".webp"}
+                    alt={flow[index].alt}
+                    width={100}
+                    height={100}
+                    className={styles.homeFlowNodes}
+                    loading="lazy"
+                />
+                <p>{flow[index].desc}</p>
+            </div>
+        );
+    }
+
+    // Flow의 Edge(간선) 그리는 함수
+    function printEdge(index: number, to: string) {
+        return !isMobile ? (
+            <div
+                className={
+                    to === "right"
+                        ? styles.homeFlowEdgeToRight
+                        : styles.homeFlowEdgeToLeft
+                }
+            >
+                <div
+                    className={`${styles.homeFlowEdge} ${
+                        edgeShow[index] && styles.homeFlowEdgeActive
+                    }`}
+                />
+            </div>
+        ) : (
+            <div className={styles.homeFlowToBottom}>
+                <div
+                    className={`${styles.homeFlowVertline} ${
+                        edgeShow[index] && styles.homeFlowVertlineActive
+                    }`}
+                />
+            </div>
+        );
+    }
+
     useEffect(() => {
+        // Intro 텍스트 순차적 slide 처리
         setTimeout(() => {
             window.scrollTo(0, 0);
             setShowIntro([true, false, false]);
@@ -55,6 +119,7 @@ export default function Home() {
             upIntro();
         }, 2000);
 
+        // Home 화면 접근 시 UI slide in 처리
         if (Router.pathname === "/") {
             document.documentElement.style.overflowY = "hidden";
             let header = document.querySelector<HTMLElement>("header");
@@ -67,6 +132,31 @@ export default function Home() {
                 document.documentElement.style.overflowY = "overlay";
             }, 2000);
         }
+
+        // 모바일 인지 아닌지 (width 800px 기준)
+        setMobile(window.innerWidth < 800);
+        window.onresize = () => {
+            setMobile(window.innerWidth < 800);
+        };
+
+        // 로드 시 Edge를 순서대로 펼치게 함
+        window.onscroll = () => {
+            if (!isEdgeInit && window.scrollY >= window.innerHeight * 2 - 400) {
+                isEdgeInit = true;
+                for (let i = 0; i < flow.length - 1; i++) {
+                    setTimeout(() => {
+                        setEdgeShow(
+                            Array.from({ length: i + 1 }, () => true).concat(
+                                Array.from(
+                                    { length: flow.length - 1 - i - 1 },
+                                    () => false
+                                )
+                            )
+                        );
+                    }, i * 1000);
+                }
+            }
+        };
     }, []);
 
     return (
@@ -157,6 +247,40 @@ export default function Home() {
             </section>
 
             {/* Section 4. */}
+            <section className={styles.homeFlow}>
+                {isMobile && <h1>핑거오더의 동작 원리</h1>}
+                <div className={styles.homeFlowNormal}>
+                    {printNodes(0)}
+                    {printEdge(0, "right")}
+                    {printNodes(1)}
+                    {printEdge(1, "right")}
+                    {printNodes(2)}
+                </div>
+                <div className={styles.homeFlowMiddle}>
+                    {!isMobile && (
+                        <>
+                            <div className={styles.homeFlowBlank} />
+                            <h1>핑거오더의 동작 원리</h1>
+                        </>
+                    )}
+                    <div className={styles.homeFlowToBottom}>
+                        <div
+                            className={`${styles.homeFlowVertline} ${
+                                edgeShow[2] && styles.homeFlowVertlineActive
+                            }`}
+                        />
+                    </div>
+                </div>
+                <div className={styles.homeFlowReverse}>
+                    {printNodes(3)}
+                    {printEdge(3, "left")}
+                    {printNodes(4)}
+                    {printEdge(4, "left")}
+                    {printNodes(5)}
+                </div>
+            </section>
+
+            {/* Section 5. */}
             <section className={styles.homeStrongth}>
                 <div className={styles.homeStrongthCard}>
                     <div className={styles.homeStrongthSub}>
@@ -197,7 +321,7 @@ export default function Home() {
                 </div>
             </section>
 
-            {/* Section 5. */}
+            {/* Section 6. */}
             <section className={styles.homeSubmit}>
                 <Link href={"/store"}>
                     <div className={styles.homeSubmitButton}>

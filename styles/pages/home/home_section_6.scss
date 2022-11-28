@@ -1,0 +1,27 @@
+/* Section 6 - Submit */
+.homeSubmit {
+    width: 100vw;
+    margin: 3rem 0;
+    display: flex;
+    justify-content: center;
+}
+
+.homeSubmitButton {
+    width: 80vw;
+    padding: 2rem 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #0070f3;
+    border-radius: 1rem;
+    background-color: #0070f3;
+    color: white;
+    font-weight: 700;
+    font-size: 2rem;
+    transition: scale 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.homeSubmitButton:hover {
+    scale: 1.05;
+}

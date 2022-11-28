@@ -1,27 +1,43 @@
-/* Section 5 - Submit */
-.homeSubmit {
+/* Section 5 - Strongth */
+.homeStrongth {
+    height: 100vh;
     width: 100vw;
-    margin: 3rem 0;
-    display: flex;
-    justify-content: center;
-}
-
-.homeSubmitButton {
-    width: 80vw;
-    padding: 2rem 5rem;
-    display: flex;
-    justify-content: center;
     align-items: center;
-    border: 1px solid #0070f3;
-    border-radius: 1rem;
-    background-color: #0070f3;
-    color: white;
-    font-weight: 700;
-    font-size: 2rem;
-    transition: scale 0.3s ease-in-out;
-    cursor: pointer;
 }
 
-.homeSubmitButton:hover {
-    scale: 1.05;
+.homeStrongth,
+.homeStrongthCard,
+.homeStrongthSub {
+    display: flex;
+    justify-content: center;
+}
+
+.homeStrongthCard {
+    min-width: 15rem;
+    gap: 5rem;
+    align-items: center;
+    padding: 3rem;
+    border: 1px solid #eaeaea;
+    border-radius: 1rem;
+    box-shadow: 15px 13px 22px -7px grey;
+}
+
+.homeStrongthSub {
+    flex-direction: column;
+}
+
+.homeStrongthSub:first-child {
+    align-items: center;
+}
+
+.homeStrongthSub:last-child {
+    gap: 5rem;
+}
+
+.homeStrongthSub > li {
+    list-style: none;
+    border: 1px solid #eaeaea;
+    border-radius: 1rem;
+    padding: 1rem;
+    box-shadow: 11px 10px 23px -14px grey;
 }
