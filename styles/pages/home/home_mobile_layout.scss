@@ -8,6 +8,13 @@
         font-size: 1.5rem;
     }
 
+    .homeFlowItem {
+        padding: 2rem 0.5rem;
+    }
+    .homeFlowItem > p {
+        padding: 0 1rem;
+    }
+
     .homeStrongth {
         gap: 1rem;
     }
@@ -42,6 +49,22 @@
     .homeWhiteboxRight {
         height: 11rem;
         width: 100%;
+    }
+
+    .homeFlowNormal,
+    .homeFlowReverse {
+        flex-direction: column;
+    }
+    .homeFlowMiddle {
+        height: 7.5rem;
+        display: flex;
+        justify-content: center;
+    }
+    .homeFlowReverse {
+        align-items: center;
+    }
+    .homeFlowToBottom {
+        height: 7.5rem;
     }
 }
 
@@ -142,6 +165,17 @@
         font-size: 1.1rem;
     }
 
+    .homeFlow {
+        padding: 4rem 2rem;
+    }
+    .homeFlowNodes {
+        width: 4.5rem;
+        height: 4.5rem;
+    }
+    .homeFlowItem > p {
+        font-size: 0.8rem;
+    }
+
     .homeStrongthCard {
         gap: 0;
     }
@@ -186,5 +220,12 @@
 
     .homeSubmitButton {
         width: 100vw;
+    }
+}
+
+@media (max-width: 300px) {
+    .homeFlow > h1 {
+        font-size: 1.2rem;
+        white-space: nowrap;
     }
 }
