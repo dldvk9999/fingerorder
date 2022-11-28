@@ -13,7 +13,7 @@ export default function QRCode(props: { tableCount: number }) {
     const [tableCount, setTableCount] = useState(0);
     const { Canvas } = useQRCode();
     const STORE_MANAGER_ID = 0;
-    const STORE_ID = store[editPage].id;
+    const [STORE_ID, setStoreID] = useState(0);
 
     // QR 리스트 다운로드
     function downloadQR() {
@@ -80,6 +80,10 @@ export default function QRCode(props: { tableCount: number }) {
         // 모바일인지 체크
         setMobile(window.innerWidth >= 1200);
     }, []);
+
+    useEffect(() => {
+        setStoreID(store[editPage].id);
+    }, [editPage]);
 
     useEffect(() => {
         // 마이페이지를 통해 접근했는지 확인
