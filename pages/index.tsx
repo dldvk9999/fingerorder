@@ -64,7 +64,7 @@ export default function Home() {
                 onMouseLeave={() => setEdgeShow([true, true, true, true, true])}
             >
                 <Image
-                    src={"/" + flow[index].name + ".webp"}
+                    src={"/home/" + flow[index].name + ".webp"}
                     alt={flow[index].alt}
                     width={100}
                     height={100}
