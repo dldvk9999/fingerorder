@@ -90,9 +90,16 @@ export default function Header() {
         setLogin(localStorage["login"] === "true" ? true : false);
 
         // innerWidth가 800px 이하일때만 nav를 렌더링함
+        // onresize를 사용하여 override하면 home에서 또 override해서 덮어써지면서 작동이 안돼 addEventListener로 대체
         setMobile(window.innerWidth < 800);
-        window.onresize = () => {
+        window.addEventListener("resize", () => {
             setMobile(window.innerWidth < 800);
+        });
+
+        return () => {
+            window.removeEventListener("resize", () => {
+                setMobile(window.innerWidth < 800);
+            });
         };
     }, []);
 
