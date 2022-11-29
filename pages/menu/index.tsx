@@ -48,7 +48,7 @@ export default function Menu() {
     }
 
     // 매장에 있는 메뉴 - 세부 아이템 출력
-    function printStoreMenuListItem(category: string, index: number) {
+    function printStoreMenuListItem(category: string) {
         let result = [];
         if (storeID !== -1) {
             const menu = store[storeID - 1].menu as unknown as menu;
@@ -87,37 +87,43 @@ export default function Menu() {
                                 <p>{(menu[category][i] as menuList).desc}</p>
                                 <p>{(menu[category][i] as menuList).price}원</p>
                             </div>
-                            <button
-                                className={styles.menuItemBtn}
-                                onClick={() =>
-                                    menuEdit(
-                                        category,
-                                        (menu[category][i] as menuList).name,
-                                        (menu[category][i] as menuList).price,
-                                        (menu[category][i] as menuList).desc,
-                                        (menu[category][i] as menuList).image
-                                    )
-                                }
-                            >
-                                수정
-                            </button>
-                            <button
-                                className={styles.menuItemBtn}
-                                onClick={() => {
-                                    if (confirm("삭제하시겠습니까?"))
-                                        alert("삭제 완료하였습니다.");
-                                }}
-                            >
-                                삭제
-                            </button>
-                            <button
-                                className={styles.menuItemBtn}
-                                onClick={() => {
-                                    alert("품절처리 완료하였습니다.");
-                                }}
-                            >
-                                품절
-                            </button>
+                            <div className={styles.menuItemBtns}>
+                                <button
+                                    className={styles.menuItemBtn}
+                                    onClick={() =>
+                                        menuEdit(
+                                            category,
+                                            (menu[category][i] as menuList)
+                                                .name,
+                                            (menu[category][i] as menuList)
+                                                .price,
+                                            (menu[category][i] as menuList)
+                                                .desc,
+                                            (menu[category][i] as menuList)
+                                                .image
+                                        )
+                                    }
+                                >
+                                    수정
+                                </button>
+                                <button
+                                    className={styles.menuItemBtn}
+                                    onClick={() => {
+                                        if (confirm("삭제하시겠습니까?"))
+                                            alert("삭제 완료하였습니다.");
+                                    }}
+                                >
+                                    삭제
+                                </button>
+                                <button
+                                    className={styles.menuItemBtn}
+                                    onClick={() => {
+                                        alert("품절처리 완료하였습니다.");
+                                    }}
+                                >
+                                    품절
+                                </button>
+                            </div>
                         </div>
                     );
                 }
@@ -145,14 +151,18 @@ export default function Menu() {
                         className={styles.menuItemHeader}
                         key={"menu-list-header-" + i}
                     >
+                        {i !== 0 && <hr />}
                         <h3>{store[storeID - 1].category[i]}</h3>
-                        {printStoreMenuListItem(
-                            store[storeID - 1].category[i],
-                            i
-                        )}
+                        {printStoreMenuListItem(store[storeID - 1].category[i])}
                     </div>
                 );
             }
+        } else {
+            result.push(
+                <h3 key={"menu-list-no-select-store"}>
+                    왼쪽에서 매장을 선택해주세요.
+                </h3>
+            );
         }
         return result;
     }
@@ -284,7 +294,7 @@ export default function Menu() {
                     </select>
                     <input
                         type="text"
-                        placeholder="이름"
+                        placeholder="메뉴 이름"
                         onChange={(e) => setItemName(e.target.value)}
                         value={itemName}
                         disabled={storeID === -1 || category === ""}
@@ -299,7 +309,7 @@ export default function Menu() {
                         className={styles.menuInput}
                     />
                     <textarea
-                        placeholder="설명"
+                        placeholder="메뉴 설명"
                         onChange={(e) => setItemDesc(e.target.value)}
                         value={itemDesc}
                         disabled={storeID === -1 || category === ""}

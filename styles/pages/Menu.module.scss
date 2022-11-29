@@ -143,17 +143,22 @@
     justify-content: center;
 }
 
-.menuItemBtn:nth-child(3) {
+.menuItemBtns {
+    display: flex;
+    width: 30%;
+}
+
+.menuItemBtn:nth-child(1) {
     border: 1px solid #0070f3;
     background-color: #0070f3;
 }
 
-.menuItemBtn:nth-child(4) {
+.menuItemBtn:nth-child(2) {
     border: 1px solid #ff314b;
     background-color: #ff314b;
 }
 
-.menuItemBtn:nth-child(5) {
+.menuItemBtn:nth-child(3) {
     border: 1px solid darkslategrey;
     background-color: darkslategrey;
 }
@@ -174,7 +179,7 @@
 }
 
 .menuItemNamePrice {
-    margin-left: 2rem;
+    margin: 0.5rem 2rem;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -188,7 +193,6 @@
     background-color: darkslategrey;
     color: white;
     padding: 0.1rem 0.5rem;
-    margin-left: 0.5rem;
 }
 
 .menuItemNamePrice > p {
@@ -197,9 +201,17 @@
 
 .menuItemNamePrice > p:nth-child(1) {
     font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 .menuItemNamePrice > p:nth-child(2) {
     font-size: 0.8rem;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    display: -webkit-box;
 }
 .menuItemNamePrice > p:nth-child(3) {
     font-size: 1rem;
@@ -208,4 +220,69 @@
 .menuInputSelect {
     appearance: none;
     cursor: pointer;
+}
+
+@media (max-width: 1024px) {
+    .menu {
+        height: fit-content;
+        flex-direction: column;
+        padding: 2rem;
+    }
+}
+
+@media (max-width: 650px) {
+    .menuItemBtns {
+        width: 10rem;
+    }
+    .menuItemCategory {
+        width: 100vw;
+    }
+    .menuItemNamePrice > p:nth-child(1) {
+        font-size: 0.8rem;
+        flex-direction: column-reverse;
+        align-items: flex-start;
+        gap: 0;
+    }
+    .menuItemNamePrice > p:nth-child(2) {
+        display: none;
+    }
+    .menuItemNamePrice {
+        margin: 1rem;
+    }
+}
+
+@media (max-width: 500px) {
+    .menuItemImage {
+        display: none;
+    }
+}
+
+@media (max-width: 400px) {
+    .menuInputSelect,
+    .menuInput {
+        width: 15rem;
+    }
+    .menuItemBtns {
+        flex-direction: column;
+        align-items: flex-end;
+        width: 30%;
+    }
+    .menuItemBtn {
+        width: 3rem;
+        height: 1.5rem;
+        padding: 0.3rem 0;
+        font-size: 0.3rem;
+    }
+    .menuItemNamePrice > p:nth-child(1) {
+        font-size: 0.8rem;
+    }
+    .menuItemNamePrice > p:nth-child(3) {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 300px) {
+    .menuItemNamePrice {
+        margin: 1rem 0.3rem;
+    }
 }
