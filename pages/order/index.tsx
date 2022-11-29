@@ -29,6 +29,7 @@ export default function Order() {
     const [menuList, setMenuList] = useState<Array<Array<menuList>>>([]);
     const [count, setCount] = useState<Array<Array<number>>>([]);
     const [locate, setLocate] = useState<Array<string>>([]);
+    const [table, setTable] = useState<Array<number>>([]);
     const [sum, setSum] = useState<Array<number>>([]);
     const [isSoundPlay, setSoundPlay] = useRecoilState(soundPlay);
     const [result, setResult] = useState<JSX.Element[]>([]);
@@ -61,6 +62,11 @@ export default function Order() {
             setSum(
                 sum.slice(0, index).concat(sum.slice(index + 1, sum.length))
             );
+            setTable(
+                table
+                    .slice(0, index)
+                    .concat(table.slice(index + 1, table.length))
+            );
         }
     }
 
@@ -71,6 +77,7 @@ export default function Order() {
         let tmpMenuList: Array<menuList> = [];
         let tmpLocate = "";
         let tmpSum = 0;
+        let tmpTable = 0;
 
         // 주문 중 메뉴의 개수 랜덤
         for (let i = 0; i < Math.floor(Math.random() * 10) + 1; i++) {
@@ -84,6 +91,7 @@ export default function Order() {
             let tm = Math.floor(Math.random() * menuLength);
             menu = storeMenu[category][tm] as menuList;
 
+            tmpTable = Math.floor(Math.random() * store[storeID].table);
             tmpLocate = store[storeID].locate;
             tmpCount.push(Math.floor(Math.random() * 10) + 1);
             tmpMenuList = [...tmpMenuList, menu];
@@ -99,6 +107,7 @@ export default function Order() {
             setCount([...count, tmpCount]);
             setMenuList([...menuList, tmpMenuList]);
             setSum([...sum, tmpSum]);
+            setTable([...table, tmpTable]);
         }
 
         if (localStorage["soundplay"] === "true") notiAudio && notiAudio.play();
@@ -167,7 +176,10 @@ export default function Order() {
                     key={"order-random-" + i}
                 >
                     <h2>{store[storeID].name}</h2>
-                    <div className={styles.orderCardLocate}>{locate[i]}</div>
+                    <div className={styles.orderCardLocate}>
+                        {locate[i]}
+                        <div>{table[i] + 1}번</div>
+                    </div>
                     {printRandomMenu(i)}
                     <p className={styles.orderCardTotal}>
                         {sum[i].toLocaleString()}원
@@ -198,7 +210,7 @@ export default function Order() {
 
     useEffect(() => {
         printRandomOrder();
-    }, [menuList, locate, count, sum]);
+    }, [menuList, locate, count, sum, table]);
 
     return LoginCheck() ? (
         <main className={styles.order}>
