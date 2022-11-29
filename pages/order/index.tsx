@@ -236,6 +236,9 @@ export default function Order() {
                     TestOrder
                 </button>
             </h1>
+            <p className={styles.orderSubText}>
+                * 상태를 클릭하여 준비 완료 표시로 변경할 수 있습니다.
+            </p>
             <section className={styles.orderSection}>{result}</section>
         </main>
     ) : null;
