@@ -2,7 +2,7 @@ import Image from "next/image";
 import store from "../../data/store";
 import LoginCheck from "../login_check";
 import styles from "../../styles/pages/Menu.module.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type menuList = {
     name: string;
@@ -22,6 +22,7 @@ export default function Menu() {
     const [itemPrice, setItemPrice] = useState(0);
     const [itemDesc, setItemDesc] = useState("");
     const [itemImage, setItemImage] = useState<any>();
+    const [isMobile, setMobile] = useState(false);
 
     // 왼쪽에 선택한 아이템이나 입력한 아이템 모두 리셋
     function editReset() {
@@ -160,7 +161,9 @@ export default function Menu() {
         } else {
             result.push(
                 <h3 key={"menu-list-no-select-store"}>
-                    왼쪽에서 매장을 선택해주세요.
+                    {isMobile
+                        ? "상단에서 매장을 선택해주세요."
+                        : "왼쪽에서 매장을 선택해주세요."}
                 </h3>
             );
         }
@@ -220,6 +223,14 @@ export default function Menu() {
             setItemImage("");
         }
     }
+
+    useEffect(() => {
+        // 모바일 인지 아닌지 (width 800px 기준)
+        setMobile(window.innerWidth < 800);
+        window.onresize = () => {
+            setMobile(window.innerWidth < 800);
+        };
+    }, []);
 
     return LoginCheck() ? (
         <main>
