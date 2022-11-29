@@ -202,6 +202,7 @@ export default function Order() {
     useEffect(() => {
         setAudio(new Audio("/noti.mp3"));
         localStorage["soundplay"] = false;
+        setSoundPlay(false);
 
         return () => {
             localStorage.removeItem("soundplay");
