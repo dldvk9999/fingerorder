@@ -74,7 +74,7 @@ const store = [
         table: 11,
         date: "2022.10.26",
         locate: "경기도 어쩌구 저쩌구",
-        category: ["치킨", "피자", "음료"],
+        category: ["치킨", "피자"],
         menu: {
             치킨: [
                 {
@@ -115,7 +115,6 @@ const store = [
                     soldout: false,
                 },
             ],
-            음료: [],
         },
     },
     {

@@ -1,0 +1,132 @@
+.order {
+    width: 100vw;
+    padding: 7rem 5rem;
+}
+
+.order > h1 {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    white-space: nowrap;
+}
+
+.order > h1 > button {
+    padding: 0.5rem 1rem;
+    color: #0070f3;
+    border: 1px solid #0070f3;
+    border-radius: 1rem;
+}
+
+.orderSoundActive {
+    background-color: #0070f3;
+    color: white !important;
+}
+
+.orderSection {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.orderCard {
+    width: 20rem;
+    max-height: 20rem;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    border: 1px solid #eaeaea;
+    border-radius: 1rem;
+    box-shadow: 10px 10px 15px -15px gray;
+}
+
+.orderCardSlideIn {
+    animation: SlideIn 1s ease-in-out;
+}
+
+@keyframes SlideIn {
+    0% {
+        transform: translateY(25%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.orderCard > h2 {
+    margin-bottom: 0.3rem;
+}
+.orderCardLocate {
+    margin: 0.5rem 0;
+}
+
+.orderCardMenu {
+    height: fit-content;
+    display: flex;
+    align-items: center;
+}
+
+.orderCardMenuTitle {
+    font-size: 0.6rem;
+    margin: 0;
+    min-width: 1.5rem;
+}
+
+.orderCardMenuActive {
+    text-decoration: line-through;
+}
+
+.orderCardMenu > p:nth-child(1) {
+    width: 100%;
+}
+.orderCardMenu > p:nth-child(2) {
+    width: 4rem;
+}
+
+.orderCardClose {
+    border: 1px solid #0070f3;
+    border-radius: 1rem;
+    background-color: #0070f3;
+    padding: 0.5rem 1rem;
+    color: white;
+    font-size: 1rem;
+    display: flex;
+    justify-content: center;
+}
+
+.orderCardTotal {
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.orderCardCheckbox {
+    display: none;
+}
+
+.orderCardLabel {
+    width: 2rem;
+    height: 1.5rem;
+    border: 1px solid #ff314b;
+    border-radius: 1rem;
+    background-color: #ff314b;
+    cursor: pointer;
+}
+
+.orderCardLabelActive {
+    border: 1px solid #0070f3;
+    background-color: #0070f3;
+}
+
+@media (max-width: 400px) {
+    .order {
+        padding: 7rem 0;
+        min-width: 15.625rem;
+    }
+    .orderCard {
+        width: 100vw;
+        min-width: 15.625rem;
+    }
+}
