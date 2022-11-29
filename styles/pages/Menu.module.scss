@@ -59,6 +59,22 @@
     height: 7rem !important;
 }
 
+.menuInputFirstSelect {
+    animation: Select-First 2s linear infinite;
+}
+
+@keyframes Select-First {
+    0% {
+        border-color: #eaeaea;
+    }
+    50% {
+        border-color: red;
+    }
+    100% {
+        border-color: #eaeaea;
+    }
+}
+
 .menuInput {
     width: 20rem;
     height: 3.5rem;

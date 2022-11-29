@@ -280,7 +280,9 @@ export default function Menu() {
                     <select
                         value={storeID}
                         onChange={(e) => setStoreID(Number(e.target.value))}
-                        className={`${styles.menuInput} ${styles.menuInputSelect}`}
+                        className={`${styles.menuInput} ${
+                            styles.menuInputSelect
+                        } ${storeID === -1 && styles.menuInputFirstSelect}`}
                     >
                         {printStoreID()}
                     </select>
