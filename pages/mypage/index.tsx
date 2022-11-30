@@ -125,7 +125,8 @@ export default function Mypage() {
                                 h2={"정말 탈퇴하시겠습니까?"}
                                 isCheckbox={true}
                                 checkboxList={qList}
-                                onClose={() => exeWithdrawal()}
+                                onClose={() => setShowModal(false)}
+                                onAccept={() => exeWithdrawal()}
                                 cancel={"취소"}
                                 accept={"탈퇴"}
                                 subChildren={"* 중복도 가능합니다"}

@@ -9,6 +9,7 @@ type modal = {
     accept: string;
     children: string;
     onClose: Function;
+    onAccept: Function;
     subChildren: string;
     checkboxList: Array<string>;
 };
@@ -21,6 +22,7 @@ export default function Modal({
     accept,
     children,
     onClose,
+    onAccept,
     subChildren = "",
     checkboxList = [],
 }: modal) {
@@ -93,7 +95,7 @@ export default function Modal({
             }
         }
         alert(accept + "가 완료되었습니다.");
-        onClose();
+        onAccept();
     };
 
     return (
