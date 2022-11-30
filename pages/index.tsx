@@ -2,11 +2,14 @@ import Image from "next/image";
 import Link from "next/link";
 import Router from "next/router";
 import { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
+import { homeIntro } from "../states";
 import data from "../data/data";
 import flow from "../data/flow";
 import styles from "../styles/pages/Home.module.scss";
 
 export default function Home() {
+    const [isHomeIntro, _] = useRecoilState(homeIntro);
     const [showIntro, setShowIntro] = useState([false, false, false]);
     const [isMobile, setMobile] = useState(false);
     const [edgeShow, setEdgeShow] = useState(
@@ -104,33 +107,39 @@ export default function Home() {
     }
 
     useEffect(() => {
-        // Intro 텍스트 순차적 slide 처리
-        setTimeout(() => {
-            window.scrollTo(0, 0);
-            setShowIntro([true, false, false]);
-        }, 100);
-        setTimeout(() => {
-            setShowIntro([true, true, false]);
-        }, 500);
-        setTimeout(() => {
-            setShowIntro([true, true, true]);
-        }, 1000);
-        setTimeout(() => {
-            upIntro();
-        }, 2000);
-
-        // Home 화면 접근 시 UI slide in 처리
-        if (Router.pathname === "/") {
-            document.documentElement.style.overflowY = "hidden";
-            let header = document.querySelector<HTMLElement>("header");
-            header!.style.opacity = "0";
-            header!.style.transform = "translateY(-4.4rem)";
-
+        if (isHomeIntro) {
+            // Intro 텍스트 순차적 slide 처리
             setTimeout(() => {
-                header!.style.opacity = "1";
-                header!.style.transform = "translateY(0)";
-                document.documentElement.style.overflowY = "overlay";
+                window.scrollTo(0, 0);
+                setShowIntro([true, false, false]);
+            }, 100);
+            setTimeout(() => {
+                setShowIntro([true, true, false]);
+            }, 500);
+            setTimeout(() => {
+                setShowIntro([true, true, true]);
+            }, 1000);
+            setTimeout(() => {
+                upIntro();
             }, 2000);
+
+            // Home 화면 접근 시 UI slide in 처리
+            if (Router.pathname === "/") {
+                document.documentElement.style.overflowY = "hidden";
+                let header = document.querySelector<HTMLElement>("header");
+                header!.style.opacity = "0";
+                header!.style.transform = "translateY(-4.4rem)";
+
+                setTimeout(() => {
+                    header!.style.opacity = "1";
+                    header!.style.transform = "translateY(0)";
+                    document.documentElement.style.overflowY = "overlay";
+                }, 2000);
+            }
+        } else {
+            window.scrollTo(0, 0);
+            setShowIntro([true, true, true]);
+            upIntro();
         }
 
         // 모바일 인지 아닌지 (width 800px 기준)

@@ -10,3 +10,8 @@ export const soundPlay = atom({
     key: "soundPlay-" + v1(),
     default: false,
 });
+
+export const homeIntro = atom({
+    key: "homeIntro-" + v1(),
+    default: true,
+});

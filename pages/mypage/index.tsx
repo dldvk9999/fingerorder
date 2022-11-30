@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import { editNumber } from "../../states";
+import { editNumber, homeIntro } from "../../states";
 import store from "../../data/store";
 import LoginCheck from "../login_check";
 import styles from "../../styles/pages/Mypage.module.scss";
@@ -9,6 +9,7 @@ import Modal from "../../components/Modal";
 
 export default function Mypage() {
     const [_, setPage] = useRecoilState(editNumber);
+    const [isHomeIntro, setHomeIntro] = useRecoilState(homeIntro);
     const [myEmail, setEmail] = useState("");
     const [isKakao, setKakao] = useState(false);
     const [isShowModal, setShowModal] = useState(false);
@@ -98,6 +99,14 @@ export default function Mypage() {
                             )}
                             <h2>{myEmail}</h2>
                         </div>
+                        <button
+                            className={`${styles.mypageHomeIntro} ${
+                                isHomeIntro && styles.mypageHomeIntroActive
+                            }`}
+                            onClick={() => setHomeIntro(!isHomeIntro)}
+                        >
+                            홈 인트로 {isHomeIntro ? "ON" : "OFF"}
+                        </button>
                         <Link
                             href={"/findpassword"}
                             className={styles.mypageChangePassword}

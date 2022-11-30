@@ -39,7 +39,8 @@
 }
 
 .mypageChangePassword,
-.mypageWithdrawal {
+.mypageWithdrawal,
+.mypageHomeIntro {
     padding: 1rem;
     border-radius: 1rem;
     color: white;
@@ -56,6 +57,16 @@
 .mypageChangePassword {
     border: 1px solid #0070f3;
     background-color: #0070f3;
+}
+
+.mypageHomeIntro {
+    border: 1px solid #0070f3;
+    color: #0070f3;
+}
+
+.mypageHomeIntroActive {
+    background-color: #0070f3;
+    color: white;
 }
 
 .mypageWithdrawal {
