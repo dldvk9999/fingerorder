@@ -55,6 +55,7 @@ export default function Login() {
                             alt={"kakao_login"}
                             width={240}
                             height={50}
+                            className={styles.loginForKakao}
                             priority
                         />
                     </button>
