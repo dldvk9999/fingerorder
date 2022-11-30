@@ -1,15 +1,26 @@
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { editNumber } from "../../states";
 import store from "../../data/store";
 import LoginCheck from "../login_check";
 import styles from "../../styles/pages/Mypage.module.scss";
-import { useEffect, useState } from "react";
+import Modal from "../../components/Modal";
 
 export default function Mypage() {
     const [_, setPage] = useRecoilState(editNumber);
     const [myEmail, setEmail] = useState("");
     const [isKakao, setKakao] = useState(false);
+    const [isShowModal, setShowModal] = useState(false);
+    const qList = [
+        "사이트의 디자인이 너무 별로입니다.",
+        "사이트 기능이 좋지 않습니다.",
+        "제 PC(모바일)에서는 호환이 잘 되지 않습니다.",
+        "사이트를 이용할 이유가 없어졌습니다.",
+        "사이트가 도움이 되지 않습니다.",
+        "문의 해결 과정이 상당히 불편합니다.",
+        "기타",
+    ];
 
     // 구매 매장 목록 출력
     function printStoreList() {
@@ -91,11 +102,25 @@ export default function Mypage() {
                             비밀번호 수정
                         </Link>
                         <button
-                            onClick={Withdrawal}
+                            onClick={() => setShowModal(true)}
                             className={styles.mypageWithdrawal}
                         >
                             회원 탈퇴
                         </button>
+                        {isShowModal && (
+                            <Modal
+                                h1={"회원탈퇴"}
+                                h2={"정말 탈퇴하시겠습니까?"}
+                                isCheckbox={true}
+                                checkboxList={qList}
+                                onClose={() => setShowModal(false)}
+                                cancel={"취소"}
+                                accept={"탈퇴"}
+                                subChildren={"* 중복도 가능합니다"}
+                            >
+                                {"✅ 어떤 이유때문인지 설문 부탁드립니다 :)"}
+                            </Modal>
+                        )}
                     </div>
                     <div className={styles.mypageStoreList}>
                         <h2>나의 매장</h2>
