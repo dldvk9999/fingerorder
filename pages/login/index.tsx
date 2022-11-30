@@ -25,7 +25,6 @@ export default function Login() {
         } else {
             localStorage["login"] = "true";
             localStorage["email"] = email;
-            alert("login function complete");
         }
     }
 
