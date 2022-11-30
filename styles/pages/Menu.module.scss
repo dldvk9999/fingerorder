@@ -238,6 +238,11 @@
     cursor: pointer;
 }
 
+.menuInputRequire {
+    animation: Select-First 1s linear;
+    animation-iteration-count: 3;
+}
+
 @media (max-width: 1024px) {
     .menu {
         height: fit-content;

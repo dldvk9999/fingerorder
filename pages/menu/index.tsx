@@ -23,6 +23,7 @@ export default function Menu() {
     const [itemDesc, setItemDesc] = useState("");
     const [itemImage, setItemImage] = useState<any>();
     const [isMobile, setMobile] = useState(false);
+    const [isDisableBtn, setDisableBtn] = useState(false);
 
     // 왼쪽에 선택한 아이템이나 입력한 아이템 모두 리셋
     function editReset() {
@@ -46,6 +47,31 @@ export default function Menu() {
         setItemPrice(price);
         setItemDesc(desc);
         setItemImage("/sample_menu/" + image);
+    }
+
+    // 메뉴 추가 함수
+    function addMenu() {
+        // 정규식으로 이름만 체크함
+        const naming = /[^a-zA-Z가-힣0-9 ()]/;
+        if (naming.exec(itemName)) {
+            alert(
+                "이름은 알파벳, 숫자, 한글, 공백, 소괄호로만 지을 수 있습니다."
+            );
+            setItemName("");
+
+            setDisableBtn(true);
+            let name = document.querySelector("#menuName");
+            name?.classList.add(styles.menuInputRequire);
+            setTimeout(() => {
+                setDisableBtn(false);
+                let name = document.querySelector("#menuName");
+                name?.classList.remove(styles.menuInputRequire);
+            }, 4000);
+            return;
+        } else {
+            editReset();
+            alert("메뉴 추가 완료하였습니다.");
+        }
     }
 
     // 매장에 있는 메뉴 - 세부 아이템 출력
@@ -306,6 +332,7 @@ export default function Menu() {
                         {printStoreCategory()}
                     </select>
                     <input
+                        id="menuName"
                         type="text"
                         placeholder="메뉴 이름"
                         onChange={(e) => setItemName(e.target.value)}
@@ -330,10 +357,8 @@ export default function Menu() {
                     />
                     <button
                         className={styles.menuAddBtn}
-                        onClick={() => {
-                            editReset();
-                            alert("메뉴 추가 완료하였습니다.");
-                        }}
+                        onClick={() => addMenu()}
+                        disabled={isDisableBtn}
                     >
                         메뉴 추가
                     </button>
