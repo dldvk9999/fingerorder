@@ -121,6 +121,21 @@
     box-shadow: 10px 10px 24px -10px grey;
 }
 
+.menuItemSearch {
+    width: 30rem;
+    margin: 0 1rem 1rem 1rem;
+    font-size: 1.5rem;
+    background-color: transparent;
+    text-align: center;
+    border: none;
+    border-bottom: 1px solid black;
+}
+
+.menuItemSearch:focus,
+.menuItemSearch:active {
+    outline: none;
+}
+
 .menuItemCategory > div {
     display: flex;
     flex-direction: column;
