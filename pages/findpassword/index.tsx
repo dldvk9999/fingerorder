@@ -11,7 +11,6 @@ export default function FindPassword() {
             alert("이메일을 입력해주세요.");
         } else {
             setSend(true);
-            alert("email send function complete");
         }
         e.preventDefault();
     }
