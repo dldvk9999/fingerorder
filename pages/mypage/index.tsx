@@ -22,6 +22,14 @@ export default function Mypage() {
         "기타",
     ];
 
+    // 회원 탈퇴 후 로그아웃
+    function exeWithdrawal() {
+        setShowModal(false);
+        localStorage.removeItem("login");
+        localStorage.removeItem("email");
+        localStorage.removeItem("kakao");
+    }
+
     // 구매 매장 목록 출력
     function printStoreList() {
         let result = [];
@@ -54,11 +62,6 @@ export default function Mypage() {
             );
         }
         return result;
-    }
-
-    // sample withdrawal
-    function Withdrawal() {
-        alert("withdrawal is complete");
     }
 
     useEffect(() => {
@@ -113,7 +116,7 @@ export default function Mypage() {
                                 h2={"정말 탈퇴하시겠습니까?"}
                                 isCheckbox={true}
                                 checkboxList={qList}
-                                onClose={() => setShowModal(false)}
+                                onClose={() => exeWithdrawal()}
                                 cancel={"취소"}
                                 accept={"탈퇴"}
                                 subChildren={"* 중복도 가능합니다"}
