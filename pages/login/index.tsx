@@ -7,14 +7,25 @@ export default function Login() {
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
 
+    // 자동 로그인 (테스트할때 재로그인하기 귀찮아서 만듬. 삭제 예정)
+    function autoLogin() {
+        localStorage["login"] = "true";
+        localStorage["email"] = "fingerorder@naver.com";
+        localStorage["kakao"] = "true";
+        location.href = "/";
+    }
+
+    // 일반 로그인 일 때
     function loginDefault() {
         localStorage["kakao"] = "false";
     }
 
+    // 카카오 로그인 일 때
     function loginKakao() {
         localStorage["kakao"] = "true";
     }
 
+    // 로그인 함수
     function login(e: { preventDefault: () => void }) {
         if (!email || !pass) {
             alert("이메일과 비밀번호를 입력해주세요.");
@@ -62,6 +73,7 @@ export default function Login() {
                     <button onClick={loginDefault} type="submit">
                         로그인
                     </button>
+                    <button onClick={autoLogin}>자동로그인</button>
                     <div className={styles.loginFormSub}>
                         <Link
                             className={styles.loginFormFunc}
