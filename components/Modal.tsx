@@ -73,14 +73,23 @@ export default function Modal({
     // modal accept handler
     const handleAcceptClick = (e: { preventDefault: () => void }) => {
         e.preventDefault();
-        let selected = "";
-        for (let i = 0; i < checkboxList.length; i++) {
-            if (questClick[i] && i === checkboxList.length - 1)
-                selected += ect + "\n";
-            else if (questClick[i]) selected += checkboxList[i] + "\n";
+
+        if (isCheckbox) {
+            let selected = "";
+            for (let i = 0; i < checkboxList.length; i++) {
+                if (questClick[i] && i === checkboxList.length - 1)
+                    selected += ect + "\n";
+                else if (questClick[i]) selected += checkboxList[i] + "\n";
+            }
+
+            if (selected === "") {
+                alert("체크 사항에 하나라도 기재 부탁드립니다.");
+                return;
+            } else {
+                alert(selected);
+            }
         }
-        alert(selected);
-        alert("탈퇴가 완료되었습니다.");
+        alert(accept + "가 완료되었습니다.");
         onClose();
     };
 
