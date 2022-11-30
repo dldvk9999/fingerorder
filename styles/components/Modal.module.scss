@@ -13,6 +13,7 @@
 }
 
 .modal {
+    min-width: 15rem;
     width: 60vw;
     position: fixed;
     display: flex;
@@ -107,4 +108,42 @@
 .modalBtn > button:nth-child(2) {
     border: 1px solid #ff314b;
     background-color: #ff314b;
+}
+
+@media (max-width: 700px) {
+    .modal {
+        width: 80vw;
+    }
+}
+
+@media (max-width: 500px) {
+    .modalCheckboxRow {
+        font-size: 0.8rem;
+    }
+    .modalBtn > button:nth-child(1),
+    .modalBtn > button:nth-child(2) {
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .modal {
+        width: 100vw;
+    }
+    .modalBody {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 300px) {
+    .modalBody > h2 {
+        font-size: 1rem;
+    }
+    .modalBody > p:nth-child(2),
+    .modalBody > p:nth-child(3) {
+        font-size: 0.8rem;
+    }
+    .modalCheckboxRow {
+        font-size: 0.5rem;
+    }
 }
