@@ -13,6 +13,7 @@ export default function Mypage() {
     const [myEmail, setEmail] = useState("");
     const [isKakao, setKakao] = useState(false);
     const [isShowModal, setShowModal] = useState(false);
+    const [nowStore, setStore] = useState(store);
     const qList = [
         "사이트의 디자인이 너무 별로입니다.",
         "사이트 기능이 좋지 않습니다.",
@@ -22,6 +23,14 @@ export default function Mypage() {
         "문의 해결 과정이 상당히 불편합니다.",
         "기타",
     ];
+
+    // 매장 삭제
+    function deleteStore(index: number) {
+        if (confirm(nowStore[index].id + ". " + nowStore[index].name + " 매장을 삭제하시겠습니까?")) {
+            setStore(nowStore.slice(0, index).concat(nowStore.slice(index + 1, nowStore.length)));
+            alert("매장을 삭제하였습니다.");
+        }
+    }
 
     // 회원 탈퇴 후 로그아웃
     function exeWithdrawal() {
@@ -34,16 +43,16 @@ export default function Mypage() {
     // 구매 매장 목록 출력
     function printStoreList() {
         let result = [];
-        for (let i = 0; i < store.length; i++) {
+        for (let i = 0; i < nowStore.length; i++) {
             result.push(
                 <div key={"mypage-storelist-" + i}>
                     <div className={styles.mypageStoreNameDate}>
                         <span className={styles.mypageStoreName}>
-                            {store[i].id}. {store[i].name}
+                            {nowStore[i].id}. {nowStore[i].name}
                         </span>
-                        <span className={styles.mypageStoreDate}>최근수정 : {store[i].date}</span>
+                        <span className={styles.mypageStoreDate}>최근수정 : {nowStore[i].date}</span>
                     </div>
-                    <div className={styles.mypageStoreBody}>{store[i].locate}</div>
+                    <div className={styles.mypageStoreBody}>{nowStore[i].locate}</div>
                     <div className={styles.mypageStoreButton}>
                         <Link href={"/qrcode"}>
                             <button onClick={() => setPage(i)}>QR코드</button>
@@ -54,6 +63,7 @@ export default function Mypage() {
                         <Link href={"/changestore"}>
                             <button onClick={() => setPage(i)}>수정</button>
                         </Link>
+                        <button onClick={() => deleteStore(i)}>삭제</button>
                     </div>
                 </div>
             );

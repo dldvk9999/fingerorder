@@ -54,6 +54,7 @@
     box-shadow: 4px 5px 10px 1px gray;
 }
 
+.mypageStoreButton > a > button,
 .mypageChangePassword {
     border: 1px solid #0070f3;
     background-color: #0070f3;
@@ -69,6 +70,7 @@
     color: white;
 }
 
+.mypageStoreButton > button,
 .mypageWithdrawal {
     border: 1px solid #ff314b;
     background-color: #ff314b;
@@ -127,10 +129,9 @@
     gap: 1rem;
 }
 
+.mypageStoreButton > button,
 .mypageStoreButton > a > button {
-    border: 1px solid #0070f3;
     border-radius: 1rem;
-    background-color: #0070f3;
     color: white;
     padding: 0.5rem 1rem;
 }
