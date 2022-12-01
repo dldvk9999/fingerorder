@@ -15,6 +15,21 @@ export default function Home() {
     const [isMobile, setMobile] = useState(false);
     const [edgeShow, setEdgeShow] = useState(Array.from({ length: flow.length - 1 }, () => false));
 
+    /* common */
+    // print Logo
+    function logo(style: string) {
+        return (
+            <Image
+                src={"/fingerorder.webp"}
+                alt={"fingerorder"}
+                width={200}
+                height={200}
+                className={style}
+                loading="lazy"
+            />
+        );
+    }
+
     /* Section 1. */
     // 페이지 로드 후에 2초 있다가 Intro의 Height가 짧아지게 하는 함수
     function upIntro() {
@@ -149,14 +164,7 @@ export default function Home() {
         <main className={styles.homeMain}>
             {/* Section 1. */}
             <section className={styles.homeInto}>
-                <Image
-                    src={"/fingerorder.webp"}
-                    alt={"fingerorder"}
-                    width={200}
-                    height={200}
-                    className={`${styles.homeIntroImage} ${showIntro[0] && styles.homeShow1}`}
-                    priority
-                />
+                {logo(`${styles.homeIntroImage} ${showIntro[0] && styles.homeShow1}`)}
                 <div className={styles.homeIntroSub}>
                     <p className={`${styles.homeIntroP} ${showIntro[1] && styles.homeShow2}`}>
                         더 <span>빠르게!</span> 더 <span>간편하게!</span>
@@ -197,16 +205,7 @@ export default function Home() {
                 <div className={styles.homeCompareBackground}>{compareLayout()}</div>
                 <div className={styles.homeCompareFront}>
                     <div>핑거오더</div>
-                    <div>
-                        <Image
-                            src={"/fingerorder.webp"}
-                            alt={"fingerorder"}
-                            width={200}
-                            height={200}
-                            className={styles.homeCompareFrontImage}
-                            loading="lazy"
-                        />
-                    </div>
+                    <div>{logo(styles.homeCompareFrontImage)}</div>
                     <div>무료</div>
                 </div>
                 <p>사장님을 위한 현명한 선택!</p>
@@ -246,14 +245,7 @@ export default function Home() {
             <section className={styles.homeStrongth}>
                 <div className={styles.homeStrongthCard}>
                     <div className={styles.homeStrongthSub}>
-                        <Image
-                            src={"/fingerorder.webp"}
-                            alt={"fingerorder"}
-                            width={200}
-                            height={200}
-                            className={styles.homeStrongthLogo}
-                            loading="lazy"
-                        />
+                        {logo(styles.homeStrongthLogo)}
                         <h2>핑거오더의 장점</h2>
                     </div>
                     <ul className={styles.homeStrongthSub}>

@@ -16,15 +16,15 @@ type menu = {
 };
 
 export default function Menu() {
-    const [storeID, setStoreID] = useState(-1);
-    const [category, setCategory] = useState("");
-    const [itemName, setItemName] = useState("");
-    const [itemPrice, setItemPrice] = useState(0);
-    const [itemDesc, setItemDesc] = useState("");
-    const [itemImage, setItemImage] = useState<any>();
-    const [isMobile, setMobile] = useState(0);
-    const [isDisableBtn, setDisableBtn] = useState(false);
-    const [searchName, setSearchName] = useState("");
+    const [storeID, setStoreID] = useState(-1); // 매장 ID
+    const [category, setCategory] = useState(""); // 매장의 카테고리
+    const [itemName, setItemName] = useState(""); // 메뉴 이름
+    const [itemPrice, setItemPrice] = useState(0); // 메뉴 가격
+    const [itemDesc, setItemDesc] = useState(""); // 메뉴 설명
+    const [itemImage, setItemImage] = useState<any>(); // 메뉴 이미지
+    const [isMobile, setMobile] = useState(0); // 모바일 인지 아닌지 (width 800px 기준)
+    const [isDisableBtn, setDisableBtn] = useState(false); // Input 값이 유효하지 않을 때 잠시 Btn을 disable 시킴 (4초)
+    const [searchName, setSearchName] = useState(""); // 검색할 텍스트
 
     // 수정 버튼 클릭 시 해당 아이템 정보 가져옴
     function menuEdit(categoryIndex: string, name: string, price: number, desc: string, image: string) {
@@ -43,6 +43,7 @@ export default function Menu() {
             alert("이름은 알파벳, 숫자, 한글, 공백, 소괄호로만 지을 수 있습니다.");
             setItemName("");
 
+            // 메뉴 추가 버튼을 잠시 disable 시킨 뒤 이름 Input 박스에 빨간색 border animation
             setDisableBtn(true);
             let name = document.querySelector("#menuName");
             name?.classList.add(styles.menuInputRequire);
@@ -61,81 +62,89 @@ export default function Menu() {
     // 매장에 있는 메뉴 - 세부 아이템 출력
     function printStoreMenuListItem(category: string) {
         let result = [];
-        if (storeID !== -1) {
-            const menu = store[storeID - 1].menu as unknown as menu;
-            if (menu[category].length) {
-                let tmp = Array.from({ length: menu[category].length }, () => false);
-                for (let i = 0; i < menu[category].length; i++) {
-                    const menuCategory = menu[category][i] as menuList;
-                    if (menuCategory.name.includes(searchName)) {
-                        tmp[i] = menuCategory.soldout;
-                        result.push(
-                            <div className={styles.menuItem} key={"menu-list-" + i}>
-                                {isMobile >= 500 && (
-                                    <Image
-                                        src={"/sample_menu/" + menuCategory.image}
-                                        alt={menuCategory.name}
-                                        width={75}
-                                        height={75}
-                                        className={styles.menuItemImage}
-                                        priority
-                                    />
-                                )}
-                                <div className={styles.menuItemNamePrice}>
-                                    <p>
-                                        {menuCategory.name}
-                                        {menuCategory.soldout && <span className={styles.menuItemSoldout}>품절</span>}
-                                    </p>
-                                    {isMobile >= 650 && <p>{menuCategory.desc}</p>}
-                                    <p>{menuCategory.price}원</p>
-                                </div>
-                                <div className={styles.menuItemBtns}>
-                                    <button
-                                        className={styles.menuItemBtn}
-                                        onClick={() =>
-                                            menuEdit(
-                                                category,
-                                                menuCategory.name,
-                                                menuCategory.price,
-                                                menuCategory.desc,
-                                                menuCategory.image
-                                            )
-                                        }
-                                    >
-                                        수정
-                                    </button>
-                                    <button
-                                        className={styles.menuItemBtn}
-                                        onClick={() => {
-                                            if (confirm("삭제하시겠습니까?")) alert("삭제 완료하였습니다.");
-                                        }}
-                                    >
-                                        삭제
-                                    </button>
-                                    <button
-                                        className={styles.menuItemBtn}
-                                        onClick={() => alert("품절처리 완료하였습니다.")}
-                                    >
-                                        품절
-                                    </button>
-                                </div>
+        const menu = store[storeID - 1].menu as unknown as menu;
+
+        // 만약 매장 - 카테고리 내 메뉴의 개수가 1이상일 경우(즉, 메뉴가 존재할 경우)
+        if (menu[category].length) {
+            let tmp = Array.from({ length: menu[category].length }, () => false);
+
+            // 모든 메뉴를 for문으로 print
+            for (let i = 0; i < menu[category].length; i++) {
+                const menuCategory = menu[category][i] as menuList;
+
+                // 만약 메뉴 이름에 검색하고자 하는 텍스트가 포함되어있을 경우(검색값이 ""일 경우 모두 출력됨)
+                if (menuCategory.name.includes(searchName)) {
+                    tmp[i] = menuCategory.soldout;
+                    result.push(
+                        <div className={styles.menuItem} key={"menu-list-" + i}>
+                            {isMobile >= 500 && (
+                                <Image
+                                    src={"/sample_menu/" + menuCategory.image}
+                                    alt={menuCategory.name}
+                                    width={75}
+                                    height={75}
+                                    className={styles.menuItemImage}
+                                    priority
+                                />
+                            )}
+                            <div className={styles.menuItemNamePrice}>
+                                <p>
+                                    {menuCategory.name}
+                                    {menuCategory.soldout && <span className={styles.menuItemSoldout}>품절</span>}
+                                </p>
+                                {isMobile >= 650 && <p>{menuCategory.desc}</p>}
+                                <p>{menuCategory.price}원</p>
                             </div>
-                        );
-                    }
+                            <div className={styles.menuItemBtns}>
+                                <button
+                                    className={styles.menuItemBtn}
+                                    onClick={() =>
+                                        menuEdit(
+                                            category,
+                                            menuCategory.name,
+                                            menuCategory.price,
+                                            menuCategory.desc,
+                                            menuCategory.image
+                                        )
+                                    }
+                                >
+                                    수정
+                                </button>
+                                <button
+                                    className={styles.menuItemBtn}
+                                    onClick={() => {
+                                        if (confirm("삭제하시겠습니까?")) alert("삭제 완료하였습니다.");
+                                    }}
+                                >
+                                    삭제
+                                </button>
+                                <button
+                                    className={styles.menuItemBtn}
+                                    onClick={() => alert("품절처리 완료하였습니다.")}
+                                >
+                                    품절
+                                </button>
+                            </div>
+                        </div>
+                    );
                 }
-            } else
-                result.push(
-                    <div className={styles.menuItemNoExist} key={"menu-list-no-exist"}>
-                        상품이 없습니다.
-                    </div>
-                );
+            }
         }
+        // 매장 - 카테고리 내 매뉴의 개수가 0인 경우(즉, 메뉴가 존재하지 않을 경우(= 메뉴를 등록하지 않았을 경우))
+        else
+            result.push(
+                <div className={styles.menuItemNoExist} key={"menu-list-no-exist"}>
+                    상품이 없습니다.
+                </div>
+            );
         return result;
     }
 
     // 매장에 있는 메뉴 목록 출력
     function printStoreMenuList() {
         let result = [];
+
+        // storeID의 값이 default 값인 -1이 아닐 때(즉, 매장 ID가 선택되었을 때)
         if (storeID !== -1)
             for (let i = 0; i < store[storeID - 1].category.length; i++)
                 result.push(
@@ -145,6 +154,7 @@ export default function Menu() {
                         {printStoreMenuListItem(store[storeID - 1].category[i])}
                     </div>
                 );
+        // 매장이 선택되지 않았을 때
         else
             result.push(
                 <h3 key={"menu-list-no-select-store"}>
@@ -219,28 +229,28 @@ export default function Menu() {
                         </span>
                     </h1>
                     <div className={styles.menuInputImageP}>
-                        <Image
-                            id="preview-image"
-                            src={itemImage ? itemImage : "/sample_menu/이미지추가.webp"}
-                            alt={"preview image"}
-                            width={150}
-                            height={150}
-                            className={`${styles.menuInputImage} ${!itemImage && styles.menuInputHide}`}
-                            loading="lazy"
-                        />
+                        {itemImage ? (
+                            <Image
+                                id="preview-image"
+                                src={itemImage}
+                                alt={"preview image"}
+                                width={150}
+                                height={150}
+                                className={`${styles.menuInputImage} ${!itemImage && styles.menuInputHide}`}
+                                loading="lazy"
+                            />
+                        ) : (
+                            <p className={styles.menuInputNoImage}>이미지 추가</p>
+                        )}
                         <div className={styles.menuInputImageInput}>
                             <input
                                 id="files"
                                 type="file"
                                 accept="image/*"
                                 onChange={(e) => readImage(e.target)}
-                                className={`${styles.menuInputImage} ${styles.menuInputHideDisplay}`}
+                                className={styles.menuInputHideDisplay}
                             />
-                            <label
-                                htmlFor="files"
-                                className={`${styles.menuInputImage} ${itemImage && styles.menuInputHide}`}
-                            ></label>
-                            <p className={itemImage && styles.menuInputHideDisplay}>이미지 추가</p>
+                            <label htmlFor="files" className={styles.menuInputLabel}></label>
                         </div>
                     </div>
                     <select

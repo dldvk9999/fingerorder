@@ -42,7 +42,7 @@ export default function Login() {
     return (
         <main>
             <section className={styles.login}>
-                <Image src={"/fingerorder.webp"} alt={"fingerorder"} width={150} height={150} />
+                <Image src={"/fingerorder.webp"} alt={"fingerorder"} width={150} height={150} priority />
                 <form className={styles.loginForm} onSubmit={login} action="/">
                     <input type="email" placeholder="이메일" onChange={(e) => setEmail(e.target.value)} />
                     <input

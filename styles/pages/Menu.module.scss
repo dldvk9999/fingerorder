@@ -25,12 +25,21 @@
     justify-content: center;
 }
 
-.menuInputImage {
+.menuInputImage,
+.menuInputNoImage,
+.menuInputLabel {
     width: 150px;
     height: 150px;
     border-radius: 50%;
     background-color: #e0e0e0;
     cursor: pointer;
+}
+
+.menuInputNoImage {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .menuInputImageInput {
@@ -40,6 +49,15 @@
     align-items: center;
     justify-content: center;
     z-index: 1;
+}
+
+.menuInputLabel {
+    position: absolute;
+    background-color: transparent !important;
+}
+
+.menuInputImageInputAbs {
+    position: absolute;
 }
 
 .menuInputImageInput > P {
