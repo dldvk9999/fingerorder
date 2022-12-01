@@ -38,11 +38,12 @@
     height: 100%;
     box-shadow: 10px 10px 15px -15px gray;
     background-color: white;
-    transition: scale 0.3s ease-in-out;
+    transition: scale 0.3s ease-in-out, border-color 0.5s ease-in-out;
 }
 
 .homeFlowItem:hover {
     scale: 1.15;
+    border-color: black;
 }
 
 .homeFlowEdge,

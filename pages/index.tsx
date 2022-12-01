@@ -15,6 +15,23 @@ export default function Home() {
     const [isMobile, setMobile] = useState(false);
     const [edgeShow, setEdgeShow] = useState(Array.from({ length: flow.length - 1 }, () => false));
 
+    /* Section 1. */
+    // 페이지 로드 후에 2초 있다가 Intro의 Height가 짧아지게 하는 함수
+    function upIntro() {
+        let intro = document.querySelector<HTMLElement>("." + styles.homeInto);
+        intro!.style.height = window.innerWidth > 650 ? "70vh" : "50vh";
+        intro!.style.paddingTop = "4.4rem";
+    }
+
+    /* Section 2. */
+    // WhiteBox 부분에 아래 화살표 클릭 시 아래로 스크롤
+    function scrollDown() {
+        document.querySelector("." + styles.homeCompare)?.scrollIntoView({
+            behavior: "smooth",
+        });
+    }
+
+    /* Section 3. */
     // carousel에서 background에 있는 카드 생성
     function compareLayout() {
         let result = [];
@@ -29,20 +46,7 @@ export default function Home() {
         return result;
     }
 
-    // Intro 부분에 0원 상품 클릭 시 아래로 스크롤
-    function scrollDown() {
-        document.querySelector("." + styles.homeCompare)?.scrollIntoView({
-            behavior: "smooth",
-        });
-    }
-
-    // 페이지 로드 후에 2초 있다가 Intro의 Height가 짧아지게 하는 함수
-    function upIntro() {
-        let intro = document.querySelector<HTMLElement>("." + styles.homeInto);
-        intro!.style.height = window.innerWidth > 650 ? "70vh" : "50vh";
-        intro!.style.paddingTop = "4.4rem";
-    }
-
+    /* Section 4. */
     // Flow의 Node 그리는 함수
     function printNodes(index: number) {
         return (
