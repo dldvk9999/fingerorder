@@ -26,10 +26,8 @@ export default function Modal({
     subChildren = "",
     checkboxList = [],
 }: modal) {
-    const [questClick, setQuestClick] = useState(
-        Array.from({ length: checkboxList.length }, () => false)
-    );
     const [ect, setEct] = useState("");
+    const [questClick, setQuestClick] = useState(Array.from({ length: checkboxList.length }, () => false));
 
     // useState Array update
     function updateQuestClick(index: number) {
@@ -41,28 +39,16 @@ export default function Modal({
     // 체크박스 출력
     function printCheckbox() {
         let result = [];
-        for (let i = 0; i < checkboxList.length; i++) {
+        for (let i = 0; i < checkboxList.length; i++)
             result.push(
-                <div
-                    className={styles.modalCheckboxRow}
-                    key={"modal-checkbox-" + i}
-                >
-                    <input
-                        id={"checkbox-" + i}
-                        className={styles.modalCheckbox}
-                        type="checkbox"
-                    />
-                    <label
-                        htmlFor={"checkbox-" + i}
-                        className={styles.modalLabel}
-                        onClick={() => updateQuestClick(i)}
-                    >
+                <div className={styles.modalCheckboxRow} key={"modal-checkbox-" + i}>
+                    <input id={"checkbox-" + i} className={styles.modalCheckbox} type="checkbox" />
+                    <label htmlFor={"checkbox-" + i} className={styles.modalLabel} onClick={() => updateQuestClick(i)}>
                         {questClick[i] ? "✔" : ""}
                     </label>
                     {checkboxList[i]}
                 </div>
             );
-        }
         return result;
     }
 
@@ -79,8 +65,7 @@ export default function Modal({
         if (isCheckbox) {
             let selected = "";
             for (let i = 0; i < checkboxList.length; i++) {
-                if (questClick[i] && i === checkboxList.length - 1)
-                    selected += ect + "\n";
+                if (questClick[i] && i === checkboxList.length - 1) selected += ect + "\n";
                 else if (questClick[i]) selected += checkboxList[i] + "\n";
             }
 

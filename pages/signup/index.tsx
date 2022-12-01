@@ -27,23 +27,10 @@ export default function Signup() {
     return (
         <main>
             <section className={styles.login}>
-                <Image
-                    src={"/fingerorder.webp"}
-                    alt={"fingerorder"}
-                    width={150}
-                    height={150}
-                />
+                <Image src={"/fingerorder.webp"} alt={"fingerorder"} width={150} height={150} />
                 {!signupOK ? (
-                    <form
-                        className={styles.loginForm}
-                        onSubmit={signup}
-                        action="/login"
-                    >
-                        <input
-                            type="email"
-                            placeholder="이메일"
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
+                    <form className={styles.loginForm} onSubmit={signup} action="/login">
+                        <input type="email" placeholder="이메일" onChange={(e) => setEmail(e.target.value)} />
                         <input
                             type="password"
                             placeholder="비밀번호"

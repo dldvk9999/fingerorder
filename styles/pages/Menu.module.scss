@@ -279,17 +279,8 @@
         align-items: flex-start;
         gap: 0;
     }
-    .menuItemNamePrice > p:nth-child(2) {
-        display: none;
-    }
     .menuItemNamePrice {
         margin: 1rem;
-    }
-}
-
-@media (max-width: 500px) {
-    .menuItemImage {
-        display: none;
     }
 }
 

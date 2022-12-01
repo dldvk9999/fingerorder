@@ -39,34 +39,10 @@ export default function Order() {
     // 주문 내역 삭제
     function deleteOrder(index: number) {
         if (confirm("삭제하시겠습니까?")) {
-            setResult(
-                result
-                    .slice(0, index)
-                    .concat(result.slice(index + 1, result.length))
-            );
-            setMenuList(
-                menuList
-                    .slice(0, index)
-                    .concat(menuList.slice(index + 1, menuList.length))
-            );
-            setCount(
-                count
-                    .slice(0, index)
-                    .concat(count.slice(index + 1, count.length))
-            );
-            setLocate(
-                locate
-                    .slice(0, index)
-                    .concat(locate.slice(index + 1, locate.length))
-            );
-            setSum(
-                sum.slice(0, index).concat(sum.slice(index + 1, sum.length))
-            );
-            setTable(
-                table
-                    .slice(0, index)
-                    .concat(table.slice(index + 1, table.length))
-            );
+            let del = [setResult, setMenuList, setCount, setLocate, setSum, setTable];
+            let delValue = [result, menuList, count, locate, sum, table];
+            for (let i = 0; i < del.length; i++)
+                del[i]((delValue[i].slice(0, index) as any).concat(delValue[i].slice(index + 1, delValue[i].length)));
         }
     }
 
@@ -82,10 +58,7 @@ export default function Order() {
         // 주문 중 메뉴의 개수 랜덤
         for (let i = 0; i < Math.floor(Math.random() * 10) + 1; i++) {
             const categoryLength = store[storeID].category.length;
-            category =
-                store[storeID].category[
-                    Math.floor(Math.random() * categoryLength)
-                ];
+            category = store[storeID].category[Math.floor(Math.random() * categoryLength)];
             const storeMenu = store[storeID].menu as unknown as menu;
             const menuLength = storeMenu[category].length;
             let tm = Math.floor(Math.random() * menuLength);
@@ -98,19 +71,13 @@ export default function Order() {
             tmpSum += tmpCount[tmpCount.length - 1] * menu.price;
         }
 
-        if (
-            tmpLocate !== "" &&
-            tmpCount.length !== 0 &&
-            tmpMenuList.length !== 0
-        ) {
-            setLocate([...locate, tmpLocate]);
-            setCount([...count, tmpCount]);
-            setMenuList([...menuList, tmpMenuList]);
-            setSum([...sum, tmpSum]);
-            setTable([...table, tmpTable]);
-        }
+        setLocate([...locate, tmpLocate]);
+        setCount([...count, tmpCount]);
+        setMenuList([...menuList, tmpMenuList]);
+        setSum([...sum, tmpSum]);
+        setTable([...table, tmpTable]);
 
-        if (localStorage["soundplay"] === "true") notiAudio && notiAudio.play();
+        if (localStorage["soundplay"] == "true") notiAudio && notiAudio.play();
     }
 
     // Label 클릭 시 처리했다는 표시를 나타내기 위해 색깔과 삭선 표시
@@ -126,23 +93,16 @@ export default function Order() {
 
     // 랜덤한 order 중 랜덤한 메뉴 생성
     function printRandomMenu(index: number) {
-        let result = [];
-        result.push(
-            <div
-                className={styles.orderCardMenu}
-                key={"order-random-menu-title"}
-            >
+        let result = [
+            <div className={styles.orderCardMenu} key={"order-random-menu-title"}>
                 <p className={styles.orderCardMenuTitle}>이름</p>
                 <p className={styles.orderCardMenuTitle}>수량</p>
                 <p className={styles.orderCardMenuTitle}>상태</p>
-            </div>
-        );
-        for (let i = 0; i < menuList[index].length; i++) {
+            </div>,
+        ];
+        for (let i = 0; i < menuList[index].length; i++)
             result.push(
-                <div
-                    className={styles.orderCardMenu}
-                    key={"order-random-menu-" + i}
-                >
+                <div className={styles.orderCardMenu} key={"order-random-menu-" + i}>
                     <p>{menuList![index][i].name}</p>
                     <p>{count![index][i]}개</p>
                     <label
@@ -158,20 +118,17 @@ export default function Order() {
                     </label>
                 </div>
             );
-        }
         return result;
     }
 
     // 랜덤한 order 생성
     function printRandomOrder() {
         let tmp = [];
-        for (let i = 0; i < menuList.length; i++) {
+        for (let i = 0; i < menuList.length; i++)
             tmp.push(
                 <div
                     className={`${styles.orderCard} ${
-                        i === menuList.length - 1 &&
-                        isClickNew &&
-                        styles.orderCardSlideIn
+                        i === menuList.length - 1 && isClickNew && styles.orderCardSlideIn
                     }`}
                     key={"order-random-" + i}
                 >
@@ -181,9 +138,7 @@ export default function Order() {
                         <div>{table[i] + 1}번</div>
                     </div>
                     {printRandomMenu(i)}
-                    <p className={styles.orderCardTotal}>
-                        {sum[i].toLocaleString()}원
-                    </p>
+                    <p className={styles.orderCardTotal}>{sum[i].toLocaleString()}원</p>
                     <button
                         className={styles.orderCardClose}
                         onClick={() => {
@@ -195,7 +150,6 @@ export default function Order() {
                     </button>
                 </div>
             );
-        }
         setResult(tmp);
     }
 
@@ -219,8 +173,7 @@ export default function Order() {
                 주문 목록
                 <button
                     onClick={() => {
-                        localStorage["soundplay"] =
-                            localStorage["soundplay"] !== "true";
+                        localStorage["soundplay"] = localStorage["soundplay"] !== "true";
                         setSoundPlay(!isSoundPlay);
                     }}
                     className={isSoundPlay ? styles.orderSoundActive : ""}
@@ -236,9 +189,7 @@ export default function Order() {
                     TestOrder
                 </button>
             </h1>
-            <p className={styles.orderSubText}>
-                * 상태를 클릭하여 준비 완료 표시로 변경할 수 있습니다.
-            </p>
+            <p className={styles.orderSubText}>* 상태를 클릭하여 준비 완료 표시로 변경할 수 있습니다.</p>
             <section className={styles.orderSection}>{result}</section>
         </main>
     ) : null;

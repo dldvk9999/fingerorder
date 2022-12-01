@@ -18,9 +18,7 @@ export default function QRCode(props: { tableCount: number }) {
     // QR 리스트 다운로드
     function downloadQR() {
         let qr = document.getElementById("QR");
-        let btn = document.querySelector<HTMLElement>(
-            "." + styles.storeQRDownload
-        );
+        let btn = document.querySelector<HTMLElement>("." + styles.storeQRDownload);
         btn!.style.display = "none";
         window.onbeforeprint = () => {
             document.body.innerHTML = qr!.innerHTML;
@@ -53,13 +51,7 @@ export default function QRCode(props: { tableCount: number }) {
         let result = [];
         const limit = index * 16 + 16;
         for (let i = index * 16; i < Math.min(limit, tableCount); i++) {
-            const url =
-                orderURL +
-                STORE_MANAGER_ID +
-                "/" +
-                STORE_ID +
-                "/" +
-                Number(i + 1);
+            const url = orderURL + STORE_MANAGER_ID + "/" + STORE_ID + "/" + Number(i + 1);
             result.push(
                 <div className={styles.storeQRItem} key={"store-QR-" + i}>
                     <Image
@@ -69,9 +61,7 @@ export default function QRCode(props: { tableCount: number }) {
                         }}
                     />
                     <p>TABLE - {i + 1}</p>
-                    <p className={styles.storeQRItemText}>
-                        QR코드를 스캔하여 자리에서 메뉴를 주문하세요!
-                    </p>
+                    <p className={styles.storeQRItemText}>QR코드를 스캔하여 자리에서 메뉴를 주문하세요!</p>
                 </div>
             );
         }
@@ -101,25 +91,17 @@ export default function QRCode(props: { tableCount: number }) {
 
     return LoginCheck() && isStoreManager ? (
         <main>
-            <section
-                id="QR"
-                className={`${styles.storeQR} ${styles.storeQRActive}`}
-            >
+            <section id="QR" className={`${styles.storeQR} ${styles.storeQRActive}`}>
                 {isMobile ? (
                     <>
                         {printQRList()}
-                        <button
-                            className={styles.storeQRDownload}
-                            onClick={downloadQR}
-                        >
+                        <button className={styles.storeQRDownload} onClick={downloadQR}>
                             QR 다운로드
                         </button>
                     </>
                 ) : (
                     <div className={styles.storeIsNotPCDiv}>
-                        <h2 className={styles.storeIsNotPC}>
-                            QR 코드 리스트는 PC에서만 가능합니다.
-                        </h2>
+                        <h2 className={styles.storeIsNotPC}>QR 코드 리스트는 PC에서만 가능합니다.</h2>
                     </div>
                 )}
             </section>

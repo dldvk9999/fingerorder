@@ -24,17 +24,9 @@ export default function Store(props: {
 
     // 추가한 카테고리에서 삭제
     function deleteCategory(index: number) {
-        if (
-            confirm(
-                "선택하신 " + category[index] + " 카테고리를 삭제하시겠습니까?"
-            )
-        ) {
+        if (confirm("선택하신 " + category[index] + " 카테고리를 삭제하시겠습니까?")) {
             let result = [];
-            for (let i = 0; i < category.length; i++) {
-                if (i !== index) {
-                    result.push(category[i]);
-                }
-            }
+            for (let i = 0; i < category.length; i++) if (i !== index) result.push(category[i]);
             setCategory(result);
         }
     }
@@ -42,7 +34,7 @@ export default function Store(props: {
     // 추가한 카테고리를 보여주는 블록 출력 함수
     function blockCategory() {
         let result = [];
-        for (let i = 0; i < category.length; i++) {
+        for (let i = 0; i < category.length; i++)
             result.push(
                 <button
                     className={styles.storeCategoryBlock}
@@ -53,7 +45,6 @@ export default function Store(props: {
                     {category[i]}
                 </button>
             );
-        }
         return result;
     }
 
@@ -67,10 +58,7 @@ export default function Store(props: {
             if (data === "") {
                 result = [false, "공백은 입력 할 수 없습니다."];
             } else if (type !== "category" && naming.exec(data)) {
-                result = [
-                    false,
-                    "이름은 알파벳, 숫자, 한글, 공백, 소괄호로만 지을 수 있습니다.",
-                ];
+                result = [false, "이름은 알파벳, 숫자, 한글, 공백, 소괄호로만 지을 수 있습니다."];
             } else if (data.length > 40) {
                 result = [false, "40자 이내로 입력해야 합니다."];
             } else if (type === "tmpcategory" && category.indexOf(data) > -1) {
@@ -80,9 +68,7 @@ export default function Store(props: {
             }
         }
         // 매장 테이블
-        else if (type === "table" && !tmpTableCount) {
-            result = [false, "테이블 수를 입력하여 주세요."];
-        }
+        else if (type === "table" && !tmpTableCount) result = [false, "테이블 수를 입력하여 주세요."];
 
         // 해당 input 테두리 빨간색으로 지정
         if (!result[0]) {
@@ -95,9 +81,7 @@ export default function Store(props: {
         }
         // 카테고리에 추가 버튼 테두리 지정
         if (index === 3 && !result[0]) {
-            let addBtn = document.querySelector<HTMLElement>(
-                "." + styles.storeInputButton
-            );
+            let addBtn = document.querySelector<HTMLElement>("." + styles.storeInputButton);
             setSubmitDisable(true);
             addBtn?.classList.add(styles.storeRequireAddBtn);
             setTimeout(() => {
@@ -113,19 +97,13 @@ export default function Store(props: {
         const data = tmpCategory.trim();
         const result = inputDataCheck(data, 3, "tmpcategory");
 
-        if (!result[0]) {
-            alert(result[1]);
-        } else {
-            setCategory([...category, data]);
-        }
+        !result[0] ? alert(result[1]) : setCategory([...category, data]);
         setTmpCategory("");
     }
 
     // 매장 등록 함수
     function storeInput() {
-        for (let i = 0; i < inputList!.length; i++) {
-            inputList![i].style.border = "1px solid #eaeaea";
-        }
+        for (let i = 0; i < inputList!.length; i++) inputList![i].style.border = "1px solid #eaeaea";
         addBtn!.style.borderTopColor = "#eaeaea";
         addBtn!.style.borderRightColor = "#eaeaea";
         addBtn!.style.borderBottomColor = "#eaeaea";
@@ -150,20 +128,14 @@ export default function Store(props: {
 
     // 카테고리 input 창에서 엔터키 입력으로 추가 가능하게 하는 함수
     const onKeyPress = (e: { key: string }) => {
-        if (e.key === "Enter") {
-            addCategory();
-        }
+        if (e.key === "Enter") addCategory();
     };
 
     useEffect(() => {
         // input 영역 변수로 저장
-        setStatusInput(
-            document.querySelectorAll<HTMLElement>("." + styles.storeInput)
-        );
+        setStatusInput(document.querySelectorAll<HTMLElement>("." + styles.storeInput));
         // Category Add Btn
-        setAddBtn(
-            document.querySelector<HTMLElement>("." + styles.storeInputButton)!
-        );
+        setAddBtn(document.querySelector<HTMLElement>("." + styles.storeInputButton)!);
     }, []);
 
     useEffect(() => {
@@ -173,13 +145,7 @@ export default function Store(props: {
         setTmpTableCount(props.tmpTableCount ? props.tmpTableCount : 0);
         setStoreLocation(props.location ? props.location : "");
         setCategory(props.category ? props.category : []);
-    }, [
-        props.name,
-        props.tableCount,
-        props.tmpTableCount,
-        props.location,
-        props.category,
-    ]);
+    }, [props.name, props.tableCount, props.tmpTableCount, props.location, props.category]);
 
     return LoginCheck() ? (
         <main className={styles.store}>
@@ -200,9 +166,7 @@ export default function Store(props: {
                     <input
                         type="number"
                         placeholder="테이블 수"
-                        onChange={(e) =>
-                            setTmpTableCount(Number(e.target.value))
-                        }
+                        onChange={(e) => setTmpTableCount(Number(e.target.value))}
                         value={tmpTableCount}
                         disabled={isSubmit}
                         className={styles.storeInput}
@@ -231,10 +195,7 @@ export default function Store(props: {
                         maxLength={40}
                         className={styles.storeInput}
                     />
-                    <p>
-                        * 매장 메뉴의 카테고리를 입력해주세요 (ex. 찌개류,
-                        고기류, 음료 등)
-                    </p>
+                    <p>* 매장 메뉴의 카테고리를 입력해주세요 (ex. 찌개류, 고기류, 음료 등)</p>
                     <button
                         className={styles.storeInputButton}
                         onClick={addCategory}
@@ -243,15 +204,9 @@ export default function Store(props: {
                         추가
                     </button>
                 </div>
-                <div className={styles.storeCategoryBlocks}>
-                    {blockCategory()}
-                </div>
+                <div className={styles.storeCategoryBlocks}>{blockCategory()}</div>
                 {!isSubmit && (
-                    <button
-                        className={styles.storeButton}
-                        onClick={storeInput}
-                        disabled={isSubmitDisable}
-                    >
+                    <button className={styles.storeButton} onClick={storeInput} disabled={isSubmitDisable}>
                         {props.name ? "매장 수정" : "매장 등록"}
                     </button>
                 )}

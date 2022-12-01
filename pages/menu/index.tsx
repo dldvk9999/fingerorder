@@ -22,18 +22,9 @@ export default function Menu() {
     const [itemPrice, setItemPrice] = useState(0);
     const [itemDesc, setItemDesc] = useState("");
     const [itemImage, setItemImage] = useState<any>();
-    const [isMobile, setMobile] = useState(false);
+    const [isMobile, setMobile] = useState(0);
     const [isDisableBtn, setDisableBtn] = useState(false);
     const [searchName, setSearchName] = useState("");
-
-    // 왼쪽에 선택한 아이템이나 입력한 아이템 모두 리셋
-    function editReset() {
-        setCategory("");
-        setItemName("");
-        setItemPrice(0);
-        setItemDesc("");
-        setItemImage("");
-    }
 
     // 수정 버튼 클릭 시 해당 아이템 정보 가져옴
     function menuEdit(categoryIndex: string, name: string, price: number, desc: string, image: string) {
@@ -41,7 +32,7 @@ export default function Menu() {
         setItemName(name);
         setItemPrice(price);
         setItemDesc(desc);
-        setItemImage("/sample_menu/" + image);
+        setItemImage(image !== "" ? "/sample_menu/" + image : image);
     }
 
     // 메뉴 추가 함수
@@ -62,7 +53,7 @@ export default function Menu() {
             }, 4000);
             return;
         } else {
-            editReset();
+            menuEdit("", "", 0, "", "");
             alert("메뉴 추가 완료하였습니다.");
         }
     }
@@ -80,20 +71,22 @@ export default function Menu() {
                         tmp[i] = menuCategory.soldout;
                         result.push(
                             <div className={styles.menuItem} key={"menu-list-" + i}>
-                                <Image
-                                    src={"/sample_menu/" + menuCategory.image}
-                                    alt={menuCategory.name}
-                                    width={75}
-                                    height={75}
-                                    className={styles.menuItemImage}
-                                    priority
-                                />
+                                {isMobile >= 500 && (
+                                    <Image
+                                        src={"/sample_menu/" + menuCategory.image}
+                                        alt={menuCategory.name}
+                                        width={75}
+                                        height={75}
+                                        className={styles.menuItemImage}
+                                        priority
+                                    />
+                                )}
                                 <div className={styles.menuItemNamePrice}>
                                     <p>
                                         {menuCategory.name}
                                         {menuCategory.soldout && <span className={styles.menuItemSoldout}>품절</span>}
                                     </p>
-                                    <p>{menuCategory.desc}</p>
+                                    {isMobile >= 650 && <p>{menuCategory.desc}</p>}
                                     <p>{menuCategory.price}원</p>
                                 </div>
                                 <div className={styles.menuItemBtns}>
@@ -130,13 +123,12 @@ export default function Menu() {
                         );
                     }
                 }
-            } else {
+            } else
                 result.push(
                     <div className={styles.menuItemNoExist} key={"menu-list-no-exist"}>
                         상품이 없습니다.
                     </div>
                 );
-            }
         }
         return result;
     }
@@ -144,8 +136,8 @@ export default function Menu() {
     // 매장에 있는 메뉴 목록 출력
     function printStoreMenuList() {
         let result = [];
-        if (storeID !== -1) {
-            for (let i = 0; i < store[storeID - 1].category.length; i++) {
+        if (storeID !== -1)
+            for (let i = 0; i < store[storeID - 1].category.length; i++)
                 result.push(
                     <div className={styles.menuItemHeader} key={"menu-list-header-" + i}>
                         {i !== 0 && <hr />}
@@ -153,52 +145,45 @@ export default function Menu() {
                         {printStoreMenuListItem(store[storeID - 1].category[i])}
                     </div>
                 );
-            }
-        } else {
+        else
             result.push(
                 <h3 key={"menu-list-no-select-store"}>
-                    {isMobile ? "상단에서 매장을 선택해주세요." : "왼쪽에서 매장을 선택해주세요."}
+                    {isMobile < 800 ? "상단에서 매장을 선택해주세요." : "왼쪽에서 매장을 선택해주세요."}
                 </h3>
             );
-        }
         return result;
     }
 
     // 선택한 매장 ID의 카테고리를 드롭다운 선택
     function printStoreCategory() {
-        let result = [];
-        result.push(
+        let result = [
             <option value={""} hidden key={"menu-storeCategory-default"}>
                 카테고리를 선택해주세요.
-            </option>
-        );
-        if (storeID !== -1) {
-            for (let i = 0; i < store[storeID - 1].category.length; i++) {
+            </option>,
+        ];
+        if (storeID !== -1)
+            for (let i = 0; i < store[storeID - 1].category.length; i++)
                 result.push(
                     <option value={store[storeID - 1].category[i]} key={"menu-storeCategory-" + i}>
                         {i + 1}. {store[storeID - 1].category[i]}
                     </option>
                 );
-            }
-        }
         return result;
     }
 
     // 매장 ID 검색 후 드롭다운 선택
     function printStoreID() {
-        let result = [];
-        result.push(
+        let result = [
             <option value={-1} hidden key={"menu-storeID-default"}>
                 매장 ID를 선택해주세요.
-            </option>
-        );
-        for (let i = 0; i < store.length; i++) {
+            </option>,
+        ];
+        for (let i = 0; i < store.length; i++)
             result.push(
                 <option value={store[i].id} key={"menu-storeID-" + i}>
                     {store[i].id}. {store[i].name}
                 </option>
             );
-        }
         return result;
     }
 
@@ -210,16 +195,14 @@ export default function Menu() {
                 setItemImage(e.target!.result);
             };
             reader.readAsDataURL(input.files[0]);
-        } else {
-            setItemImage("");
-        }
+        } else setItemImage("");
     }
 
     useEffect(() => {
         // 모바일 인지 아닌지 (width 800px 기준)
-        setMobile(window.innerWidth < 800);
+        setMobile(window.innerWidth);
         window.onresize = () => {
-            setMobile(window.innerWidth < 800);
+            setMobile(window.innerWidth);
         };
     }, []);
 
@@ -230,8 +213,8 @@ export default function Menu() {
                     <h1>
                         메뉴 등록
                         <span>
-                            <button onClick={editReset}>
-                                <Image src={"/reload.webp"} alt={"reload"} width={25} height={25} />
+                            <button onClick={() => menuEdit("", "", 0, "", "")}>
+                                <Image src={"/reload.webp"} alt={"reload"} width={25} height={25} priority />
                             </button>
                         </span>
                     </h1>
@@ -243,7 +226,7 @@ export default function Menu() {
                             width={150}
                             height={150}
                             className={`${styles.menuInputImage} ${!itemImage && styles.menuInputHide}`}
-                            priority
+                            loading="lazy"
                         />
                         <div className={styles.menuInputImageInput}>
                             <input

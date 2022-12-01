@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styles from "../../styles/pages/Login.module.scss";
 
 export default function FindPassword() {
@@ -7,28 +7,15 @@ export default function FindPassword() {
     const [isSend, setSend] = useState(false);
 
     function emailSend(e: { preventDefault: () => void }) {
-        if (email === "") {
-            alert("이메일을 입력해주세요.");
-        } else {
-            setSend(true);
-        }
+        email === "" ? alert("이메일을 입력해주세요.") : setSend(true);
         e.preventDefault();
     }
 
     return (
         <main>
             <section className={styles.login}>
-                <Image
-                    src={"/fingerorder.webp"}
-                    alt={"fingerorder"}
-                    width={150}
-                    height={150}
-                />
-                <form
-                    className={styles.loginForm}
-                    onSubmit={emailSend}
-                    action="/"
-                >
+                <Image src={"/fingerorder.webp"} alt={"fingerorder"} width={150} height={150} />
+                <form className={styles.loginForm} onSubmit={emailSend} action="/">
                     {!isSend ? (
                         <>
                             <input

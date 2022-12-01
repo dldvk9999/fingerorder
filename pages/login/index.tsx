@@ -42,18 +42,9 @@ export default function Login() {
     return (
         <main>
             <section className={styles.login}>
-                <Image
-                    src={"/fingerorder.webp"}
-                    alt={"fingerorder"}
-                    width={150}
-                    height={150}
-                />
+                <Image src={"/fingerorder.webp"} alt={"fingerorder"} width={150} height={150} />
                 <form className={styles.loginForm} onSubmit={login} action="/">
-                    <input
-                        type="email"
-                        placeholder="이메일"
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
+                    <input type="email" placeholder="이메일" onChange={(e) => setEmail(e.target.value)} />
                     <input
                         type="password"
                         placeholder="비밀번호"
@@ -75,10 +66,7 @@ export default function Login() {
                     </button>
                     <button onClick={autoLogin}>자동로그인</button>
                     <div className={styles.loginFormSub}>
-                        <Link
-                            className={styles.loginFormFunc}
-                            href={"/findpassword"}
-                        >
+                        <Link className={styles.loginFormFunc} href={"/findpassword"}>
                             비밀번호 찾기
                         </Link>
                         /
