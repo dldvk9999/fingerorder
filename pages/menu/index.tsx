@@ -221,7 +221,7 @@ export default function Menu() {
                     <div className={styles.menuInputImageP}>
                         <Image
                             id="preview-image"
-                            src={itemImage ? itemImage : "/sample_menu/이미지추가.png"}
+                            src={itemImage ? itemImage : "/sample_menu/이미지추가.webp"}
                             alt={"preview image"}
                             width={150}
                             height={150}
