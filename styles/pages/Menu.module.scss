@@ -122,7 +122,7 @@
 }
 
 .menuItemSearch {
-    width: 30rem;
+    width: 60%;
     margin: 0 1rem 1rem 1rem;
     font-size: 1.5rem;
     background-color: transparent;
@@ -313,6 +313,10 @@
         font-size: 0.8rem;
     }
     .menuItemNamePrice > p:nth-child(3) {
+        font-size: 0.8rem;
+    }
+    .menuItemSearch,
+    .menuItemCategory > div > h3 {
         font-size: 0.8rem;
     }
 }
