@@ -78,7 +78,7 @@
 
 .mypageStoreList {
     width: 50vw;
-    min-width: 15rem;
+    min-width: 16rem;
     padding: 1rem 1rem 3rem 1rem;
     display: flex;
     flex-direction: column;
@@ -144,9 +144,12 @@
     .mypageStoreDate {
         margin: 0;
     }
+    .mypageStoreButton {
+        gap: 0;
+    }
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1024px) {
     .mypage {
         padding: 2rem 4rem;
     }
@@ -187,19 +190,17 @@
         font-size: 0.85rem;
         padding: 0.5rem 0;
     }
-    .mypageStoreButton {
-        gap: 0.5rem;
-    }
     .mypageStoreButton > a > button {
         font-size: 0.8rem;
         padding: 0.5rem 0.7rem;
     }
 }
 
-@media (max-width: 400px) {
+@media (max-width: 450px) {
     .mypage {
         padding: 2rem 1rem;
     }
+    .mypageStoreButton > button,
     .mypageStoreButton > a > button {
         font-size: 0.5rem;
         padding: 0.3rem 0.4rem;
