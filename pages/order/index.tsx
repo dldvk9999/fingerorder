@@ -195,7 +195,7 @@ export default function Order() {
                     <Link href={"/orderlist"}>
                         <button>주문내역 조회</button>
                     </Link>
-                    <Link href={"/orderlist"}>
+                    <Link href={"/sales"}>
                         <button>매출내역 조회</button>
                     </Link>
                 </div>
