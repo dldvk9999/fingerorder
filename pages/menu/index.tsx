@@ -15,6 +15,7 @@ type menu = {
     [key: string]: Array<Object>;
 };
 
+// custom한 mock data를 사용해서 상대적으로 코드가 긴 편인데 백엔드와 연동하면 코드가 약 3~50% 정도 감소될 예정
 export default function Menu() {
     const [nowStore, setStore] = useState(store);
     const [storeID, setStoreID] = useState(-1); // 매장 ID
@@ -27,27 +28,57 @@ export default function Menu() {
     const [isDisableBtn, setDisableBtn] = useState(false); // Input 값이 유효하지 않을 때 잠시 Btn을 disable 시킴 (4초)
     const [searchName, setSearchName] = useState(""); // 검색할 텍스트
 
-    // 메뉴 삭제 함수
-    function deleteMenu(index: number, cate: string) {
+    // store 정보 수정해서 저장
+    function saveStore(storeInfo: any) {
+        setStore(
+            nowStore
+                .slice(0, storeID - 1)
+                .concat(storeInfo)
+                .concat(nowStore.slice(storeID, nowStore.length))
+        );
+    }
+
+    // 메뉴 Edit 함수 (추가, 삭제, 품절 처리)
+    function editMenu(type: string, cate: string, index: number = 0) {
         let storeInfo = nowStore[storeID - 1];
         let menu = storeInfo.menu as unknown as menu;
         let menuCategory = menu[cate] as Array<menuList>;
-        if (confirm(menuCategory[index].name + " 메뉴를 삭제하시겠습니까?")) {
-            menuCategory = menuCategory.slice(0, index).concat(menuCategory.slice(index + 1, menuCategory.length));
-            menu[cate] = menuCategory;
-            storeInfo.menu = menu as any;
-            setStore(
-                nowStore
-                    .slice(0, storeID - 1)
-                    .concat(storeInfo)
-                    .concat(nowStore.slice(storeID, nowStore.length))
-            );
-            alert("메뉴를 삭제하였습니다.");
+
+        // 추가 처리
+        if (type === "add") {
+            const imagePath =
+                itemImage.trim() === "" || itemImage.length > 100 ? "/sample_menu/fingerorder.webp" : itemImage;
+
+            menu[cate] = [
+                ...menu[cate],
+                { name: itemName, price: itemPrice, desc: itemDesc, image: imagePath, soldout: false },
+            ];
+
+            menuInfoLoad("", "", 0, "", "");
+            setItemImage("");
+            alert("메뉴 추가 완료하였습니다.");
         }
+
+        // 삭제 처리
+        else if (type === "delete") {
+            if (confirm(menuCategory[index].name + " 메뉴를 삭제하시겠습니까?")) {
+                menuCategory = menuCategory.slice(0, index).concat(menuCategory.slice(index + 1, menuCategory.length));
+                menu[cate] = menuCategory;
+                alert("메뉴를 삭제하였습니다.");
+            }
+        }
+
+        // 품절 처리
+        else {
+            menuCategory[index].soldout = !menuCategory[index].soldout;
+            menu[cate] = menuCategory;
+        }
+        storeInfo.menu = menu as any;
+        saveStore(storeInfo);
     }
 
     // 수정 버튼 클릭 시 해당 아이템 정보 가져옴
-    function menuEdit(categoryIndex: string, name: string, price: number, desc: string, image: string) {
+    function menuInfoLoad(categoryIndex: string, name: string, price: number, desc: string, image: string) {
         setCategory(categoryIndex);
         setItemName(name);
         setItemPrice(price);
@@ -70,37 +101,11 @@ export default function Menu() {
                 name?.classList.add(styles.menuInputRequire);
                 setTimeout(() => {
                     setDisableBtn(false);
-                    let name = document.querySelector("#menuName");
                     name?.classList.remove(styles.menuInputRequire);
                 }, 4000);
                 return;
             } else {
-                let storeInfo = nowStore[storeID - 1];
-                let menu = storeInfo.menu as unknown as menu;
-                const imagePath =
-                    itemImage.trim() === "" || itemImage.length > 100 ? "/sample_menu/fingerorder.webp" : itemImage;
-
-                menu[cate] = [
-                    ...menu[cate],
-                    {
-                        name: itemName,
-                        price: itemPrice,
-                        desc: itemDesc,
-                        image: imagePath,
-                        soldout: false,
-                    },
-                ];
-                storeInfo.menu = menu as any;
-                setStore(
-                    nowStore
-                        .slice(0, storeID - 1)
-                        .concat(storeInfo)
-                        .concat(nowStore.slice(storeID, nowStore.length))
-                );
-
-                menuEdit("", "", 0, "", "");
-                setItemImage("");
-                alert("메뉴 추가 완료하였습니다.");
+                editMenu("add", cate);
             }
         } else {
             alert("매장 ID와 카테고리를 먼저 선택해주세요.");
@@ -147,7 +152,7 @@ export default function Menu() {
                                 <button
                                     className={styles.menuItemBtn}
                                     onClick={() =>
-                                        menuEdit(
+                                        menuInfoLoad(
                                             category,
                                             menuCategory.name,
                                             menuCategory.price,
@@ -158,13 +163,10 @@ export default function Menu() {
                                 >
                                     수정
                                 </button>
-                                <button className={styles.menuItemBtn} onClick={() => deleteMenu(i, category)}>
+                                <button className={styles.menuItemBtn} onClick={() => editMenu("delete", category, i)}>
                                     삭제
                                 </button>
-                                <button
-                                    className={styles.menuItemBtn}
-                                    onClick={() => alert("품절처리 완료하였습니다.")}
-                                >
+                                <button className={styles.menuItemBtn} onClick={() => editMenu("soldout", category, i)}>
                                     품절
                                 </button>
                             </div>
@@ -267,7 +269,7 @@ export default function Menu() {
                     <h1>
                         메뉴 등록
                         <span>
-                            <button onClick={() => menuEdit("", "", 0, "", "")}>
+                            <button onClick={() => menuInfoLoad("", "", 0, "", "")}>
                                 <Image src={"/reload.webp"} alt={"reload"} width={25} height={25} priority />
                             </button>
                         </span>
