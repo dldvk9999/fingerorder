@@ -1,0 +1,54 @@
+.orderlist {
+    width: 100vw;
+    height: calc(100vh - 4.4rem);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 5rem;
+}
+
+.orderlistGrid,
+.orderlistGridBody {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 3fr 1fr;
+    justify-items: center;
+    align-items: center;
+}
+
+.orderlistGrid > h2 {
+    width: 100%;
+    background-color: #ccd1ff;
+    border-top: 4px double black;
+    border-bottom: 4px double black;
+    text-align: center;
+    margin: 0;
+}
+
+.orderlistGridBody {
+    max-height: 3.5rem;
+    border-top: 1px solid #eaeaea;
+    border-bottom: 1px solid #eaeaea;
+    cursor: pointer;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+}
+
+.orderlistGridBody:hover {
+    background-color: #eaeaea;
+}
+
+.orderlistGridBlank {
+    margin: 0;
+    grid-column: span 1;
+}
+
+.orderlistGridHide {
+    border: 1px solid black;
+    height: fit-content !important;
+    width: 100%;
+    text-align: center;
+}
+.orderlistGridShow {
+    max-height: 20rem;
+}
