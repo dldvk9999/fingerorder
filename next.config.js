@@ -12,6 +12,9 @@ const nextConfig = {
         includePaths: [path.join(__dirname, "styles")],
         prependData: `@import "styles/_variables.scss"; @import "styles/_mixins.scss";`,
     },
+    images: {
+        sizes: "200px",
+    },
 };
 
 export default nextConfig;
