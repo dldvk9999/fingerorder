@@ -134,6 +134,7 @@ export default function Order() {
                     key={"order-random-" + i}
                 >
                     <h2>{store[storeID].name}</h2>
+                    <div className={styles.orderCardMenu}>{new Date().toLocaleString()}</div>
                     <div className={styles.orderCardLocate}>
                         {locate[i]}
                         <div>{table[i] + 1}번</div>

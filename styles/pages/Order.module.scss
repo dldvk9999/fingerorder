@@ -49,7 +49,7 @@
 
 .orderCard {
     width: 20rem;
-    max-height: 20rem;
+    max-height: 25rem;
     overflow-y: scroll;
     display: flex;
     flex-direction: column;
@@ -75,7 +75,7 @@
 }
 
 .orderCard > h2 {
-    margin-bottom: 0.3rem;
+    margin: 0.3rem 0;
 }
 .orderCardLocate {
     margin: 0.5rem 0;
@@ -154,6 +154,9 @@
     .order {
         padding: 7rem 0;
         min-width: 15.625rem;
+    }
+    .order > div > div {
+        gap: 0;
     }
     .orderCard {
         width: 100vw;
