@@ -3,18 +3,33 @@
     padding: 7rem 5rem;
 }
 
-.order > h1 {
+.order > div,
+.order > div > div {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.order > div > h1 {
     display: flex;
     align-items: center;
     gap: 1rem;
     white-space: nowrap;
+    margin: 0;
 }
 
-.order > h1 > button {
+.order > div > div > a > button,
+.order > div > h1 > button {
+    height: 2rem;
     padding: 0.5rem 1rem;
     color: #0070f3;
     border: 1px solid #0070f3;
     border-radius: 1rem;
+}
+
+.order > div > div > a > button {
+    color: white !important;
+    background-color: #0070f3;
 }
 
 .orderSoundActive {
@@ -124,6 +139,15 @@
 .orderCardLabelActive {
     border: 1px solid #0070f3;
     background-color: #0070f3;
+}
+
+@media (max-width: 800px) {
+    .order > div {
+        flex-direction: column;
+    }
+    .order > div > div {
+        justify-content: flex-start;
+    }
 }
 
 @media (max-width: 400px) {

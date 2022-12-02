@@ -4,6 +4,7 @@ import { soundPlay } from "../../states";
 import LoginCheck from "../login_check";
 import store from "../../data/store";
 import styles from "../../styles/pages/Order.module.scss";
+import Link from "next/link";
 
 type menuList = {
     name: string;
@@ -169,26 +170,36 @@ export default function Order() {
 
     return LoginCheck() ? (
         <main className={styles.order}>
-            <h1>
-                주문 목록
-                <button
-                    onClick={() => {
-                        localStorage["soundplay"] = localStorage["soundplay"] !== "true";
-                        setSoundPlay(!isSoundPlay);
-                    }}
-                    className={isSoundPlay ? styles.orderSoundActive : ""}
-                >
-                    {isSoundPlay ? "sound ON" : "sound OFF"}
-                </button>
-                <button
-                    onClick={() => {
-                        setClickNew(true);
-                        makeRandomOrder();
-                    }}
-                >
-                    TestOrder
-                </button>
-            </h1>
+            <div>
+                <h1>
+                    주문 목록
+                    <button
+                        onClick={() => {
+                            localStorage["soundplay"] = localStorage["soundplay"] !== "true";
+                            setSoundPlay(!isSoundPlay);
+                        }}
+                        className={isSoundPlay ? styles.orderSoundActive : ""}
+                    >
+                        {isSoundPlay ? "sound ON" : "sound OFF"}
+                    </button>
+                    <button
+                        onClick={() => {
+                            setClickNew(true);
+                            makeRandomOrder();
+                        }}
+                    >
+                        TestOrder
+                    </button>
+                </h1>
+                <div>
+                    <Link href={"/orderlist"}>
+                        <button>주문내역 조회</button>
+                    </Link>
+                    <Link href={"/orderlist"}>
+                        <button>매출내역 조회</button>
+                    </Link>
+                </div>
+            </div>
             <p className={styles.orderSubText}>* 상태를 클릭하여 준비 완료 표시로 변경할 수 있습니다.</p>
             <section className={styles.orderSection}>{result}</section>
         </main>
