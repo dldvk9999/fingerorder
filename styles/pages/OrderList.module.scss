@@ -1,6 +1,5 @@
 .orderlist {
     width: 100vw;
-    height: calc(100vh - 4.4rem);
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -8,8 +7,64 @@
     overflow-x: scroll;
 }
 
-.orderlist > h1 {
+.orderlistHeader > h1 {
     white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.orderlistHeader,
+.orderlistSearch {
+    display: flex;
+    align-items: center;
+}
+
+.orderlistHeader {
+    width: 100%;
+    justify-content: space-between;
+}
+
+.orderlistExportExcel {
+    border: 1px solid #0070f3;
+    background-color: #0070f3;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 1rem;
+}
+
+.orderlistSearch {
+    gap: 1rem;
+}
+
+.orderlistSelectDate {
+    font-size: 1rem;
+    width: 11rem;
+    padding: 0.3rem 1rem;
+    border: 1px solid #eaeaea;
+    border-radius: 1rem;
+    text-align: center;
+    -ms-user-select: none;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.orderlistSelectDate:focus,
+.orderlistSelectDate:active,
+.orderlistSelectDate:hover {
+    border-color: #0070f3;
+    outline: none;
+}
+
+.orderlistTable {
+    width: 100%;
+}
+
+.orderlistBody {
+    width: 100%;
+    overflow-x: scroll;
 }
 
 .orderlistGrid,
@@ -22,13 +77,14 @@
     align-items: center;
 }
 
-.orderlistGrid > h2 {
+.orderlistGrid > th {
     width: 100%;
     background-color: #ccd1ff;
     border-top: 4px double black;
     border-bottom: 4px double black;
     text-align: center;
     margin: 0;
+    font-size: 1.3rem;
 }
 
 .orderlistGridBody {
@@ -38,6 +94,14 @@
     cursor: pointer;
     overflow: hidden;
     transition: max-height 0.5s ease;
+}
+
+.orderlistGridBody > td {
+    line-height: 3rem;
+}
+
+.orderlistGridInnerBody {
+    line-height: 1rem !important;
 }
 
 .orderlistGridBody:hover {
@@ -63,11 +127,26 @@
     .orderlist {
         padding: 5rem 1rem;
     }
-    .orderlistGrid > h2 {
+    .orderlistGrid > th {
         font-size: 1rem;
     }
-    .orderlistGridBody > p,
-    .orderlistGridBody > div > p {
+    .orderlistGridBody > td {
         font-size: 0.8rem;
+    }
+    .orderlistSearch {
+        gap: 0;
+    }
+}
+
+@media (max-width: 700px) {
+    .orderlistHeader,
+    .orderlistSearch {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 400px) {
+    .orderlistHeader > h1 {
+        flex-direction: column;
     }
 }

@@ -4,7 +4,7 @@ const orderlist = [
         number: 2,
         type: "테이블번호",
         total: 250000,
-        time: "2022.12.2 15:02",
+        time: "2022.12.3 15:02",
         menu: [
             {
                 name: "치킨",
@@ -23,7 +23,7 @@ const orderlist = [
         number: 14,
         type: "주문번호",
         total: 12000,
-        time: "2022.12.2 15:31",
+        time: "2022.12.4 15:31",
         menu: [
             {
                 name: "오징어튀김",
@@ -42,7 +42,7 @@ const orderlist = [
         number: 9,
         type: "테이블번호",
         total: 60000,
-        time: "2022.12.2 16:59",
+        time: "2022.12.4 16:59",
         menu: [
             {
                 name: "부대찌개",
