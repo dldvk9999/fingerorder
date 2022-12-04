@@ -57,8 +57,8 @@ export default function OrderList() {
                         onClick={() => showRow(i)}
                         key={"orderlist-menu-" + i}
                     >
-                        <td>{myOrderList[i].type}</td>
                         <td>{myOrderList[i].name}</td>
+                        <td>{myOrderList[i].type}</td>
                         <td>{myOrderList[i].number}번</td>
                         <td>{myOrderList[i].total.toLocaleString()}원</td>
                         <td>{myOrderList[i].time}</td>
