@@ -13,7 +13,7 @@ const nextConfig = {
         prependData: `@import "styles/_variables.scss"; @import "styles/_mixins.scss";`,
     },
     images: {
-        sizes: "200px",
+        imageSizes: [200],
     },
 };
 
