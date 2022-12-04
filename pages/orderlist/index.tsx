@@ -12,6 +12,7 @@ type menu = {
 export default function OrderList() {
     const [myOrderList, setOrderList] = useState<any>([]);
     const [showTableRow, setTableRow] = useState<Array<boolean>>([]);
+    const [width, setWidth] = useState(0);
 
     // Row를 클릭했을 때 해당 Row 펼치기
     function showRow(index: number) {
@@ -47,9 +48,11 @@ export default function OrderList() {
                     key={"orderlist-menu-" + i}
                 >
                     <p>{myOrderList[i].name}</p>
+                    <p>{myOrderList[i].type}</p>
                     <p>{myOrderList[i].number}번</p>
                     <p>{myOrderList[i].total.toLocaleString()}원</p>
                     <p>{myOrderList[i].time}</p>
+                    <p className={styles.orderlistGridBlank}></p>
                     <p className={styles.orderlistGridBlank}></p>
                     <p className={styles.orderlistGridBlank}></p>
                     <div>{printOrderListMenu(myOrderList[i].menu)}</div>
@@ -63,6 +66,11 @@ export default function OrderList() {
     useEffect(() => {
         setOrderList(orderlist);
         setTableRow(Array.from({ length: orderlist.length }, () => false));
+
+        setWidth(window.innerWidth);
+        window.onresize = () => {
+            setWidth(window.innerWidth);
+        };
     }, []);
 
     return LoginCheck() ? (
@@ -71,9 +79,8 @@ export default function OrderList() {
                 <h1>주문 내역 조회</h1>
                 <div className={styles.orderlistGrid}>
                     <h2>매장 이름</h2>
-                    <h2>
-                        테이블{"("}주문{")"} 번호
-                    </h2>
+                    <h2>구분</h2>
+                    <h2>번호</h2>
                     <h2>총합</h2>
                     <h2>주문 시간</h2>
                 </div>

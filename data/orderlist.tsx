@@ -2,6 +2,7 @@ const orderlist = [
     {
         name: "진짜 맛있는 집",
         number: 2,
+        type: "테이블번호",
         total: 250000,
         time: "2022.12.2 15:02",
         menu: [
@@ -20,6 +21,7 @@ const orderlist = [
     {
         name: "진짜 맛있는 집",
         number: 14,
+        type: "주문번호",
         total: 12000,
         time: "2022.12.2 15:31",
         menu: [
@@ -38,6 +40,7 @@ const orderlist = [
     {
         name: "진짜 맛있는 집",
         number: 9,
+        type: "테이블번호",
         total: 60000,
         time: "2022.12.2 16:59",
         menu: [
