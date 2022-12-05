@@ -22,7 +22,7 @@ export default function Sales() {
                 const sales = Math.floor(Math.random() * 2001 + 500) * 1000;
                 allSum += sales;
                 result.push(
-                    <tr key={"sales-date-" + i}>
+                    <tr className={styles.salesTableRow} key={"sales-date-" + i}>
                         <td>
                             {selectDate.getFullYear()}년 {("0" + (selectDate.getMonth() + 1)).slice(-2)}월{" "}
                             {("0" + (i + 1)).slice(-2)}일
@@ -46,8 +46,16 @@ export default function Sales() {
                     <h1>
                         매출 내역 조회
                         <DownloadTableExcel
-                            filename={"매출내역목록_" + new Date().getTime()}
-                            sheet="sales"
+                            filename={
+                                "매출내역목록_" +
+                                selectDate?.getFullYear() +
+                                "년" +
+                                (Number(selectDate?.getMonth()) + Number(1)) +
+                                "월"
+                            }
+                            sheet={
+                                selectDate?.getFullYear() + "년" + (Number(selectDate?.getMonth()) + Number(1)) + "월"
+                            }
                             currentTableRef={tableRef.current}
                         >
                             <button className={styles.salesExportExcel}>내보내기</button>
