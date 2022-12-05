@@ -32,6 +32,7 @@ export default function Order() {
     const [locate, setLocate] = useState<Array<string>>([]);
     const [table, setTable] = useState<Array<number>>([]);
     const [sum, setSum] = useState<Array<number>>([]);
+    const [date, setDate] = useState<Array<Date>>([]);
     const [isSoundPlay, setSoundPlay] = useRecoilState(soundPlay);
     const [result, setResult] = useState<JSX.Element[]>([]);
     const [notiAudio, setAudio] = useState<any>();
@@ -40,8 +41,8 @@ export default function Order() {
     // 주문 내역 삭제
     function deleteOrder(index: number) {
         if (confirm("삭제하시겠습니까?")) {
-            let del = [setResult, setMenuList, setCount, setLocate, setSum, setTable];
-            let delValue = [result, menuList, count, locate, sum, table];
+            let del = [setResult, setMenuList, setCount, setLocate, setSum, setTable, setDate];
+            let delValue = [result, menuList, count, locate, sum, table, date];
             for (let i = 0; i < del.length; i++)
                 del[i]((delValue[i].slice(0, index) as any).concat(delValue[i].slice(index + 1, delValue[i].length)));
         }
@@ -55,6 +56,7 @@ export default function Order() {
         let tmpLocate = "";
         let tmpSum = 0;
         let tmpTable = 0;
+        let tmpDate = new Date();
 
         // 주문 중 메뉴의 개수 랜덤
         for (let i = 0; i < Math.floor(Math.random() * 10) + 1; i++) {
@@ -77,6 +79,7 @@ export default function Order() {
         setMenuList([...menuList, tmpMenuList]);
         setSum([...sum, tmpSum]);
         setTable([...table, tmpTable]);
+        setDate([...date, tmpDate]);
 
         if (localStorage["soundplay"] == "true") notiAudio && notiAudio.play();
     }
@@ -134,7 +137,7 @@ export default function Order() {
                     key={"order-random-" + i}
                 >
                     <h2>{store[storeID].name}</h2>
-                    <div className={styles.orderCardMenu}>{new Date().toLocaleString()}</div>
+                    <div className={styles.orderCardMenu}>{date[i].toLocaleString()}</div>
                     <div className={styles.orderCardLocate}>
                         {locate[i]}
                         <div>{table[i] + 1}번</div>
