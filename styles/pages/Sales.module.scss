@@ -104,3 +104,9 @@
         font-size: 1.25rem;
     }
 }
+
+@media (max-width: 400px) {
+    .sales > div > h1 {
+        flex-direction: column;
+    }
+}
