@@ -9,13 +9,14 @@ type menuList = {
     price: number;
     desc: string;
     image: string;
+    rate: number;
     soldout: boolean;
 };
 type menu = {
     [key: string]: Array<Object>;
 };
 
-// custom한 mock data를 사용해서 상대적으로 코드가 긴 편인데 백엔드와 연동하면 코드가 약 3~50% 정도 감소될 예정
+// custom한 mock data를 사용해서 상대적으로 코드가 긴 편인데 백엔드와 연동하면 코드가 약 3~50% 정도 감소될 것 같음
 export default function Menu() {
     const [nowStore, setStore] = useState(store);
     const [storeID, setStoreID] = useState(-1); // 매장 ID
@@ -27,6 +28,15 @@ export default function Menu() {
     const [isMobile, setMobile] = useState(0); // 모바일 인지 아닌지 (width 800px 기준)
     const [isDisableBtn, setDisableBtn] = useState(false); // Input 값이 유효하지 않을 때 잠시 Btn을 disable 시킴 (4초)
     const [searchName, setSearchName] = useState(""); // 검색할 텍스트
+
+    // 메뉴 별점에 맞는 별 이미지 스타일링
+    function ratingStyle(rate: number) {
+        if (rate === 5) return styles.menuItemRateImage1;
+        else if (rate > 4) return styles.menuItemRateImage2;
+        else if (rate > 3) return styles.menuItemRateImage3;
+        else if (rate > 2) return styles.menuItemRateImage4;
+        else return styles.menuItemRateImage5;
+    }
 
     // store 정보 수정해서 저장
     function saveStore(storeInfo: any) {
@@ -146,7 +156,20 @@ export default function Menu() {
                                     {menuCategory.soldout && <span className={styles.menuItemSoldout}>품절</span>}
                                 </p>
                                 {isMobile >= 650 && <p>{menuCategory.desc}</p>}
-                                <p>{menuCategory.price.toLocaleString()}원</p>
+                                <div className={styles.menuItemPriceRate}>
+                                    {menuCategory.price.toLocaleString()}원
+                                    <div className={styles.menuItemRate}>
+                                        <Image
+                                            src={"/rating.webp"}
+                                            alt={"rating"}
+                                            width={isMobile < 600 ? 15 : 75}
+                                            height={15}
+                                            className={`${styles.menuItemRateImage} ${ratingStyle(menuCategory.rate)}`}
+                                            priority
+                                        />
+                                        <p>{menuCategory.rate}</p>
+                                    </div>
+                                </div>
                             </div>
                             <div className={styles.menuItemBtns}>
                                 <button

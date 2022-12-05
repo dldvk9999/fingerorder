@@ -130,7 +130,7 @@
 
 .menuItemCategory {
     width: 40rem;
-    min-width: 15rem;
+    min-width: 260px;
     padding: 2rem 1rem 2rem 1rem;
     display: flex;
     flex-direction: column;
@@ -266,6 +266,42 @@
     font-size: 1rem;
 }
 
+.menuItemPriceRate {
+    display: flex;
+}
+
+.menuItemRate > p {
+    margin: 0;
+    padding: 0 0.2rem;
+    line-height: 1rem;
+}
+
+.menuItemRate {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 0.5rem;
+}
+
+.menuItemRateImage {
+    object-fit: cover;
+}
+.menuItemRateImage1 {
+    object-position: 0% 0%;
+}
+.menuItemRateImage2 {
+    object-position: 0% 25%;
+}
+.menuItemRateImage3 {
+    object-position: 0% 50%;
+}
+.menuItemRateImage4 {
+    object-position: 0% 75%;
+}
+.menuItemRateImage5 {
+    object-position: 0% 100%;
+}
+
 .menuInputSelect {
     appearance: none;
     cursor: pointer;
@@ -299,6 +335,12 @@
     }
     .menuItemNamePrice {
         margin: 1rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .menuItemRateImage {
+        object-view-box: inset(0 80% 80% 0);
     }
 }
 
