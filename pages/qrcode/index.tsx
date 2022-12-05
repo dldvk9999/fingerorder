@@ -6,11 +6,12 @@ import store from "../../data/store";
 import LoginCheck from "../login_check";
 import styles from "../../styles/pages/Qrcode.module.scss";
 
-export default function QRCode(props: { tableCount: number }) {
+export default function QRCode(props: { tableCount: number; type: string }) {
     const [editPage, _] = useRecoilState(editNumber);
     const [isStoreManager, setStoreManager] = useState(true);
     const [isMobile, setMobile] = useState(true);
     const [tableCount, setTableCount] = useState(0);
+    const [storeType, setStoreType] = useState("");
     const { Image } = useQRCode();
     const STORE_MANAGER_ID = 0;
     const [STORE_ID, setStoreID] = useState(0);
@@ -51,7 +52,10 @@ export default function QRCode(props: { tableCount: number }) {
         let result = [];
         const limit = index * 16 + 16;
         for (let i = index * 16; i < Math.min(limit, tableCount); i++) {
-            const url = orderURL + STORE_MANAGER_ID + "/" + STORE_ID + "/" + Number(i + 1);
+            let url = "";
+            if (storeType === "TableNumber") url = orderURL + STORE_MANAGER_ID + "/" + STORE_ID + "/" + Number(i + 1);
+            else url = orderURL + STORE_MANAGER_ID + "/" + STORE_ID + "/";
+
             result.push(
                 <div className={styles.storeQRItem} key={"store-QR-" + i}>
                     <Image
@@ -74,7 +78,7 @@ export default function QRCode(props: { tableCount: number }) {
     }, []);
 
     useEffect(() => {
-        setStoreID(store[editPage]?.id);
+        setStoreID(editPage !== -1 ? store[editPage]?.id : 0);
     }, [editPage]);
 
     useEffect(() => {
@@ -82,12 +86,11 @@ export default function QRCode(props: { tableCount: number }) {
         if (!props.tableCount && editPage === -1) {
             alert("마이페이지를 통해 접근해주세요.");
             location.href = "/mypage";
-        } else if (!props.tableCount) {
-            setTableCount(store[editPage].table);
         } else {
-            setTableCount(props.tableCount);
+            setTableCount(!props.tableCount ? store[editPage].table : props.tableCount);
+            setStoreType(!props.type ? store[editPage].type : props.type);
         }
-    }, [props.tableCount, editPage]);
+    }, [props.tableCount, props.type, editPage]);
 
     return LoginCheck() && isStoreManager ? (
         <main>

@@ -9,6 +9,7 @@ export default function Store(props: {
     tmpTableCount: SetStateAction<number>;
     location: SetStateAction<string>;
     category: SetStateAction<string[]>;
+    type: string;
 }) {
     const [storeName, setStoreName] = useState(""); // 매장 이름
     const [tableCount, setTableCount] = useState(0); // 매장 테이블 수
@@ -21,6 +22,17 @@ export default function Store(props: {
     const [inputList, setStatusInput] = useState<NodeListOf<HTMLElement>>(); // input 리스트
     const [addBtn, setAddBtn] = useState<HTMLElement>(); // category add button
     const [isSubmitDisable, setSubmitDisable] = useState(false); // Submit 버튼 disable 유뮤 (Require 미 입력으로 Submit시 4초 disable)
+    const [storeType, setStoreType] = useState(""); // 매장의 QR코드 타입, "OrderNumber": 주문번호 운영, "TableNumber": 테이블번호 운영
+
+    // QR코드 타입 설정 함수
+    function selectQRType(index: number, type: string) {
+        setStoreType(type);
+        let buttons = document.querySelector("." + styles.storeType)!.children;
+        for (let i = 0; i < buttons.length; i++) {
+            if (i === index) buttons[i].classList.add(styles.storeTypeActive);
+            else buttons[i].classList.remove(styles.storeTypeActive);
+        }
+    }
 
     // 추가한 카테고리에서 삭제
     function deleteCategory(index: number) {
@@ -69,23 +81,36 @@ export default function Store(props: {
         }
         // 매장 테이블
         else if (type === "table" && !tmpTableCount) result = [false, "테이블 수를 입력하여 주세요."];
+        // type 버튼
+        else if (type === "type" && data === "") result = [false, "QR코드 타입을 선택해주세요."];
 
+        // 카테고리에 추가 버튼 테두리 빨간색으로 지정
+        if (index === 3 && !result[0]) {
+            setSubmitDisable(true);
+            let addBtn = document.querySelector<HTMLElement>("." + styles.storeInputButton);
+            addBtn?.classList.add(styles.storeRequireAddBtn);
+            setTimeout(() => {
+                addBtn?.classList.remove(styles.storeRequireAddBtn);
+                setSubmitDisable(false);
+            }, 4000);
+        }
+        // type 버튼 테두리 빨간색으로 지정
+        if (type === "type" && !result[0]) {
+            setSubmitDisable(true);
+            let b = document.querySelector<HTMLElement>("." + styles.storeType);
+            console.log(b);
+            b?.classList.add(styles.storeRequire);
+            setTimeout(() => {
+                b?.classList.remove(styles.storeRequire);
+                setSubmitDisable(false);
+            }, 4000);
+        }
         // 해당 input 테두리 빨간색으로 지정
-        if (!result[0]) {
+        else if (!result[0]) {
             setSubmitDisable(true);
             inputList![index].classList.add(styles.storeRequire);
             setTimeout(() => {
                 inputList![index].classList.remove(styles.storeRequire);
-                setSubmitDisable(false);
-            }, 4000);
-        }
-        // 카테고리에 추가 버튼 테두리 지정
-        if (index === 3 && !result[0]) {
-            let addBtn = document.querySelector<HTMLElement>("." + styles.storeInputButton);
-            setSubmitDisable(true);
-            addBtn?.classList.add(styles.storeRequireAddBtn);
-            setTimeout(() => {
-                addBtn?.classList.remove(styles.storeRequireAddBtn);
                 setSubmitDisable(false);
             }, 4000);
         }
@@ -112,8 +137,9 @@ export default function Store(props: {
         let table = inputDataCheck(tmpTableCount, 1, "table");
         let location = inputDataCheck(storeLocation, 2);
         let cate = inputDataCheck(category, 3, "category");
-        if (!name[0] || !location[0] || !table[0] || !cate[0]) {
-            alert(name[1] || location[1] || table[1] || cate[1]);
+        let btn = inputDataCheck(storeType, -1, "type");
+        if (!name[0] || !location[0] || !table[0] || !cate[0] || !btn[0]) {
+            alert(name[1] || location[1] || table[1] || cate[1] || !btn[0]);
             return;
         }
 
@@ -123,7 +149,7 @@ export default function Store(props: {
 
         // QR 코드 생성
         setShowQR(true);
-        alert("store input complete");
+        alert("매장 등록이 완료되었습니다.");
     }
 
     // 카테고리 input 창에서 엔터키 입력으로 추가 가능하게 하는 함수
@@ -145,7 +171,10 @@ export default function Store(props: {
         setTmpTableCount(props.tmpTableCount ? props.tmpTableCount : 0);
         setStoreLocation(props.location ? props.location : "");
         setCategory(props.category ? props.category : []);
-    }, [props.name, props.tableCount, props.tmpTableCount, props.location, props.category]);
+        setStoreType(props.type ? props.type : "");
+
+        if (props.type) selectQRType(props.type === "TableNumber" ? 0 : 1, props.type);
+    }, [props.name, props.tableCount, props.tmpTableCount, props.location, props.category, props.type]);
 
     return LoginCheck() ? (
         <main className={styles.store}>
@@ -205,6 +234,24 @@ export default function Store(props: {
                     </button>
                 </div>
                 <div className={styles.storeCategoryBlocks}>{blockCategory()}</div>
+                <div className={styles.storeType}>
+                    <button onClick={() => selectQRType(0, "TableNumber")} disabled={isSubmitDisable || isSubmit}>
+                        <p>
+                            테이블번호로
+                            <br />
+                            운영되는
+                        </p>
+                        <p>QR코드</p>
+                    </button>
+                    <button onClick={() => selectQRType(1, "OrderNumber")} disabled={isSubmitDisable || isSubmit}>
+                        <p>
+                            주문번호로
+                            <br />
+                            운영되는
+                        </p>
+                        <p>QR코드</p>
+                    </button>
+                </div>
                 {!isSubmit && (
                     <button className={styles.storeButton} onClick={storeInput} disabled={isSubmitDisable}>
                         {props.name ? "매장 수정" : "매장 등록"}
@@ -213,7 +260,7 @@ export default function Store(props: {
             </section>
 
             {/* Section 2. QR */}
-            {isShowQR && <QRCode tableCount={tableCount} />}
+            {isShowQR && <QRCode tableCount={tableCount} type={storeType} />}
         </main>
     ) : null;
 }

@@ -23,6 +23,7 @@ export default function ChangeStore() {
             tmpTableCount={store[editPage].table}
             location={store[editPage].locate}
             category={store[editPage].category}
+            type={store[editPage].type}
         />
     ) : null;
 }
