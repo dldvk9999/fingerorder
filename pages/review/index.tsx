@@ -34,18 +34,18 @@ export default function Review() {
         );
     }
 
-    // 사장님이 답글달기 버튼 클릭했을 때
+    // 사장님이 답글 달기 버튼 클릭했을 때 - input 창 열림
     function onclickReply(index: number) {
+        setReply("");
         setTmpReview(review[index]);
         setTmpReviewIndex(index);
-        document.querySelector("." + styles.reviewInput)?.scrollIntoView({
+        document.querySelector("." + styles.reviewList)?.scrollIntoView({
             behavior: "smooth",
         });
     }
 
-    // 사장님이 답글 달기
+    // 사장님이 답글 등록 버튼 클릭했을 때 - input 값에 내용을 저장
     function inputReply() {
-        console.log(reply);
         let tmp = review;
         tmp[tmpReviewIndex].reply = reply;
         setReview(tmp);
@@ -54,23 +54,45 @@ export default function Review() {
         setTmpReviewIndex(-1);
     }
 
+    // Review의 Item 요소들은 재활용가능한 코드로 구현
+    function printReviewItem(type: "profile" | "reply", reviewIndex: number = -1) {
+        return (
+            <div className={styles.reviewListUserProfile}>
+                {reviewImages(type)}
+                <div className={styles.reviewListUserInfo}>
+                    {type === "profile" && review ? (
+                        <>
+                            <p>
+                                {reviewIndex !== -1 ? review[reviewIndex].name : tmpReview!.name}
+                                <span>{reviewIndex !== -1 ? review[reviewIndex].time : tmpReview!.time}</span>
+                            </p>
+                            <p>{reviewIndex !== -1 ? review[reviewIndex].comment : tmpReview!.comment}</p>
+                        </>
+                    ) : (
+                        <>
+                            {review && review[reviewIndex].reply ? (
+                                <>
+                                    <p>사장님</p>
+                                    <pre>{review[reviewIndex].reply}</pre>
+                                </>
+                            ) : (
+                                <button onClick={() => onclickReply(reviewIndex)} className={styles.reviewListReplyBtn}>
+                                    답글 달기
+                                </button>
+                            )}
+                        </>
+                    )}
+                </div>
+            </div>
+        );
+    }
+
     // 리뷰 입력 부분 출력
     function printReviewInput() {
         return (
             <div className={styles.reviewInput}>
                 <hr />
-                <div className={styles.reviewListUserProfile}>
-                    {reviewImages("profile")}
-                    <div className={styles.reviewListUserInfo}>
-                        {review && (
-                            <>
-                                <p>{tmpReview!.name}</p>
-                                <p>{tmpReview!.time}</p>
-                                <p>{tmpReview!.comment}</p>
-                            </>
-                        )}
-                    </div>
-                </div>
+                {printReviewItem("profile")}
                 <hr />
                 <div className={styles.reviewListUserProfile}>
                     {reviewImages("reply")}
@@ -96,36 +118,9 @@ export default function Review() {
             result.push(
                 <div className={styles.reviewListItem} key={"review-item-" + i}>
                     <hr />
-                    <div className={styles.reviewListUserProfile}>
-                        {reviewImages("profile")}
-                        <div className={styles.reviewListUserInfo}>
-                            {review && (
-                                <>
-                                    <p>
-                                        {review[i].name}
-                                        <span>{review[i].time}</span>
-                                    </p>
-                                    <p>{review[i].comment}</p>
-                                </>
-                            )}
-                        </div>
-                    </div>
+                    {printReviewItem("profile", i)}
                     <hr />
-                    <div className={styles.reviewListUserProfile}>
-                        {reviewImages("reply")}
-                        {review && review[i].reply ? (
-                            <div className={styles.reviewListUserInfo}>
-                                <p>사장님</p>
-                                <pre>{review[i].reply}</pre>
-                            </div>
-                        ) : (
-                            <div className={styles.reviewListUserInfo}>
-                                <button onClick={() => onclickReply(i)} className={styles.reviewListReplyBtn}>
-                                    답글 달기
-                                </button>
-                            </div>
-                        )}
-                    </div>
+                    {printReviewItem("reply", i)}
                 </div>
             );
         }
@@ -133,8 +128,21 @@ export default function Review() {
     }
 
     useEffect(() => {
-        setReview(reviews[storeID].review);
+        // 마이페이지를 통해 접근했는지 확인
+        if (storeID === -1) {
+            alert("마이페이지를 통해 접근해주세요.");
+            location.href = "/mypage";
+        } else {
+            setReview(reviews[storeID].review);
+        }
     }, []);
+
+    useEffect(() => {
+        // 답글 달기 버튼을 클릭하여 Input 창이 생길 때 모바일에서는 창이 생겼는지 모를 수 있으므로 auto scroll 처리
+        document.querySelector("." + styles.reviewInput)?.scrollIntoView({
+            behavior: "smooth",
+        });
+    }, [tmpReview]);
 
     return LoginCheck() ? (
         <main>
