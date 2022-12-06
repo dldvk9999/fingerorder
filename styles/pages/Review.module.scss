@@ -1,0 +1,64 @@
+.review {
+    width: 100vw;
+    padding: 5rem 10rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.review > div {
+    gap: 3rem;
+    justify-content: space-between;
+}
+
+.review > div,
+.reviewListUserProfile {
+    display: flex;
+}
+
+.reviewListItem {
+    width: 100%;
+}
+
+.reviewList,
+.reviewInput {
+    width: 30rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    max-height: 30rem;
+    overflow-y: scroll;
+    background-color: #eaeaea;
+    padding: 2rem;
+    box-shadow: 15px 15px 15px -15px gray;
+}
+
+.reviewListUserInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.reviewListReplyBtn {
+    width: 10rem;
+    padding: .5rem 1rem;
+    border: 1px solid #0070f3;
+    background-color: #0070f3;
+    color: white;
+    border-radius: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+
+.reviewListImage {
+    padding: .3rem;
+}
+
+.reviewListReplyImage {
+    rotate: 180deg;
+}
+
+.reviewInputArea {
+    width: 100%;
+    height: 10rem;
+}
