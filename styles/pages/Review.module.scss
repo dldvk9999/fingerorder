@@ -1,6 +1,7 @@
 .review {
     width: 100vw;
-    padding: 5rem 10rem;
+    min-width: 260px;
+    padding: 3rem 10rem;
     display: flex;
     flex-direction: column;
 }
@@ -15,17 +16,30 @@
     display: flex;
 }
 
+.reviewListUserProfile {
+    width: 100%;
+    gap: 2rem;
+}
+
+.reviewListManager {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+}
+
 .reviewListItem {
     width: 100%;
 }
 
 .reviewList,
 .reviewInput {
-    width: 30rem;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    max-height: 30rem;
+    max-height: 40rem;
     overflow-y: scroll;
     background-color: #eaeaea;
     padding: 2rem;
@@ -33,13 +47,26 @@
 }
 
 .reviewListUserInfo {
+    width: 100%;
     display: flex;
     flex-direction: column;
 }
 
+.reviewListUserInfo > p:nth-child(1) {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.reviewListUserInfo > p > span {
+    font-size: 0.8rem;
+    font-weight: 400;
+    margin: 0 0.5rem;
+}
+
 .reviewListReplyBtn {
-    width: 10rem;
-    padding: .5rem 1rem;
+    width: 20rem;
+    padding: 0.5rem 1rem;
     border: 1px solid #0070f3;
     background-color: #0070f3;
     color: white;
@@ -51,7 +78,7 @@
 }
 
 .reviewListImage {
-    padding: .3rem;
+    padding: 0.3rem;
 }
 
 .reviewListReplyImage {
@@ -61,4 +88,100 @@
 .reviewInputArea {
     width: 100%;
     height: 10rem;
+    border: 2px solid #888;
+    border-radius: 1rem 1rem 0 0;
+    padding: 1rem;
+    resize: none;
+}
+
+.reviewInputArea:focus,
+.reviewInputArea:active {
+    outline: none;
+    border: 2px solid #0070f3;
+}
+
+.reviewInputAreaSubmit {
+    width: 100%;
+    height: 3rem;
+    border: 1px solid #0070f3;
+    background-color: #0070f3;
+    color: white;
+    border-radius: 0 0 1rem 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.reviewNoExist {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+@media (max-width: 1300px) {
+    .review {
+        padding: 5rem 5rem;
+    }
+    .reviewListReplyBtn {
+        width: 10rem;
+    }
+}
+
+@media (max-width: 800px) {
+    .review > div {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 500px) {
+    .review {
+        padding: 5rem 2rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .review > div {
+        gap: 1rem;
+    }
+    .reviewList,
+    .reviewInput {
+        padding: 1rem;
+    }
+    .reviewListImage {
+        width: 40px;
+        height: 40px;
+    }
+    .reviewListReplyBtn {
+        width: 5rem;
+        font-size: 0.6rem;
+    }
+    .reviewListUserInfo > p:nth-child(1) {
+        font-size: 1rem;
+    }
+    .reviewListUserInfo > p:nth-child(2) {
+        font-size: 0.8rem;
+    }
+    .reviewListUserProfile {
+        gap: 0;
+    }
+}
+
+@media (max-width: 300px) {
+    .review {
+        padding: 5rem 1rem;
+    }
+    .reviewListUserInfo > p:nth-child(1) {
+        display: flex;
+        flex-direction: column;
+    }
+    .reviewListUserInfo > p:nth-child(1) > span {
+        margin: 0;
+    }
+    .reviewListImage {
+        width: 30px;
+        height: 30px;
+    }
 }
