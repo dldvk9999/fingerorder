@@ -1,8 +1,11 @@
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import store from "../../data/store";
 import LoginCheck from "../login_check";
+import { useRecoilState } from "recoil";
+import { registrationIndex } from "../../states";
 import styles from "../../styles/pages/Menu.module.scss";
-import { useEffect, useState } from "react";
+import Link from "next/link";
 
 type menuList = {
     name: string;
@@ -17,7 +20,8 @@ type menu = {
 };
 
 // custom한 mock data를 사용해서 상대적으로 코드가 긴 편인데 백엔드와 연동하면 코드가 약 3~50% 정도 감소될 것 같음
-export default function Menu() {
+export default function Menu(props: { auth: boolean }) {
+    const [_, setRegiIndex] = useRecoilState(registrationIndex);
     const [nowStore, setStore] = useState(store);
     const [storeID, setStoreID] = useState(-1); // 매장 ID
     const [category, setCategory] = useState(""); // 매장의 카테고리
@@ -167,7 +171,7 @@ export default function Menu() {
                                             className={`${styles.menuItemRateImage} ${ratingStyle(menuCategory.rate)}`}
                                             priority
                                         />
-                                        <p>{menuCategory.rate}</p>
+                                        <p>{menuCategory.rate ? menuCategory.rate : 0}</p>
                                     </div>
                                 </div>
                             </div>
@@ -278,6 +282,12 @@ export default function Menu() {
     }
 
     useEffect(() => {
+        // 접근 경로 체크
+        if (!props.auth) {
+            alert("서비스 등록을 통해 접근해주세요.");
+            location.href = "/registration";
+        }
+
         // 모바일 인지 아닌지 (width 800px 기준)
         setMobile(window.innerWidth);
         window.onresize = () => {
@@ -285,18 +295,11 @@ export default function Menu() {
         };
     }, []);
 
-    return LoginCheck() ? (
-        <main>
+    return LoginCheck() && props.auth ? (
+        <main className={styles.menuMain}>
             <div className={styles.menu}>
                 <section className={styles.menuInfo}>
-                    <h1>
-                        메뉴 등록
-                        <span>
-                            <button onClick={() => menuInfoLoad("", "", 0, "", "")}>
-                                <Image src={"/reload.webp"} alt={"reload"} width={25} height={25} priority />
-                            </button>
-                        </span>
-                    </h1>
+                    <h1>메뉴 등록</h1>
                     <div className={styles.menuInputImageP}>
                         {itemImage !== "" ? (
                             <Image
@@ -342,7 +345,7 @@ export default function Menu() {
                     <input
                         id="menuName"
                         type="text"
-                        placeholder="메뉴 이름"
+                        placeholder="메뉴 이름을 입력해주세요."
                         onChange={(e) => setItemName(e.target.value)}
                         value={itemName}
                         disabled={storeID === -1 || category === ""}
@@ -350,22 +353,41 @@ export default function Menu() {
                     />
                     <input
                         type="number"
-                        placeholder="가격"
+                        placeholder="가격을 입력해주세요."
                         onChange={(e) => setItemPrice(Number(e.target.value))}
                         value={itemPrice}
                         disabled={storeID === -1 || category === ""}
                         className={styles.menuInput}
                     />
                     <textarea
-                        placeholder="메뉴 설명"
+                        placeholder="메뉴 설명을 입력해주세요."
                         onChange={(e) => setItemDesc(e.target.value)}
                         value={itemDesc}
                         disabled={storeID === -1 || category === ""}
                         className={`${styles.menuInput} ${styles.menuInputTextarea}`}
                     />
-                    <button className={styles.menuAddBtn} onClick={() => addMenu(category)} disabled={isDisableBtn}>
-                        메뉴 추가
-                    </button>
+                    <div className={styles.menuBtnList}>
+                        <button className={styles.menuAddBtn} onClick={() => addMenu(category)} disabled={isDisableBtn}>
+                            메뉴 추가
+                        </button>
+                        <button className={styles.menuReset} onClick={() => menuInfoLoad("", "", 0, "", "")}>
+                            <svg width="24pt" height="24pt" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">
+                                <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" stroke="none">
+                                    <path d="M2675 4771 c-48 -22 -79 -54 -100 -103 -12 -30 -15 -79 -15 -238 l0 -200 -81 0 c-226 0 -528 -76 -774 -195 -534 -258 -934 -769 -1055 -1346 -58 -280 -53 -612 15 -879 87 -348 264 -658 517 -907 177 -174 304 -266 520 -373 456 -226 986 -263 1477 -104 131 43 358 153 470 229 439 295 732 732 836 1250 45 222 25 309 -82 357 -40 18 -64 19 -336 16 -283 -3 -294 -4 -345 -27 -76 -34 -137 -106 -152 -177 -73 -349 -335 -645 -672 -760 -407 -138 -864 -7 -1130 325 -432 539 -223 1335 418 1592 94 38 237 69 317 69 l57 0 0 -195 c0 -209 6 -243 53 -293 56 -60 166 -81 237 -44 19 10 280 201 580 424 571 426 586 439 611 532 17 64 -7 142 -63 207 -28 32 -1079 816 -1128 841 -44 23 -124 23 -175 -1z" />
+                                </g>
+                            </svg>
+                        </button>
+                    </div>
+                    <div className={styles.menuAddBtns}>
+                        <button onClick={() => setRegiIndex(1)} className={styles.menuAddBtn} disabled={isDisableBtn}>
+                            이전
+                        </button>
+                        <Link href={"/registrationok"}>
+                            <button className={styles.menuAddBtn} disabled={isDisableBtn}>
+                                완료
+                            </button>
+                        </Link>
+                    </div>
                 </section>
 
                 <section className={styles.menuList}>

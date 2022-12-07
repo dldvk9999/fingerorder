@@ -273,7 +273,7 @@ export default function Home() {
 
             {/* Section 6. */}
             <section className={styles.homeSubmit}>
-                <Link href={"/store"}>
+                <Link href={"/registration"}>
                     <div className={styles.homeSubmitButton}>지금 매장 등록하러 가기</div>
                 </Link>
             </section>

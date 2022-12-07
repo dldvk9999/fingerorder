@@ -1,7 +1,9 @@
 .store {
+    width: 100vw;
     display: flex;
     justify-content: center;
     gap: 10rem;
+    padding-top: 0 !important;
 }
 
 /* Section 1. Store Info & Input */
@@ -20,18 +22,19 @@
 
 .storeUseButton {
     display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
-    margin-bottom: 1rem;
+    flex-direction: column;
+    align-items: center;
 }
 
 .storeUseButton > p {
-    width: 22rem;
-    position: absolute;
+    width: 100%;
     font-size: 0.7rem;
-    transform: translate(40px, 31px);
+    padding-left: 8px;
+    margin-top: 6px;
+    margin-bottom: 0;
     display: flex;
     justify-content: flex-start;
+    align-items: center;
 }
 
 .storeInput {
@@ -63,68 +66,6 @@
 .storeInput:focus,
 .storeInput:active {
     outline: none;
-}
-
-.storeInputButton,
-.storeButton {
-    height: 3.5rem;
-    display: flex;
-    justify-content: center;
-}
-
-.storeInputButton {
-    width: 4rem;
-    position: absolute;
-    padding: 0.3rem;
-    border: 1px solid #eaeaea;
-    border-radius: 0 1rem 1rem 0;
-    background-color: #eaeaea;
-}
-
-.storeInputButton.storeRequireAddBtn {
-    animation: Not-Write-addBtn 1s linear;
-    animation-iteration-count: 3;
-}
-
-@keyframes Not-Write-addBtn {
-    0% {
-        border-top-color: #eaeaea;
-        border-right-color: #eaeaea;
-        border-bottom-color: #eaeaea;
-    }
-    50% {
-        border-top-color: red;
-        border-right-color: red;
-        border-bottom-color: red;
-    }
-    100% {
-        border-top-color: #eaeaea;
-        border-right-color: #eaeaea;
-        border-bottom-color: #eaeaea;
-    }
-}
-
-.storeCategoryBlocks {
-    width: 20rem;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-}
-
-.storeCategoryBlock {
-    height: 2rem;
-    padding: 1rem;
-    border: 1px solid #eaeaea;
-    border-radius: 1rem;
-    background-color: #eaeaea;
-    display: flex;
-    align-items: center;
-    white-space: nowrap;
-}
-
-.storeCategoryBlock:hover {
-    background-color: #ff314b;
-    color: white;
 }
 
 .storeType {
@@ -166,6 +107,7 @@
 
 .storeButton {
     width: 13rem;
+    height: 3.5rem;
     padding: 0.5rem 1rem;
     border: 1px solid #0070f3;
     border-radius: 1rem;
@@ -183,19 +125,28 @@
     }
 }
 
+@media (max-width: 500px) {
+    .storeInfo > h1 {
+        font-size: 1.5rem;
+    }
+}
+
 @media (max-width: 400px) {
     .storeInput {
         width: 13rem;
     }
     .storeUseButton > p {
         width: 12rem;
-        transform: translate(-7px, 45px);
-    }
-    .storeCategoryBlocks {
-        width: 14rem;
+        transform: translate(-7px, 0px);
     }
     .storeCategoryBlock {
         font-size: 0.7rem;
         padding: 0.5rem 0.7rem;
+    }
+    .storeType {
+        width: 14rem;
+    }
+    .storeType > button > p:nth-child(2) {
+        font-size: 1rem;
     }
 }

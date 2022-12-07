@@ -1,11 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
+import { editNumber } from "../states";
 import styles from "../styles/components/Header.module.scss";
 
 const router = [
-    ["store", "매장 등록"],
-    ["menu", "메뉴 등록"],
+    ["registration", "서비스 등록"],
+    // ["store", "매장 등록"],
+    // ["menu", "메뉴 등록"],
 ];
 const routerLogin = [
     ["order", "주문목록"],
@@ -14,6 +17,7 @@ const routerLogin = [
 ];
 
 export default function Header() {
+    const [_, setEditPage] = useRecoilState(editNumber);
     const [isLogin, setLogin] = useState(false);
     const [isMobile, setMobile] = useState(false);
 
@@ -37,16 +41,18 @@ export default function Header() {
         location.href = "/";
     }
 
+    // router click event
+    function routerClickEvent(printWhere: string) {
+        if (printWhere === "nav") closeNav();
+        setEditPage(-1);
+    }
+
     // router 가능한 주소 목록 (재사용 가능 함수)
     function routerList(printWhere: string) {
         let result = [];
         for (let i = 0; i < router.length; i++)
             result.push(
-                <Link
-                    href={"/" + router[i][0]}
-                    onClick={() => (printWhere === "nav" ? closeNav() : "")}
-                    key={"header-router-" + i}
-                >
+                <Link href={"/" + router[i][0]} onClick={() => routerClickEvent(printWhere)} key={"header-router-" + i}>
                     {router[i][1]}
                 </Link>
             );

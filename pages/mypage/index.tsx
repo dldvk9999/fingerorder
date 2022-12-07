@@ -60,7 +60,7 @@ export default function Mypage() {
                         <Link href={"/review"}>
                             <button onClick={() => setPage(i)}>리뷰보기</button>
                         </Link>
-                        <Link href={"/changestore"}>
+                        <Link href={"/registration"}>
                             <button onClick={() => setPage(i)}>수정</button>
                         </Link>
                         <button onClick={() => deleteStore(i)}>삭제</button>

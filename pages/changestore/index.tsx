@@ -17,13 +17,14 @@ export default function ChangeStore() {
     }, [editPage]);
 
     return LoginCheck() && editPage !== -1 ? (
-        <Store
-            name={store[editPage].name}
-            tableCount={store[editPage].table}
-            tmpTableCount={store[editPage].table}
-            location={store[editPage].locate}
-            category={store[editPage].category}
-            type={store[editPage].type}
-        />
+        <main>
+            <Store
+                name={store[editPage].name}
+                tableCount={store[editPage].table}
+                tmpTableCount={store[editPage].table}
+                location={store[editPage].locate}
+                type={store[editPage].type}
+            />
+        </main>
     ) : null;
 }

@@ -15,3 +15,8 @@ export const homeIntro = atom({
     key: "homeIntro-" + v1(),
     default: true,
 });
+
+export const registrationIndex = atom({
+    key: "registrationIndex-" + v1(),
+    default: 0,
+});
