@@ -14,11 +14,13 @@
 }
 
 .regiNodeEdge > div {
-    width: 50%;
-    min-width: 260px;
+    width: 30rem;
     margin-top: 1rem;
     display: flex;
-    justify-content: space-evenly;
+}
+
+.regiNodeEdge > div:last-child {
+    width: fit-content;
 }
 
 .regiNode {
@@ -30,11 +32,16 @@
     align-items: center;
     justify-content: center;
     line-height: 0;
-    transition: border-color 0.3s ease-in-out 0.6s;
+    background-color: white;
+    transition: border-color 0.3s ease-in-out 0.6s, scale 0.3s ease-in-out 0.6s;
 }
 
 .regiNode.regiNodeActive {
     border: 2px solid #0070f3;
+}
+
+.regiNode.regiNodeScaleActive {
+    scale: 1.2;
 }
 
 .regiEdge {
@@ -57,7 +64,7 @@
 .regiEdgeToRight {
     display: flex;
     align-items: center;
-    width: 45%;
+    width: 100%;
 }
 
 .regiEdgeToRight {
