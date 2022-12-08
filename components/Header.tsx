@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { editNumber } from "../states";
 import styles from "../styles/components/Header.module.scss";
@@ -20,17 +20,16 @@ export default function Header() {
     const [_, setEditPage] = useRecoilState(editNumber);
     const [isLogin, setLogin] = useState(false);
     const [isMobile, setMobile] = useState(false);
+    const nav = useRef<HTMLElement>(null);
 
     // nav open
     function openNav() {
-        let nav = document.querySelector("nav");
-        nav?.classList.add("active");
+        nav.current!.classList.add("active");
     }
 
     // nav close
     function closeNav() {
-        let nav = document.querySelector("nav");
-        nav?.classList.remove("active");
+        nav.current!.classList.remove("active");
     }
 
     // sample logout
@@ -152,7 +151,7 @@ export default function Header() {
                         </button>
                     </div>
 
-                    <nav>
+                    <nav ref={nav}>
                         <div className={styles.headerNavClose}>
                             <button onClick={closeNav} aria-label="navigation close button">
                                 <svg viewBox="0 0 120.64 122.88" width="17" height="17" xmlSpace="preserve">
