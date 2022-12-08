@@ -68,10 +68,10 @@ export default function Store(props: {
     function storeInput() {
         for (let i = 0; i < inputList!.length; i++) inputList![i].style.border = "1px solid #eaeaea";
 
-        let name = inputDataCheck(storeName, 0);
-        let location = inputDataCheck(storeLocation, 1);
+        let name = inputDataCheck(storeName.trim(), 0);
+        let location = inputDataCheck(storeLocation.trim(), 1);
         let table = inputDataCheck(tmpTableCount, 2, "table");
-        let btn = inputDataCheck(storeType, -1, "type");
+        let btn = inputDataCheck(storeType.trim(), -1, "type");
         if (!name[0] || !location[0] || !table[0] || !btn[0]) {
             alert(name[1] || location[1] || table[1] || !btn[0]);
             return;
