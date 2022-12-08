@@ -43,16 +43,6 @@ export default function Menu(props: { auth: boolean }) {
         else return styles.menuItemRateImage5;
     }
 
-    // store 정보 수정해서 저장
-    function saveStore(storeInfo: any) {
-        setStore(
-            nowStore
-                .slice(0, storeID - 1)
-                .concat(storeInfo)
-                .concat(nowStore.slice(storeID, nowStore.length))
-        );
-    }
-
     // 메뉴 Edit 함수 (추가, 삭제, 품절 처리)
     function editMenu(type: string, cate: string, index: number = 0) {
         let storeInfo = nowStore[storeID - 1];
@@ -89,7 +79,7 @@ export default function Menu(props: { auth: boolean }) {
             menu[cate] = menuCategory;
         }
         storeInfo.menu = menu as any;
-        saveStore(storeInfo);
+        setStore([...store, storeInfo]);
     }
 
     // 수정 버튼 클릭 시 해당 아이템 정보 가져옴
@@ -117,13 +107,8 @@ export default function Menu(props: { auth: boolean }) {
                     setDisableBtn(false);
                     menuName.current!.classList.remove(styles.menuInputRequire);
                 }, 4000);
-                return;
-            } else {
-                editMenu("add", cate);
-            }
-        } else {
-            alert("매장 ID와 카테고리를 먼저 선택해주세요.");
-        }
+            } else editMenu("add", cate);
+        } else alert("매장 ID와 카테고리를 먼저 선택해주세요.");
     }
 
     // 매장에 있는 메뉴 - 세부 아이템 출력
@@ -133,21 +118,18 @@ export default function Menu(props: { auth: boolean }) {
 
         // 만약 매장 - 카테고리 내 메뉴의 개수가 1이상일 경우(즉, 메뉴가 존재할 경우)
         if (menu[category].length) {
-            let tmp = Array.from({ length: menu[category].length }, () => false);
-
             // 모든 메뉴를 for문으로 print
             for (let i = 0; i < menu[category].length; i++) {
-                const menuCategory = menu[category][i] as menuList;
+                const mCate = menu[category][i] as menuList;
 
                 // 만약 메뉴 이름에 검색하고자 하는 텍스트가 포함되어있을 경우(검색값이 ""일 경우 모두 출력됨)
-                if (menuCategory.name.includes(searchName)) {
-                    tmp[i] = menuCategory.soldout;
+                if (mCate.name.includes(searchName)) {
                     result.push(
                         <div className={styles.menuItem} key={"menu-list-" + i}>
                             {isMobile >= 500 && (
                                 <Image
-                                    src={menuCategory.image}
-                                    alt={menuCategory.name}
+                                    src={mCate.image}
+                                    alt={mCate.name}
                                     width={75}
                                     height={75}
                                     className={styles.menuItemImage}
@@ -156,22 +138,22 @@ export default function Menu(props: { auth: boolean }) {
                             )}
                             <div className={styles.menuItemNamePrice}>
                                 <p>
-                                    {menuCategory.name}
-                                    {menuCategory.soldout && <span className={styles.menuItemSoldout}>품절</span>}
+                                    {mCate.name}
+                                    {mCate.soldout && <span className={styles.menuItemSoldout}>품절</span>}
                                 </p>
-                                {isMobile >= 650 && <p>{menuCategory.desc}</p>}
+                                {isMobile >= 650 && <p>{mCate.desc}</p>}
                                 <div className={styles.menuItemPriceRate}>
-                                    {menuCategory.price.toLocaleString()}원
+                                    {mCate.price.toLocaleString()}원
                                     <div className={styles.menuItemRate}>
                                         <Image
                                             src={"/rating.webp"}
                                             alt={"rating"}
                                             width={isMobile < 600 ? 15 : 75}
                                             height={15}
-                                            className={`${styles.menuItemRateImage} ${ratingStyle(menuCategory.rate)}`}
+                                            className={`${styles.menuItemRateImage} ${ratingStyle(mCate.rate)}`}
                                             priority
                                         />
-                                        <p>{menuCategory.rate ? menuCategory.rate : 0}</p>
+                                        <p>{mCate.rate ? mCate.rate : 0}</p>
                                     </div>
                                 </div>
                             </div>
@@ -179,13 +161,7 @@ export default function Menu(props: { auth: boolean }) {
                                 <button
                                     className={styles.menuItemBtn}
                                     onClick={() =>
-                                        menuInfoLoad(
-                                            category,
-                                            menuCategory.name,
-                                            menuCategory.price,
-                                            menuCategory.desc,
-                                            menuCategory.image
-                                        )
+                                        menuInfoLoad(category, mCate.name, mCate.price, mCate.desc, mCate.image)
                                     }
                                 >
                                     수정
@@ -236,34 +212,18 @@ export default function Menu(props: { auth: boolean }) {
         return result;
     }
 
-    // 선택한 매장 ID의 카테고리를 드롭다운 선택
-    function printStoreCategory() {
+    // 매장 ID 및 카테고리 드롭다운 선택
+    function printStoreIDCategory(type: "ID" | "category") {
         let result = [
-            <option value={""} hidden key={"menu-storeCategory-default"}>
-                카테고리를 선택해주세요.
+            <option value={type === "ID" ? -1 : ""} hidden key={"menu-IDCategory-default"}>
+                {type === "ID" ? "매장 ID를 선택해주세요." : "카테고리를 선택해주세요."}
             </option>,
         ];
-        if (storeID !== -1)
-            for (let i = 0; i < nowStore[storeID - 1].category.length; i++)
-                result.push(
-                    <option value={nowStore[storeID - 1].category[i]} key={"menu-storeCategory-" + i}>
-                        {i + 1}. {nowStore[storeID - 1].category[i]}
-                    </option>
-                );
-        return result;
-    }
-
-    // 매장 ID 검색 후 드롭다운 선택
-    function printStoreID() {
-        let result = [
-            <option value={-1} hidden key={"menu-storeID-default"}>
-                매장 ID를 선택해주세요.
-            </option>,
-        ];
-        for (let i = 0; i < nowStore.length; i++)
+        const data = type === "ID" ? nowStore : storeID !== -1 ? nowStore[storeID - 1].category : nowStore[0].category;
+        for (let i = 0; i < data.length; i++)
             result.push(
-                <option value={nowStore[i].id} key={"menu-storeID-" + i}>
-                    {nowStore[i].id}. {nowStore[i].name}
+                <option value={type === "ID" ? (data[i] as any).id : data[i]} key={"menu-storeCategory-" + i}>
+                    {type === "ID" ? (data[i] as any).id : i + 1}. {type === "ID" ? (data[i] as any).name : data[i]}
                 </option>
             );
         return result;
@@ -332,7 +292,7 @@ export default function Menu(props: { auth: boolean }) {
                             storeID === -1 && styles.menuInputFirstSelect
                         }`}
                     >
-                        {printStoreID()}
+                        {printStoreIDCategory("ID")}
                     </select>
                     <select
                         value={category}
@@ -340,7 +300,7 @@ export default function Menu(props: { auth: boolean }) {
                         className={`${styles.menuInput} ${styles.menuInputSelect}`}
                         disabled={storeID === -1}
                     >
-                        {printStoreCategory()}
+                        {printStoreIDCategory("category")}
                     </select>
                     <input
                         type="text"
