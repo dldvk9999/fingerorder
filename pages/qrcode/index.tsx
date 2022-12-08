@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useQRCode } from "next-qrcode";
 import { useRecoilState } from "recoil";
 import { editNumber } from "../../states";
@@ -8,19 +8,19 @@ import styles from "../../styles/pages/Qrcode.module.scss";
 
 export default function QRCode(props: { tableCount: number; type: string }) {
     const [editPage, _] = useRecoilState(editNumber);
+    const { Image } = useQRCode();
     const [isStoreManager, setStoreManager] = useState(true);
     const [isMobile, setMobile] = useState(true);
     const [tableCount, setTableCount] = useState(0);
     const [storeType, setStoreType] = useState("");
-    const { Image } = useQRCode();
-    const STORE_MANAGER_ID = 0;
     const [STORE_ID, setStoreID] = useState(0);
+    const storeQRDownload = useRef<HTMLButtonElement>(null);
+    const STORE_MANAGER_ID = useRef(0);
 
     // QR 리스트 다운로드
     function downloadQR() {
         let qr = document.getElementById("QR");
-        let btn = document.querySelector<HTMLElement>("." + styles.storeQRDownload);
-        btn!.style.display = "none";
+        storeQRDownload.current!.style.display = "none";
         window.onbeforeprint = () => {
             document.body.innerHTML = qr!.innerHTML;
         };
@@ -53,8 +53,9 @@ export default function QRCode(props: { tableCount: number; type: string }) {
         const limit = index * 16 + 16;
         for (let i = index * 16; i < Math.min(limit, tableCount); i++) {
             let url = "";
-            if (storeType === "TableNumber") url = orderURL + STORE_MANAGER_ID + "/" + STORE_ID + "/" + Number(i + 1);
-            else url = orderURL + STORE_MANAGER_ID + "/" + STORE_ID + "/";
+            if (storeType === "TableNumber")
+                url = orderURL + STORE_MANAGER_ID.current + "/" + STORE_ID + "/" + Number(i + 1);
+            else url = orderURL + STORE_MANAGER_ID.current + "/" + STORE_ID + "/";
 
             result.push(
                 <div className={styles.storeQRItem} key={"store-QR-" + i}>

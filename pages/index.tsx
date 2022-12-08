@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Router from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { homeIntro } from "../states";
 import data from "../data/data";
@@ -14,6 +14,8 @@ export default function Home() {
     const [showIntro, setShowIntro] = useState([false, false, false]);
     const [isMobile, setMobile] = useState(false);
     const [edgeShow, setEdgeShow] = useState(Array.from({ length: flow.length - 1 }, () => false));
+    const homeInto = useRef<HTMLElement>(null);
+    const homeCompare = useRef<HTMLElement>(null);
 
     /* common */
     // print Logo
@@ -33,15 +35,14 @@ export default function Home() {
     /* Section 1. */
     // 페이지 로드 후에 2초 있다가 Intro의 Height가 짧아지게 하는 함수
     function upIntro() {
-        let intro = document.querySelector<HTMLElement>("." + styles.homeInto);
-        intro!.style.height = window.innerWidth > 650 ? "70vh" : "50vh";
-        intro!.style.paddingTop = "4.4rem";
+        homeInto.current!.style.height = window.innerWidth > 650 ? "70vh" : "50vh";
+        homeInto.current!.style.paddingTop = "4.4rem";
     }
 
     /* Section 2. */
     // WhiteBox 부분에 아래 화살표 클릭 시 아래로 스크롤
     function scrollDown() {
-        document.querySelector("." + styles.homeCompare)?.scrollIntoView({
+        homeCompare.current!.scrollIntoView({
             behavior: "smooth",
         });
     }
@@ -163,7 +164,7 @@ export default function Home() {
     return (
         <main className={styles.homeMain}>
             {/* Section 1. */}
-            <section className={styles.homeInto}>
+            <section className={styles.homeInto} ref={homeInto}>
                 {logo(`${styles.homeIntroImage} ${showIntro[0] && styles.homeShow1}`)}
                 <div className={styles.homeIntroSub}>
                     <p className={`${styles.homeIntroP} ${showIntro[1] && styles.homeShow2}`}>
@@ -201,7 +202,7 @@ export default function Home() {
             </section>
 
             {/* Section 3. */}
-            <section className={styles.homeCompare}>
+            <section className={styles.homeCompare} ref={homeCompare}>
                 <div className={styles.homeCompareBackground}>{compareLayout()}</div>
                 <div className={styles.homeCompareFront}>
                     <div>핑거오더</div>

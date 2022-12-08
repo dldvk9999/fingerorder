@@ -1,4 +1,4 @@
-import { SetStateAction, useEffect, useState } from "react";
+import { SetStateAction, useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { registrationIndex } from "../../states";
 import LoginCheck from "../login_check";
@@ -20,11 +20,12 @@ export default function Store(props: {
     const [inputList, setStatusInput] = useState<NodeListOf<HTMLElement>>(); // input 리스트
     const [isSubmitDisable, setSubmitDisable] = useState(false); // Submit 버튼 disable 유뮤 (Require 미 입력으로 Submit시 4초 disable)
     const [storeType, setStoreType] = useState(""); // 매장의 QR코드 타입, "OrderNumber": 주문번호 운영, "TableNumber": 테이블번호 운영
+    const storeTypeElement = useRef<HTMLDivElement>(null);
 
     // QR코드 타입 설정 함수
     function selectQRType(index: number, type: string) {
         setStoreType(type);
-        let buttons = document.querySelector("." + styles.storeType)!.children;
+        let buttons = storeTypeElement.current!.children;
         for (let i = 0; i < buttons.length; i++) {
             if (i === index) buttons[i].classList.add(styles.storeTypeActive);
             else buttons[i].classList.remove(styles.storeTypeActive);
@@ -45,10 +46,9 @@ export default function Store(props: {
         // type 버튼 테두리 빨간색으로 지정
         if (type === "type" && !result[0]) {
             setSubmitDisable(true);
-            let b = document.querySelector<HTMLElement>("." + styles.storeType);
-            b?.classList.add(styles.storeRequire);
+            storeTypeElement.current!.classList.add(styles.storeRequire);
             setTimeout(() => {
-                b?.classList.remove(styles.storeRequire);
+                storeTypeElement.current!.classList.remove(styles.storeRequire);
                 setSubmitDisable(false);
             }, 4000);
         }
@@ -137,7 +137,7 @@ export default function Store(props: {
                     />
                     <p>* QR 코드를 출력하여 각 테이블마다 붙여 사용하세요!</p>
                 </div>
-                <div className={styles.storeType}>
+                <div className={styles.storeType} ref={storeTypeElement}>
                     <button onClick={() => selectQRType(0, "TableNumber")} disabled={isSubmitDisable}>
                         <p>
                             테이블번호로

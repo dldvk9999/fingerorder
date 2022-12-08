@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import Menu from "../menu";
 import Category from "../category";
 import Store from "../store";
@@ -11,6 +11,8 @@ import styles from "../../styles/pages/Registration.module.scss";
 export default function Registration() {
     const [editPage, _] = useRecoilState(editNumber);
     const [regiIndex, setRegiIndex] = useRecoilState(registrationIndex);
+    const registration = useRef<HTMLDivElement>(null);
+    const main = useRef<HTMLElement>(null);
 
     function printStep() {
         let result = [];
@@ -41,21 +43,18 @@ export default function Registration() {
 
     useEffect(() => {
         // 각 Step transform 처리
-        let step = document.querySelector<HTMLElement>("." + styles.registration);
-        step!.style.transform = `translateX(${regiIndex * -100}%)`;
+        registration.current!.style.transform = `translateX(${regiIndex * -100}%)`;
 
         // 슬라이드로 넘길 때 마다 Y축 스크롤은 항상 위로 스크롤
-        document.querySelector("main")?.scrollIntoView({
-            behavior: "smooth",
-        });
+        main.current!.scrollIntoView({ behavior: "smooth" });
     }, [regiIndex]);
 
     return LoginCheck() ? (
-        <main>
+        <main ref={main}>
             {/* 서비스 등록 Step 표시 */}
             <div className={styles.regiNodeEdge}>{printStep()}</div>
             {/* 서비스 등록 Body 부분 */}
-            <div className={styles.registration}>
+            <div className={styles.registration} ref={registration}>
                 <section className={styles.regiSection}>
                     <Store
                         auth

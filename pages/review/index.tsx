@@ -4,7 +4,7 @@ import { editNumber } from "../../states";
 import reviews from "../../data/reviews";
 import LoginCheck from "../login_check";
 import styles from "../../styles/pages/Review.module.scss";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type reviewTmp = {
     name: string;
@@ -19,6 +19,7 @@ export default function Review() {
     const [tmpReview, setTmpReview] = useState<reviewTmp>();
     const [tmpReviewIndex, setTmpReviewIndex] = useState(-1);
     const [reply, setReply] = useState("");
+    const reviewList = useRef<HTMLDivElement>(null);
 
     // 아이콘 이미지 출력
     function reviewImages(type: string) {
@@ -51,7 +52,7 @@ export default function Review() {
             setReply(isReply ? isReply : "");
             setTmpReview(review[index]);
             setTmpReviewIndex(index);
-            document.querySelector("." + styles.reviewList)?.scrollIntoView({
+            reviewList.current!.scrollIntoView({
                 behavior: "smooth",
             });
         } else {
@@ -185,7 +186,7 @@ export default function Review() {
             <section className={styles.review}>
                 <h1>매장 리뷰</h1>
                 <div>
-                    <div className={styles.reviewList}>
+                    <div className={styles.reviewList} ref={reviewList}>
                         {review ? printReviewList() : <p className={styles.reviewNoExist}>리뷰가 없습니다.</p>}
                     </div>
                     {tmpReview && printReviewInput()}

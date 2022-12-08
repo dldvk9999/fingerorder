@@ -1,13 +1,14 @@
 import { Fireworks } from "fireworks-js";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import LoginCheck from "../login_check";
 import styles from "../../styles/pages/Registrationok.module.scss";
 
 export default function RegistrationOk() {
+    const regiokFire = useRef<HTMLElement>(null);
+
     useEffect(() => {
-        const container = document.querySelector("." + styles.regiokFire);
-        const fireworks = new Fireworks(container!, {
+        const fireworks = new Fireworks(regiokFire.current!, {
             delay: {
                 min: 80,
                 max: 100,
@@ -32,7 +33,7 @@ export default function RegistrationOk() {
                     <button className={styles.regiokMypage}>마이페이지로 이동</button>
                 </Link>
             </section>
-            <section className={styles.regiokFire}></section>
+            <section className={styles.regiokFire} ref={regiokFire}></section>
         </main>
     ) : null;
 }

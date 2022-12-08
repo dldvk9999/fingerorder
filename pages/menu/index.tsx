@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import store from "../../data/store";
 import LoginCheck from "../login_check";
 import { useRecoilState } from "recoil";
@@ -32,6 +32,7 @@ export default function Menu(props: { auth: boolean }) {
     const [isMobile, setMobile] = useState(0); // 모바일 인지 아닌지 (width 800px 기준)
     const [isDisableBtn, setDisableBtn] = useState(false); // Input 값이 유효하지 않을 때 잠시 Btn을 disable 시킴 (4초)
     const [searchName, setSearchName] = useState(""); // 검색할 텍스트
+    const menuName = useRef<HTMLInputElement>(null);
 
     // 메뉴 별점에 맞는 별 이미지 스타일링
     function ratingStyle(rate: number) {
@@ -111,11 +112,10 @@ export default function Menu(props: { auth: boolean }) {
 
                 // 메뉴 추가 버튼을 잠시 disable 시킨 뒤 이름 Input 박스에 빨간색 border animation
                 setDisableBtn(true);
-                let name = document.querySelector("#menuName");
-                name?.classList.add(styles.menuInputRequire);
+                menuName.current!.classList.add(styles.menuInputRequire);
                 setTimeout(() => {
                     setDisableBtn(false);
-                    name?.classList.remove(styles.menuInputRequire);
+                    menuName.current!.classList.remove(styles.menuInputRequire);
                 }, 4000);
                 return;
             } else {
@@ -343,13 +343,13 @@ export default function Menu(props: { auth: boolean }) {
                         {printStoreCategory()}
                     </select>
                     <input
-                        id="menuName"
                         type="text"
                         placeholder="메뉴 이름을 입력해주세요."
                         onChange={(e) => setItemName(e.target.value)}
                         value={itemName}
                         disabled={storeID === -1 || category === ""}
                         className={styles.menuInput}
+                        ref={menuName}
                     />
                     <input
                         type="number"

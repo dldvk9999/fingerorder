@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { registrationIndex } from "../../states";
 import styles from "../../styles/pages/Category.module.scss";
@@ -8,8 +8,8 @@ export default function Category(props: { category: Array<string>; auth: boolean
     const [category, setCategory] = useState<Array<string>>([]); // 매장의 메뉴 카테고리
     const [tmpCategory, setTmpCategory] = useState(""); // 입력중인 매장의 메뉴 카테고리
     const [isSubmitDisable, setSubmitDisable] = useState(false);
-    const [inputList, setStatusInput] = useState<HTMLElement>();
-    const [addBtn, setAddBtn] = useState<HTMLElement>();
+    const inputList = useRef<HTMLInputElement>(null);
+    const addBtn = useRef<HTMLButtonElement>(null);
 
     // 카테고리 입력했는지 체크 & 데이터 전송
     function submitCategory() {
@@ -67,11 +67,11 @@ export default function Category(props: { category: Array<string>; auth: boolean
         // 해당 input 테두리 및 추가 버튼 테두리 빨간색으로 지정
         if (!result[0]) {
             setSubmitDisable(true);
-            addBtn!.classList.add(styles.categoryRequireAddBtn);
-            inputList!.classList.add(styles.categoryRequire);
+            addBtn.current!.classList.add(styles.categoryRequireAddBtn);
+            inputList.current!.classList.add(styles.categoryRequire);
             setTimeout(() => {
-                addBtn!.classList.remove(styles.categoryRequireAddBtn);
-                inputList!.classList.remove(styles.categoryRequire);
+                addBtn.current!.classList.remove(styles.categoryRequireAddBtn);
+                inputList.current!.classList.remove(styles.categoryRequire);
                 setSubmitDisable(false);
             }, 4000);
         }
@@ -99,10 +99,6 @@ export default function Category(props: { category: Array<string>; auth: boolean
             location.href = "/registration";
         }
 
-        // input 영역 변수로 저장
-        setStatusInput(document.querySelector<HTMLElement>("." + styles.categoryInput)!);
-        // Category Add Btn
-        setAddBtn(document.querySelector<HTMLElement>("." + styles.categoryInputButton)!);
         // category init
         setCategory(props.category ? props.category : []);
     }, []);
@@ -121,8 +117,14 @@ export default function Category(props: { category: Array<string>; auth: boolean
                         minLength={1}
                         maxLength={40}
                         className={styles.categoryInput}
+                        ref={inputList}
                     />
-                    <button className={styles.categoryInputButton} onClick={addCategory} disabled={isSubmitDisable}>
+                    <button
+                        className={styles.categoryInputButton}
+                        onClick={addCategory}
+                        disabled={isSubmitDisable}
+                        ref={addBtn}
+                    >
                         추가
                     </button>
                 </div>
