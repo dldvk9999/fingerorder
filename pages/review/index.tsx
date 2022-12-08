@@ -15,7 +15,7 @@ type reviewTmp = {
 
 export default function Review() {
     const [storeID, _] = useRecoilState(editNumber);
-    const [review, setReview] = useState<any>([]);
+    const [review, setReview] = useState<Array<reviewTmp>>([]);
     const [tmpReview, setTmpReview] = useState<reviewTmp>();
     const [tmpReviewIndex, setTmpReviewIndex] = useState(-1);
     const [reply, setReply] = useState("");
@@ -34,14 +34,31 @@ export default function Review() {
         );
     }
 
-    // 사장님이 답글 달기 버튼 클릭했을 때 - input 창 열림
-    function onclickReply(index: number) {
-        setReply("");
-        setTmpReview(review[index]);
-        setTmpReviewIndex(index);
-        document.querySelector("." + styles.reviewList)?.scrollIntoView({
-            behavior: "smooth",
-        });
+    // 사장님이 답글 삭제 아이콘을 클릭했을 때
+    function deleteReply(index: number) {
+        if (confirm("리뷰 답글을 삭제하시겠습니까?")) {
+            let tmp = review;
+            tmp[index].reply = "";
+            setReview(tmp);
+            setReview([...review, tmp[index]]);
+            alert("삭제되었습니다.");
+        }
+    }
+
+    // 사장님이 답글 달기 or 수정 버튼 클릭했을 때 - input 창 열림 (재클릭시 닫힘)
+    function onclickReply(index: number, isReply: string = "") {
+        if (!tmpReview || tmpReview.reply !== isReply) {
+            setReply(isReply ? isReply : "");
+            setTmpReview(review[index]);
+            setTmpReviewIndex(index);
+            document.querySelector("." + styles.reviewList)?.scrollIntoView({
+                behavior: "smooth",
+            });
+        } else {
+            setReply("");
+            setTmpReview(undefined);
+            setTmpReviewIndex(0);
+        }
     }
 
     // 사장님이 답글 등록 버튼 클릭했을 때 - input 값에 내용을 저장
@@ -70,9 +87,24 @@ export default function Review() {
                         </>
                     ) : (
                         <>
-                            {review && review[reviewIndex].reply ? (
+                            {/* 사장님의 답글이 달려있는지 확인 */}
+                            {review[reviewIndex].reply ? (
                                 <>
-                                    <p>사장님</p>
+                                    <div className={styles.reviewListManagerTitle}>
+                                        <p>사장님</p>
+                                        <button onClick={() => onclickReply(reviewIndex, review[reviewIndex].reply)}>
+                                            <Image src={"/edit.webp"} alt={"edit"} width={30} height={30} priority />
+                                        </button>
+                                        <button onClick={() => deleteReply(reviewIndex)}>
+                                            <Image
+                                                src={"/delete.webp"}
+                                                alt={"delete"}
+                                                width={20}
+                                                height={20}
+                                                priority
+                                            />
+                                        </button>
+                                    </div>
                                     <pre>{review[reviewIndex].reply}</pre>
                                 </>
                             ) : (
@@ -144,13 +176,17 @@ export default function Review() {
         });
     }, [tmpReview]);
 
+    useEffect(() => {
+        printReviewList();
+    }, [review]);
+
     return LoginCheck() ? (
         <main>
             <section className={styles.review}>
                 <h1>매장 리뷰</h1>
                 <div>
                     <div className={styles.reviewList}>
-                        {review.length ? printReviewList() : <p className={styles.reviewNoExist}>리뷰가 없습니다.</p>}
+                        {review ? printReviewList() : <p className={styles.reviewNoExist}>리뷰가 없습니다.</p>}
                     </div>
                     {tmpReview && printReviewInput()}
                 </div>
