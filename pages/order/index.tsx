@@ -18,6 +18,16 @@ type menu = {
 };
 
 export default function Order() {
+    const [isSoundPlay, setSoundPlay] = useRecoilState(soundPlay);
+    const [menuList, setMenuList] = useState<Array<Array<menuList>>>([]);
+    const [count, setCount] = useState<Array<Array<number>>>([]);
+    const [locate, setLocate] = useState<Array<string>>([]);
+    const [table, setTable] = useState<Array<number>>([]);
+    const [sum, setSum] = useState<Array<number>>([]);
+    const [date, setDate] = useState<Array<Date>>([]);
+    const [result, setResult] = useState<JSX.Element[]>([]);
+    const [notiAudio, setAudio] = useState<any>();
+    const [isClickNew, setClickNew] = useState(false);
     let storeID = Math.floor(Math.random() * 3);
     let category = "";
     let menu: menuList = {
@@ -27,16 +37,6 @@ export default function Order() {
         image: "",
         soldout: false,
     };
-    const [menuList, setMenuList] = useState<Array<Array<menuList>>>([]);
-    const [count, setCount] = useState<Array<Array<number>>>([]);
-    const [locate, setLocate] = useState<Array<string>>([]);
-    const [table, setTable] = useState<Array<number>>([]);
-    const [sum, setSum] = useState<Array<number>>([]);
-    const [date, setDate] = useState<Array<Date>>([]);
-    const [isSoundPlay, setSoundPlay] = useRecoilState(soundPlay);
-    const [result, setResult] = useState<JSX.Element[]>([]);
-    const [notiAudio, setAudio] = useState<any>();
-    const [isClickNew, setClickNew] = useState(false);
 
     // 주문 내역 삭제
     function deleteOrder(index: number) {
