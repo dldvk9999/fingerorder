@@ -23,9 +23,9 @@
 
 ```
 Root
-├─components	    # Header, Footer, Modal 컴포넌트
+├─components	            # Header, Footer, Modal 컴포넌트
 ├─data			    # mock data
-├─pages		        # 각 페이지
+├─pages		            # 각 페이지
 ├─public		    # 페이지에 사용된 이미지
 ├─states		    # Recoil에 사용되는 변수 파일
 ├─styles		    # SCSS 스타일
