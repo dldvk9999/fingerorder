@@ -8,6 +8,8 @@ export default function Category(props: { category: Array<string>; auth: boolean
     const [category, setCategory] = useState<Array<string>>([]); // 매장의 메뉴 카테고리
     const [tmpCategory, setTmpCategory] = useState(""); // 입력중인 매장의 메뉴 카테고리
     const [isSubmitDisable, setSubmitDisable] = useState(false);
+    const [isEditIndex, setIsEditIndex] = useState(-1); // 수정 중인 카테고리의 Index
+    const [isEdit, setIsEdit] = useState(false); // 현재 수정 중인지
     const inputList = useRef<HTMLInputElement>(null);
     const addBtn = useRef<HTMLButtonElement>(null);
 
@@ -26,6 +28,22 @@ export default function Category(props: { category: Array<string>; auth: boolean
         }
     }
 
+    // 추가한 카테고리 수정
+    function editCategory() {
+        let tmp = category;
+        tmp[isEditIndex] = tmpCategory;
+        setCategory(tmp);
+        setTmpCategory("");
+        setIsEdit(false);
+    }
+
+    // 현재 상태 일반 <-> 수정 변환
+    function changeEditStatus(index: number = -1) {
+        setTmpCategory(index !== -1 ? category[index] : "");
+        setIsEditIndex(index);
+        setIsEdit(index !== -1 ? true : false);
+    }
+
     // 카테고리 리스트 출력
     function printCategory() {
         let result = [];
@@ -34,7 +52,12 @@ export default function Category(props: { category: Array<string>; auth: boolean
                 result.push(
                     <div className={styles.categoryMenuListItem} key={"category-item-" + i}>
                         <h2>{category[i]}</h2>
-                        <button onClick={() => deleteCategory(i)}>삭제</button>
+                        <div>
+                            <button onClick={() => changeEditStatus(!isEdit ? i : undefined)}>
+                                {isEdit ? "취소" : "수정"}
+                            </button>
+                            <button onClick={() => deleteCategory(i)}>삭제</button>
+                        </div>
                         {i !== category.length - 1 && <hr />}
                     </div>
                 );
@@ -119,14 +142,25 @@ export default function Category(props: { category: Array<string>; auth: boolean
                         className={styles.categoryInput}
                         ref={inputList}
                     />
-                    <button
-                        className={styles.categoryInputButton}
-                        onClick={addCategory}
-                        disabled={isSubmitDisable}
-                        ref={addBtn}
-                    >
-                        추가
-                    </button>
+                    {isEdit ? (
+                        <button
+                            className={styles.categoryInputButton}
+                            onClick={() => editCategory()}
+                            disabled={isSubmitDisable}
+                            ref={addBtn}
+                        >
+                            수정
+                        </button>
+                    ) : (
+                        <button
+                            className={styles.categoryInputButton}
+                            onClick={addCategory}
+                            disabled={isSubmitDisable}
+                            ref={addBtn}
+                        >
+                            추가
+                        </button>
+                    )}
                 </div>
 
                 <div className={styles.categoryMenuList}>

@@ -134,7 +134,12 @@
     align-items: center;
 }
 
-.categoryMenuListItem > button {
+.categoryMenuListItem > div {
+    display: flex;
+    gap: 1rem;
+}
+
+.categoryMenuListItem > div > button {
     width: 5rem;
     border: 1px solid $red;
     border-radius: 1rem;
