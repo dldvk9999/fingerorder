@@ -22,8 +22,8 @@
 }
 
 .salesExportExcel {
-    border: 1px solid #0070f3;
-    background-color: #0070f3;
+    border: 1px solid $blue;
+    background-color: $blue;
     color: white;
     padding: 0.5rem 1rem;
     border-radius: 1rem;
@@ -34,7 +34,7 @@
     width: 11rem;
     padding: 0.3rem 1rem;
     margin: 1rem;
-    border: 1px solid #eaeaea;
+    border: 1px solid $lightwhite;
     border-radius: 1rem;
     text-align: center;
     -ms-user-select: none;
@@ -47,7 +47,7 @@
 .salesSelectDate:focus,
 .salesSelectDate:active,
 .salesSelectDate:hover {
-    border-color: #0070f3;
+    border-color: $blue;
     outline: none;
 }
 
@@ -67,7 +67,7 @@
 }
 
 .salesTable > thead > tr > th {
-    background-color: #ccd1ff;
+    background-color: $tableheader;
     border-top: 4px double black;
     border-bottom: 4px double black;
     text-align: center;
@@ -87,7 +87,7 @@
 }
 
 .salesTableRow:hover {
-    background-color: #eaeaea;
+    background-color: $lightwhite;
 }
 
 @media (max-width: 800px) {

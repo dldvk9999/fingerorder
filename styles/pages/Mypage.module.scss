@@ -56,24 +56,24 @@
 
 .mypageStoreButton > a > button,
 .mypageChangePassword {
-    border: 1px solid #0070f3;
-    background-color: #0070f3;
+    border: 1px solid $blue;
+    background-color: $blue;
 }
 
 .mypageHomeIntro {
-    border: 1px solid #0070f3;
-    color: #0070f3;
+    border: 1px solid $blue;
+    color: $blue;
 }
 
 .mypageHomeIntroActive {
-    background-color: #0070f3;
+    background-color: $blue;
     color: white;
 }
 
 .mypageStoreButton > button,
 .mypageWithdrawal {
-    border: 1px solid #ff314b;
-    background-color: #ff314b;
+    border: 1px solid $red;
+    background-color: $red;
 }
 
 .mypageStoreList {

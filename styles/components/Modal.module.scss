@@ -101,13 +101,13 @@
 }
 
 .modalBtn > button:nth-child(1) {
-    border: 1px solid #0070f3;
-    background-color: #0070f3;
+    border: 1px solid $blue;
+    background-color: $blue;
 }
 
 .modalBtn > button:nth-child(2) {
-    border: 1px solid #ff314b;
-    background-color: #ff314b;
+    border: 1px solid $red;
+    background-color: $red;
 }
 
 @media (max-width: 700px) {

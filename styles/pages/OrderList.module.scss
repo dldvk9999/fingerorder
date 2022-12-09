@@ -25,8 +25,8 @@
 }
 
 .orderlistExportExcel {
-    border: 1px solid #0070f3;
-    background-color: #0070f3;
+    border: 1px solid $blue;
+    background-color: $blue;
     color: white;
     padding: 0.5rem 1rem;
     border-radius: 1rem;
@@ -41,7 +41,7 @@
     font-size: 1rem;
     width: 11rem;
     padding: 0.3rem 1rem;
-    border: 1px solid #eaeaea;
+    border: 1px solid $lightwhite;
     border-radius: 1rem;
     text-align: center;
     -ms-user-select: none;
@@ -54,7 +54,7 @@
 .orderlistSelectDate:focus,
 .orderlistSelectDate:active,
 .orderlistSelectDate:hover {
-    border-color: #0070f3;
+    border-color: $blue;
     outline: none;
 }
 
@@ -79,7 +79,7 @@
 
 .orderlistGrid > th {
     width: 100%;
-    background-color: #ccd1ff;
+    background-color: $tableheader;
     border-top: 4px double black;
     border-bottom: 4px double black;
     text-align: center;
@@ -89,8 +89,8 @@
 
 .orderlistGridBody {
     max-height: 3.5rem;
-    border-top: 1px solid #eaeaea;
-    border-bottom: 1px solid #eaeaea;
+    border-top: 1px solid $lightwhite;
+    border-bottom: 1px solid $lightwhite;
     cursor: pointer;
     overflow: hidden;
     transition: max-height 0.5s ease;
@@ -105,7 +105,7 @@
 }
 
 .orderlistGridBody:hover {
-    background-color: #eaeaea;
+    background-color: $lightwhite;
 }
 
 .orderlistGridBlank {

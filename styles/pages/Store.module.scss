@@ -40,7 +40,7 @@
 .storeInput {
     width: 20rem;
     height: 3.5rem;
-    border: 1px solid #eaeaea;
+    border: 1px solid $lightwhite;
     border-radius: 1rem;
     padding: 0.5rem;
 }
@@ -53,13 +53,13 @@
 
 @keyframes Not-Write {
     0% {
-        border-color: #eaeaea;
+        border-color: $lightwhite;
     }
     50% {
-        border-color: red;
+        border-color: $red;
     }
     100% {
-        border-color: #eaeaea;
+        border-color: $lightwhite;
     }
 }
 
@@ -72,7 +72,7 @@
     width: 20rem;
     display: flex;
     align-items: center;
-    border: 1px solid #eaeaea;
+    border: 1px solid $lightwhite;
     border-radius: 1rem;
 }
 
@@ -86,8 +86,8 @@
 
 .storeTypeActive,
 .storeType > button:hover {
-    border: 1px solid #0070f3;
-    background-color: #0070f3;
+    border: 1px solid $blue;
+    background-color: $blue;
     color: white;
 }
 
@@ -109,9 +109,9 @@
     width: 13rem;
     height: 3.5rem;
     padding: 0.5rem 1rem;
-    border: 1px solid #0070f3;
+    border: 1px solid $blue;
     border-radius: 1rem;
-    background-color: #0070f3;
+    background-color: $blue;
     color: white;
     font-size: 1.5rem;
     display: flex;

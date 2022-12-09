@@ -27,7 +27,7 @@
     width: 2rem;
     height: 2rem;
     border-radius: 50%;
-    border: 2px solid #eaeaea;
+    border: 2px solid $lightwhite;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -37,7 +37,7 @@
 }
 
 .regiNode.regiNodeActive {
-    border: 2px solid #0070f3;
+    border: 2px solid $blue;
 }
 
 .regiNode.regiNodeScaleActive {
@@ -46,7 +46,7 @@
 
 .regiEdge {
     background: rgba(0, 0, 0, 0.35);
-    background-color: #0070f3;
+    background-color: $blue;
     font-size: 0px;
     line-height: 0px;
     transition: width 0.6s ease-in-out;

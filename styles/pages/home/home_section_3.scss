@@ -30,9 +30,9 @@
 
 .homeCompareBackItem,
 .homeCompareFront {
-    border: 1px solid #f9f9f9;
+    border: 1px solid $darkwhite;
     border-radius: 1rem;
-    background-color: #f9f9f9;
+    background-color: $darkwhite;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -40,14 +40,14 @@
 }
 
 .homeCompareBackItem {
-    border: 1px solid #f9f9f9;
-    background-color: #f9f9f9;
+    border: 1px solid $darkwhite;
+    background-color: $darkwhite;
     width: 15rem;
     height: 25rem;
 }
 
 .homeCompareBackItem > * {
-    color: #bbbbbb;
+    color: $disable;
 }
 
 .homeCompareBackItem > div:nth-child(1) {
@@ -78,7 +78,7 @@
 
 .homeCompareFront > div:nth-child(1) {
     font-size: 2.5rem;
-    background-color: #ff314b;
+    background-color: $red;
     color: white;
     width: 100%;
     text-align: center;
@@ -90,7 +90,7 @@
 }
 .homeCompareFront > div:nth-child(3) {
     font-size: 3rem;
-    color: #0070f3;
+    color: $blue;
     font-weight: 700;
     margin-bottom: 3rem;
 }

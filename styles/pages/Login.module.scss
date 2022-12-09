@@ -14,7 +14,7 @@
 .loginForm > input {
     width: 20rem;
     height: 3rem;
-    border: 1px solid #eaeaea;
+    border: 1px solid $lightwhite;
     border-radius: 10px;
     padding: 0.5rem;
 }
@@ -24,9 +24,9 @@
 .loginForm > a > button {
     width: 15rem;
     height: 3rem;
-    border: 1px solid #0070f3;
+    border: 1px solid $blue;
     border-radius: 1rem;
-    background-color: #0070f3;
+    background-color: $blue;
     color: white;
     display: flex;
     justify-content: center;
