@@ -43,6 +43,11 @@ Root
 -   핑거오더 서비스를 소개
 -   6개의 Section으로 분할
 
+### 로그인 및 회원가입
+
+-   이메일, 비밀번호로 회원가입
+-   카카오 로그인 가능 (구현 예정)
+
 ### 마이페이지
 
 -   비밀번호 수정, 회원 탈퇴
@@ -58,7 +63,7 @@ Root
 
 -   실시간 주문 확인 가능
 -   주문 내역 페이지 이동 가능
--   매출 내역 페이지 이동 간으
+-   매출 내역 페이지 이동 가능
 
 ### QR코드
 
@@ -68,3 +73,11 @@ Root
 ## 배포 주소
 
 https://fingerorder.vercel.app/
+
+## QR코드를 통한 URL 접속 페이지
+
+https://github.com/welcome5group/frontend_order
+
+## 백엔드
+
+https://github.com/welcome5group/backend
