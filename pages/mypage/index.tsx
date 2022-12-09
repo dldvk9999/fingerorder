@@ -2,10 +2,10 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { editNumber, homeIntro } from "../../states";
+import Modal from "../../components/Modal";
 import store from "../../data/store";
 import LoginCheck from "../login_check";
 import styles from "../../styles/pages/Mypage.module.scss";
-import Modal from "../../components/Modal";
 
 export default function Mypage() {
     const [_, setPage] = useRecoilState(editNumber);
@@ -14,6 +14,8 @@ export default function Mypage() {
     const [isKakao, setKakao] = useState(false);
     const [isShowModal, setShowModal] = useState(false);
     const [nowStore, setStore] = useState(store);
+
+    // 회원탈퇴에 사용되는 설문 목록
     const qList = [
         "사이트의 디자인이 너무 별로입니다.",
         "사이트 기능이 좋지 않습니다.",
@@ -40,7 +42,7 @@ export default function Mypage() {
         localStorage.removeItem("kakao");
     }
 
-    // 구매 매장 목록 출력
+    // 서비스 등록 완료한 매장 목록 출력
     function printStoreList() {
         let result = [];
         for (let i = 0; i < nowStore.length; i++) {
