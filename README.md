@@ -36,6 +36,9 @@ Root
 
 ## 주요 페이지 소개
 
+> 백엔드와는 아직 연동이 되어있지 않은 상태로  
+> mock data를 통해 디자인 및 기능만 구현하였습니다.
+
 ### Home 화면
 
 ![Home](./public/readme/home.gif)
@@ -74,10 +77,10 @@ Root
 
 https://fingerorder.vercel.app/
 
-## QR코드를 통한 URL 접속 페이지
+## QR코드를 통한 URL 접속 페이지 (Github)
 
 https://github.com/welcome5group/frontend_order
 
-## 백엔드
+## Backend (Github)
 
 https://github.com/welcome5group/backend
