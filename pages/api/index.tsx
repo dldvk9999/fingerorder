@@ -5,7 +5,7 @@ const url = "/api";
 const header = {
     withCredentials: false, // cors 통신 설정
     headers: {
-        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+        "Content-Type": "application/json; charset=UTF-8",
     },
 };
 
