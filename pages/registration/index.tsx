@@ -14,13 +14,14 @@ export default function Registration() {
     const registration = useRef<HTMLDivElement>(null);
     const main = useRef<HTMLElement>(null);
 
+    // Step 표시 출력
     function printStep() {
         let result = [];
         for (let i = 0; i < 3; i++) {
             result.push(
                 <div key={"regi-step-" + i}>
                     <div
-                        className={`${styles.regiNode} ${styles.regiNodeActive} ${
+                        className={`${styles.regiNode} ${regiIndex >= i && styles.regiNodeActive} ${
                             regiIndex === i && styles.regiNodeScaleActive
                         }`}
                     >

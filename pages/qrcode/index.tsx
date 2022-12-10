@@ -91,7 +91,7 @@ export default function QRCode(props: { tableCount: number; type: string }) {
             setTableCount(!props.tableCount ? store[editPage].table : props.tableCount);
             setStoreType(!props.type ? store[editPage].type : props.type);
         }
-    }, [props.tableCount, props.type, editPage]);
+    }, [props.tableCount, props.type]);
 
     return LoginCheck() && isStoreManager ? (
         <main>
