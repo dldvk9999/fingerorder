@@ -354,7 +354,7 @@ export default function Menu(props: { auth: boolean }) {
                     <h2>메뉴 리스트</h2>
                     <div className={styles.menuItemCategory}>
                         <input
-                            type="text"
+                            type="search"
                             placeholder="메뉴 이름 검색"
                             onChange={(e) => setSearchName(e.target.value)}
                             className={styles.menuItemSearch}
