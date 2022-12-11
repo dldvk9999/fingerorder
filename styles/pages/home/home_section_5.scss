@@ -1,15 +1,13 @@
 /* Section 5 - Strongth */
 .homeStrongth {
-    height: 100vh;
-    width: 100vw;
+    @include area(100vw, 100vh);
     align-items: center;
 }
 
 .homeStrongth,
 .homeStrongthCard,
 .homeStrongthSub {
-    display: flex;
-    justify-content: center;
+    @include view(flex, center);
 }
 
 .homeStrongthCard {
@@ -24,20 +22,18 @@
 
 .homeStrongthSub {
     flex-direction: column;
-}
 
-.homeStrongthSub:first-child {
-    align-items: center;
-}
-
-.homeStrongthSub:last-child {
-    gap: 5rem;
-}
-
-.homeStrongthSub > li {
-    list-style: none;
-    border: 1px solid $lightwhite;
-    border-radius: 1rem;
-    padding: 1rem;
-    box-shadow: 11px 10px 23px -14px grey;
+    &:first-child {
+        align-items: center;
+    }
+    &:last-child {
+        gap: 5rem;
+    }
+    li {
+        list-style: none;
+        border: 1px solid $lightwhite;
+        border-radius: 1rem;
+        padding: 1rem;
+        box-shadow: 11px 10px 23px -14px grey;
+    }
 }

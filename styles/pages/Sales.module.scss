@@ -1,32 +1,25 @@
 .sales {
+    @include view(flex, normal, flex-start);
     width: 100vw;
-    display: flex;
     flex-direction: column;
-    align-items: flex-start;
     padding: 5rem;
     min-width: 270px;
 }
 
 .sales > div {
+    @include view(flex, space-between, center);
     width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
 
-.sales > div > h1 {
-    white-space: nowrap;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+    h1 {
+        @include view(flex, normal, center);
+        white-space: nowrap;
+        gap: 1rem;
+    }
 }
 
 .salesExportExcel {
-    border: 1px solid $blue;
-    background-color: $blue;
-    color: white;
+    @include buttonStyle(fit-content, fit-content, $blue);
     padding: 0.5rem 1rem;
-    border-radius: 1rem;
 }
 
 .salesSelectDate {
@@ -42,13 +35,13 @@
     -khtml-user-select: none;
     -webkit-user-select: none;
     user-select: none;
-}
 
-.salesSelectDate:focus,
-.salesSelectDate:active,
-.salesSelectDate:hover {
-    border-color: $blue;
-    outline: none;
+    &:focus,
+    &:active,
+    &:hover {
+        border-color: $blue;
+        outline: none;
+    }
 }
 
 .salesBody {
@@ -59,24 +52,22 @@
 .salesTable {
     width: 100%;
     border-spacing: 0;
-}
 
-.salesTable > caption {
-    font-size: 1.5rem;
-    font-weight: 700;
-}
-
-.salesTable > thead > tr > th {
-    background-color: $tableheader;
-    border-top: 4px double black;
-    border-bottom: 4px double black;
-    text-align: center;
-    margin: 0;
-    font-size: 1.3rem;
-}
-
-.salesTable > tbody {
-    text-align: center;
+    caption {
+        font-size: 1.5rem;
+        font-weight: 700;
+    }
+    thead > tr > th {
+        background-color: $tableheader;
+        border-top: 4px double black;
+        border-bottom: 4px double black;
+        text-align: center;
+        margin: 0;
+        font-size: 1.3rem;
+    }
+    tbody {
+        text-align: center;
+    }
 }
 
 .salesTableTotal > td {

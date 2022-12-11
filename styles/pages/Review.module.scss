@@ -6,14 +6,10 @@
     flex-direction: column;
 }
 
-.review > div {
-    gap: 3rem;
-    justify-content: space-between;
-}
-
 .review > div,
 .reviewListUserProfile {
     display: flex;
+    gap: 3rem;
 }
 
 .reviewListUserProfile {
@@ -22,11 +18,9 @@
 }
 
 .reviewListManager {
+    @include view(flex, flex-end, center);
     width: 100%;
-    display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
 }
 
 .reviewListItem {
@@ -35,10 +29,9 @@
 
 .reviewList,
 .reviewInput {
+    @include view(flex, normal, flex-start);
     width: 100%;
-    display: flex;
     flex-direction: column;
-    align-items: flex-start;
     max-height: 40rem;
     overflow-y: scroll;
     background-color: $lightwhite;
@@ -50,36 +43,28 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-}
 
-.reviewListUserInfo > div > p:nth-child(1),
-.reviewListUserInfo > p:nth-child(1) {
-    font-size: 1.3rem;
-    font-weight: 700;
-    margin: 0;
-}
-
-.reviewListUserInfo > p > span {
-    font-size: 0.8rem;
-    font-weight: 400;
-    margin: 0 0.5rem;
+    div > p:nth-child(1),
+    p:nth-child(1) {
+        font-size: 1.3rem;
+        font-weight: 700;
+        margin: 0;
+    }
+    p > span {
+        font-size: 0.8rem;
+        font-weight: 400;
+        margin: 0 0.5rem;
+    }
 }
 
 .reviewListManagerTitle {
-    display: flex;
-    align-items: center;
+    @include view(flex, flex-start !important, center);
+    gap: 1rem !important;
 }
 
 .reviewListReplyBtn {
-    width: 20rem;
+    @include buttonStyle(20rem, fit-content, $blue);
     padding: 0.5rem 1rem;
-    border: 1px solid $blue;
-    background-color: $blue;
-    color: white;
-    border-radius: 1rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     margin: auto;
 }
 
@@ -92,37 +77,27 @@
 }
 
 .reviewInputArea {
-    width: 100%;
-    height: 10rem;
+    @include area(100%, 10rem);
     border: 2px solid $reviewinput;
     border-radius: 1rem 1rem 0 0;
     padding: 1rem;
     resize: none;
-}
 
-.reviewInputArea:focus,
-.reviewInputArea:active {
-    outline: none;
-    border: 2px solid $blue;
+    &:focus,
+    &:active {
+        outline: none;
+        border: 2px solid $blue;
+    }
 }
 
 .reviewInputAreaSubmit {
-    width: 100%;
-    height: 3rem;
-    border: 1px solid $blue;
-    background-color: $blue;
-    color: white;
+    @include buttonStyle(100%, 3rem, $blue);
     border-radius: 0 0 1rem 1rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .reviewNoExist {
+    @include view(flex, center, center);
     width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     font-size: 1.3rem;
     font-weight: 700;
 }
@@ -157,8 +132,7 @@
         padding: 1rem;
     }
     .reviewListImage {
-        width: 40px;
-        height: 40px;
+        @include area(40px, 40px);
     }
     .reviewListReplyBtn {
         width: 5rem;
@@ -182,12 +156,11 @@
     .reviewListUserInfo > p:nth-child(1) {
         display: flex;
         flex-direction: column;
-    }
-    .reviewListUserInfo > p:nth-child(1) > span {
-        margin: 0;
+        span {
+            margin: 0;
+        }
     }
     .reviewListImage {
-        width: 30px;
-        height: 30px;
+        @include area(30px, 30px);
     }
 }

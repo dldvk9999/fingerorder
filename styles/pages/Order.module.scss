@@ -2,37 +2,31 @@
     width: 100vw;
     min-height: 100vh;
     padding: 7rem 5rem;
-}
 
-.order > div,
-.order > div > div {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-}
-
-.order > div > h1 {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    white-space: nowrap;
-    margin: 0;
+    div {
+        @include view(flex, space-between);
+        h1 {
+            @include view(flex, normal, center);
+            gap: 1rem;
+            white-space: nowrap;
+            margin: 0;
+        }
+        div {
+            @include view(flex, space-between, center);
+            gap: 1rem;
+        }
+    }
 }
 
 .order > div > div > a > button,
 .order > div > h1 > button {
-    height: 2rem;
-    padding: 0.5rem 1rem;
+    @include buttonStyle(fit-content, 2rem, $blue, 0.8rem);
     color: $blue;
-    border: 1px solid $blue;
-    border-radius: 1rem;
+    background-color: white;
+    padding: 0.5rem 1rem;
 }
 
-.order > div > div > a > button {
-    color: white !important;
-    background-color: $blue;
-}
-
+.order > div > div > a > button,
 .orderSoundActive {
     background-color: $blue;
     color: white !important;
@@ -58,36 +52,31 @@
     border: 1px solid $lightwhite;
     border-radius: 1rem;
     box-shadow: 10px 10px 15px -15px gray;
+
+    h2 {
+        margin: 0.3rem 0;
+    }
 }
 
 .orderCardSlideIn {
-    animation: SlideIn 1s ease-in-out;
+    @include animation("slide_in .7s ease-in-out");
 }
 
-@keyframes SlideIn {
-    0% {
-        transform: translateY(25%);
-        opacity: 0;
-    }
-    100% {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
-.orderCard > h2 {
-    margin: 0.3rem 0;
-}
 .orderCardLocate {
+    @include view(flex, space-between);
     margin: 0.5rem 0;
-    display: flex;
-    justify-content: space-between;
 }
 
 .orderCardMenu {
+    @include view(flex, normal, center);
     height: fit-content;
-    display: flex;
-    align-items: center;
+
+    p:nth-child(1) {
+        width: 100%;
+    }
+    p:nth-child(2) {
+        width: 4rem;
+    }
 }
 
 .orderCardMenuTitle {
@@ -100,28 +89,18 @@
     text-decoration: line-through;
 }
 
-.orderCardMenu > p:nth-child(1) {
-    width: 100%;
-}
-.orderCardMenu > p:nth-child(2) {
-    width: 4rem;
-}
-
 .orderCardClose {
-    border: 1px solid $blue;
+    @include view(flex, center);
+    @include border_backcolor($blue);
     border-radius: 1rem;
-    background-color: $blue;
     padding: 0.5rem 1rem;
     color: white;
     font-size: 1rem;
-    display: flex;
-    justify-content: center;
 }
 
 .orderCardTotal {
+    @include view(flex, flex-end);
     font-size: 1.5rem;
-    display: flex;
-    justify-content: flex-end;
 }
 
 .orderCardCheckbox {
@@ -129,25 +108,20 @@
 }
 
 .orderCardLabel {
-    width: 2rem;
-    height: 1.5rem;
-    border: 1px solid $red;
-    border-radius: 1rem;
-    background-color: $red;
+    @include buttonStyle(2rem, 1.5rem, $red);
     cursor: pointer;
 }
 
 .orderCardLabelActive {
-    border: 1px solid $blue;
-    background-color: $blue;
+    @include border_backcolor($blue);
 }
 
 @media (max-width: 800px) {
     .order > div {
         flex-direction: column;
-    }
-    .order > div > div {
-        justify-content: flex-start;
+        div {
+            justify-content: flex-start;
+        }
     }
 }
 
@@ -155,9 +129,9 @@
     .order {
         padding: 7rem 0;
         min-width: 15.625rem;
-    }
-    .order > div > div {
-        gap: 0;
+        div > div {
+            gap: 0;
+        }
     }
     .orderCard {
         width: 100vw;

@@ -1,9 +1,15 @@
 /* Section 3 - Compare */
 .homeCompare {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    align-items: center;
+    @include view(flex, normal, center);
+    @include area(100vw, 100vh);
+
+    p {
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, 35vh);
+        font-weight: 700;
+        font-size: 2rem;
+    }
 }
 
 .homeCompareCarousel {
@@ -11,94 +17,65 @@
 }
 
 .homeCompareBackground {
+    @include view(flex, normal, center);
+    @include animation("carousel-infinite 30s linear infinite");
     height: 60%;
-    display: flex;
-    align-items: center;
     gap: 2rem;
     padding: 3rem 0 3rem 2rem;
-    animation: carousel-infinite 30s linear infinite;
-}
-
-@keyframes carousel-infinite {
-    0% {
-        transform: translateX(0%);
-    }
-    100% {
-        transform: translateX(-50%);
-    }
 }
 
 .homeCompareBackItem,
 .homeCompareFront {
-    border: 1px solid $darkwhite;
+    @include view(flex, space-between, center);
+    @include border_backcolor($darkwhite);
     border-radius: 1rem;
-    background-color: $darkwhite;
-    display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
 }
 
 .homeCompareBackItem {
-    border: 1px solid $darkwhite;
-    background-color: $darkwhite;
-    width: 15rem;
-    height: 25rem;
-}
+    @include area(15rem, 25rem);
+    @include border_backcolor($darkwhite);
 
-.homeCompareBackItem > * {
-    color: $disable;
-}
-
-.homeCompareBackItem > div:nth-child(1) {
-    font-size: 2rem;
-    margin-top: 3rem;
-}
-.homeCompareBackItem > div:nth-child(2) {
-    font-size: 8rem;
-}
-.homeCompareBackItem > div:nth-child(3) {
-    font-size: 1.5rem;
-    margin-bottom: 3rem;
+    * {
+        color: $disable;
+    }
+    div:nth-child(1) {
+        font-size: 2rem;
+        margin-top: 3rem;
+    }
+    div:nth-child(2) {
+        font-size: 8rem;
+    }
+    div:nth-child(3) {
+        font-size: 1.5rem;
+        margin-bottom: 3rem;
+    }
 }
 
 .homeCompareFront {
+    @include view(flex, space-between, center);
+    @include area(20rem, 30rem);
+    @include border_backcolor($lightwhite, white);
     position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border: 1px solid #eaeaea;
-    background-color: white;
-    width: 20rem;
-    height: 30rem;
     left: 50%;
     transform: translateX(-50%);
     box-shadow: 10px 10px 25px -3px gray;
-}
 
-.homeCompareFront > div:nth-child(1) {
-    font-size: 2.5rem;
-    background-color: $red;
-    color: white;
-    width: 100%;
-    text-align: center;
-    margin-top: 3rem;
+    div:nth-child(1) {
+        font-size: 2.5rem;
+        background-color: $red;
+        color: white;
+        width: 100%;
+        text-align: center;
+        margin-top: 3rem;
+    }
+    div:nth-child(3) {
+        font-size: 3rem;
+        color: $blue;
+        font-weight: 700;
+        margin-bottom: 3rem;
+    }
 }
 .homeCompareFrontImage {
-    display: flex;
-    align-items: center;
-}
-.homeCompareFront > div:nth-child(3) {
-    font-size: 3rem;
-    color: $blue;
-    font-weight: 700;
-    margin-bottom: 3rem;
-}
-
-.homeCompare > p {
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, 35vh);
-    font-weight: 700;
-    font-size: 2rem;
+    @include view(flex, normal, center);
 }

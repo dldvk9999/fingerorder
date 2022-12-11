@@ -1,121 +1,92 @@
 .store {
+    @include view(flex, center);
     width: 100vw;
-    display: flex;
-    justify-content: center;
     gap: 10rem;
     padding-top: 0 !important;
 }
 
 /* Section 1. Store Info & Input */
 .storeInfo {
-    display: flex;
+    @include view(flex, center, center);
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
     gap: 1.5rem;
-}
 
-.storeInfo > h1 {
-    font-size: 3rem;
-    font-weight: 700;
+    h1 {
+        font-size: 3rem;
+        font-weight: 700;
+    }
 }
 
 .storeUseButton {
-    display: flex;
+    @include view(flex, normal, center);
     flex-direction: column;
-    align-items: center;
-}
 
-.storeUseButton > p {
-    width: 100%;
-    font-size: 0.7rem;
-    padding-left: 8px;
-    margin-top: 6px;
-    margin-bottom: 0;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
+    p {
+        @include view(flex, flex-start, center);
+        width: 100%;
+        font-size: 0.7rem;
+        padding-left: 8px;
+        margin-top: 6px;
+        margin-bottom: 0;
+    }
 }
 
 .storeInput {
-    width: 20rem;
-    height: 3.5rem;
+    @include area(20rem, 3.5rem);
     border: 1px solid $lightwhite;
     border-radius: 1rem;
     padding: 0.5rem;
-}
 
-.storeType.storeRequire,
-.storeInput.storeRequire {
-    animation: Not-Write 1s linear;
-    animation-iteration-count: 3;
-}
-
-@keyframes Not-Write {
-    0% {
-        border-color: $lightwhite;
-    }
-    50% {
-        border-color: $red;
-    }
-    100% {
-        border-color: $lightwhite;
+    &:focus,
+    &:active {
+        outline: none;
     }
 }
 
-.storeInput:focus,
-.storeInput:active {
-    outline: none;
+.storeType,
+.storeInput {
+    &.storeRequire {
+        @include animation("border_to_red 1s linear 3");
+    }
 }
 
 .storeType {
+    @include view(flex, normal, center);
     width: 20rem;
-    display: flex;
-    align-items: center;
     border: 1px solid $lightwhite;
     border-radius: 1rem;
-}
 
-.storeType > button {
-    width: 100%;
-    flex-direction: column;
-    padding: 1rem;
-    text-align: center;
-    border: 1px solid transparent;
+    button {
+        width: 100%;
+        flex-direction: column;
+        padding: 1rem;
+        text-align: center;
+        border: 1px solid transparent;
+
+        &:nth-child(1) {
+            border-radius: 1rem 0 0 1rem;
+        }
+        &:nth-child(2) {
+            border-radius: 0 1rem 1rem 0;
+        }
+        p:nth-child(1) {
+            font-size: 0.8rem;
+        }
+        p:nth-child(2) {
+            font-size: 1.3rem;
+        }
+    }
 }
 
 .storeTypeActive,
 .storeType > button:hover {
-    border: 1px solid $blue;
-    background-color: $blue;
+    @include border_backcolor($blue);
     color: white;
-}
-
-.storeType > button:nth-child(1) {
-    border-radius: 1rem 0 0 1rem;
-}
-.storeType > button:nth-child(2) {
-    border-radius: 0 1rem 1rem 0;
-}
-
-.storeType > button > p:nth-child(1) {
-    font-size: 0.8rem;
-}
-.storeType > button > p:nth-child(2) {
-    font-size: 1.3rem;
 }
 
 .storeButton {
-    width: 13rem;
-    height: 3.5rem;
+    @include buttonStyle(13rem, 3.5rem, $blue, 1.5rem);
     padding: 0.5rem 1rem;
-    border: 1px solid $blue;
-    border-radius: 1rem;
-    background-color: $blue;
-    color: white;
-    font-size: 1.5rem;
-    display: flex;
-    justify-content: center;
     margin: 2rem 0 3rem;
 }
 
@@ -145,8 +116,8 @@
     }
     .storeType {
         width: 14rem;
-    }
-    .storeType > button > p:nth-child(2) {
-        font-size: 1rem;
+        button > p:nth-child(2) {
+            font-size: 1rem;
+        }
     }
 }

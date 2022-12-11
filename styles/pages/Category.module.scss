@@ -3,111 +3,53 @@
 }
 
 .category {
+    @include view(flex, center, center);
     width: 100vw;
     padding: 0 5rem;
-    display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
 
-.category > h1 {
-    font-size: 3rem;
+    h1 {
+        font-size: 3rem;
+    }
 }
 
 .categoryUseButton {
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
+    @include view(flex, flex-end, flex-end);
     margin-bottom: 1rem;
 }
 
 .categoryInputButton {
-    height: 3.5rem;
-    display: flex;
-    justify-content: center;
-}
-
-.categoryInputButton {
+    @include border_backcolor($lightwhite);
     width: 4rem;
     position: absolute;
     padding: 0.3rem;
-    border: 1px solid $lightwhite;
     border-radius: 0 1rem 1rem 0;
-    background-color: $lightwhite;
-}
 
-.categoryInputButton.categoryRequireAddBtn {
-    animation: Not-Write-addBtn 1s linear;
-    animation-iteration-count: 3;
+    &.categoryRequireAddBtn {
+        @include animation("border_to_red_addBtn 1s linear 3");
+    }
 }
 
 .categoryInput {
-    width: 40rem;
-    height: 3.5rem;
+    @include area(40rem, 3.5rem);
     border: 1px solid $lightwhite;
     border-radius: 1rem;
     padding: 0.5rem;
-}
 
-.categoryInput.categoryRequire {
-    animation: Not-Write 1s linear;
-    animation-iteration-count: 3;
-}
-@keyframes Not-Write {
-    0% {
-        border-color: $lightwhite;
+    &.categoryRequire {
+        @include animation("border_to_red 1s linear 3");
     }
-    50% {
-        border-color: $red;
-    }
-    100% {
-        border-color: $lightwhite;
-    }
-}
 
-.categoryInput:focus,
-.categoryInput:active {
-    outline: none;
+    &:focus,
+    &:active {
+        outline: none;
+    }
 }
 
 .categoryInputButton,
 .categoryButton {
+    @include view(flex, center, center);
     height: 3.5rem;
-    display: flex;
-    justify-content: center;
-}
-
-.categoryInputButton {
-    width: 4rem;
-    position: absolute;
-    padding: 0.3rem;
-    border: 1px solid $lightwhite;
-    border-radius: 0 1rem 1rem 0;
-    background-color: $lightwhite;
-}
-
-.categoryInputButton.categoryRequireAddBtn {
-    animation: Not-Write-addBtn 1s linear;
-    animation-iteration-count: 3;
-}
-
-@keyframes Not-Write-addBtn {
-    0% {
-        border-top-color: $lightwhite;
-        border-right-color: $lightwhite;
-        border-bottom-color: $lightwhite;
-    }
-    50% {
-        border-top-color: $red;
-        border-right-color: $red;
-        border-bottom-color: $red;
-    }
-    100% {
-        border-top-color: $lightwhite;
-        border-right-color: $lightwhite;
-        border-bottom-color: $lightwhite;
-    }
 }
 
 .categoryMenuList {
@@ -128,28 +70,19 @@
 }
 
 .categoryMenuListItem {
-    display: flex;
+    @include view(flex, center, center);
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
 
-.categoryMenuListItem > div {
-    display: flex;
-    gap: 1rem;
-}
+    div {
+        display: flex;
+        gap: 1rem;
 
-.categoryMenuListItem > div > button {
-    width: 5rem;
-    border: 1px solid $red;
-    border-radius: 1rem;
-    background-color: $red;
-    padding: 0.5rem 1rem;
-    display: flex;
-    justify-content: center;
-    margin-bottom: 1rem;
-    font-weight: 700;
-    color: white;
+        button {
+            @include buttonStyle(5rem, 2rem, $red);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+    }
 }
 
 .storeButtons {
@@ -158,16 +91,8 @@
 }
 
 .storeButton {
-    width: 13rem;
-    height: 3.5rem;
+    @include buttonStyle(13rem, 3rem, $blue);
     padding: 0.5rem 1rem;
-    border: 1px solid $blue;
-    border-radius: 1rem;
-    background-color: $blue;
-    color: white;
-    font-size: 1.5rem;
-    display: flex;
-    justify-content: center;
     margin: 2rem 0 3rem;
 }
 
@@ -181,11 +106,11 @@
 }
 
 @media (max-width: 500px) {
-    .category > h1 {
-        font-size: 1.5rem;
-    }
     .category {
         padding: 3rem 2rem;
+        h1 {
+            font-size: 1.5rem;
+        }
     }
     .storeButton {
         font-size: 1rem;

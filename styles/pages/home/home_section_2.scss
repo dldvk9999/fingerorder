@@ -1,4 +1,4 @@
-/* Section 2 - Images */
+/* Section 2 - Whitebox */
 .homeWhitebox > * {
     height: 17rem;
 }
@@ -9,39 +9,32 @@
 }
 
 .homeWhiteboxItems {
+    @include view(flex, normal, center);
     width: 100vw;
     position: absolute;
-    display: flex;
-    align-items: center;
 }
 
 .homeWhiteboxLeft {
-    width: 60%;
-    height: 17rem;
-    background-color: white;
-    border: 1px solid $lightwhite;
+    @include view(flex, space-evenly, center);
+    @include area(60%, 17rem);
+    @include border_backcolor($lightwhite, white);
     border-radius: 0 10rem 10rem 0;
     box-shadow: 10px 10px 30px -15px gray;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
 }
 
 .homeWhiteboxRight {
+    @include view(flex, center);
     width: 40%;
-    display: flex;
-    justify-content: center;
     color: #bbbbbb;
 }
 
 .homeWhiteboxItem {
-    display: flex;
+    @include view(flex, center);
     flex-direction: column;
-    justify-content: center;
-}
 
-.homeWhiteboxItem > div {
-    font-size: 2rem;
+    div {
+        font-size: 2rem;
+    }
 }
 
 .homeWhiteboxItemHighlight {
@@ -50,8 +43,7 @@
 }
 
 .homeWhiteboxDown {
-    width: 3rem;
-    height: 3rem;
+    @include area(3rem, 3rem);
     vertical-align: middle;
     fill: currentColor;
     overflow: hidden;

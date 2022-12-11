@@ -4,35 +4,31 @@
     flex-direction: column;
     gap: 2rem;
     padding: 2rem 7rem;
-}
 
-.mypage > h1 {
-    white-space: nowrap;
+    h1 {
+        white-space: nowrap;
+    }
 }
 
 .mypageSub {
+    @include view(flex, normal, center);
     width: 100%;
-    display: flex;
-    align-items: center;
 }
 
 .mypageInfo {
+    @include view(flex, space-evenly, center);
     width: 50vw;
-    display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
     gap: 2rem;
 }
 
 .mypageMyEmail {
-    display: flex;
-    align-items: center;
+    @include view(flex, normal, center);
     gap: 0.5rem;
 }
 
 .mypageKakaoSymbol {
-    fill: #3c1e1e;
+    fill: $kakaosymbol;
     fill-opacity: 1;
     fill-rule: nonzero;
     stroke: none;
@@ -41,27 +37,30 @@
 .mypageChangePassword,
 .mypageWithdrawal,
 .mypageHomeIntro {
+    @include buttonStyle(15rem, 3rem, $blue, 1.3rem);
     padding: 1rem;
-    border-radius: 1rem;
-    color: white;
-    width: 15rem;
-    height: 3rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     font-weight: 700;
-    font-size: 1.5rem;
     box-shadow: 4px 5px 10px 1px gray;
 }
 
-.mypageStoreButton > a > button,
-.mypageChangePassword {
-    border: 1px solid $blue;
-    background-color: $blue;
+.mypageStoreButton {
+    @include view(flex, flex-end, center);
+    margin-top: 1rem;
+    gap: 1rem;
+    padding: 1rem 0 !important;
+
+    a {
+        padding: 0;
+    }
+    button,
+    a > button {
+        @include buttonStyle(fit-content, fit-content, $blue, 0.9rem);
+        padding: 0.5rem 1rem;
+    }
 }
 
 .mypageHomeIntro {
-    border: 1px solid $blue;
+    background-color: white;
     color: $blue;
 }
 
@@ -72,39 +71,38 @@
 
 .mypageStoreButton > button,
 .mypageWithdrawal {
-    border: 1px solid $red;
-    background-color: $red;
+    @include border_backcolor($red);
 }
 
 .mypageStoreList {
+    @include view(flex, normal, center);
     width: 50vw;
     min-width: 16rem;
     padding: 1rem 1rem 3rem 1rem;
-    display: flex;
     flex-direction: column;
-    align-items: center;
     background-color: #e0e0e0;
     box-shadow: 10px 10px 24px -10px grey;
-}
 
-.mypageStoreList > h2 {
-    font-size: 1.5rem;
-    font-weight: 700;
+    h2 {
+        font-size: 1.5rem;
+        font-weight: 700;
+    }
 }
 
 .mypageStoreListItem {
-    width: 90%;
-    height: 35rem;
+    @include area(90%, 35rem);
     display: flex;
     flex-direction: column;
     gap: 1rem;
     overflow-y: scroll;
-}
 
-.mypageStoreListItem > * {
-    background-color: white;
-    padding: 1rem;
-    border-radius: 1rem;
+    * {
+        background-color: white;
+        border-radius: 1rem;
+    }
+    div {
+        padding: 1rem;
+    }
 }
 
 .mypageStoreName {
@@ -119,24 +117,10 @@
 }
 
 .mypageStoreBody {
-    padding: 1rem 0;
+    padding: 1rem;
 }
 
-.mypageStoreButton {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 1rem;
-    gap: 1rem;
-}
-
-.mypageStoreButton > button,
-.mypageStoreButton > a > button {
-    border-radius: 1rem;
-    color: white;
-    padding: 0.5rem 1rem;
-}
-
-@media (max-width: 1180px) {
+@media (max-width: 1300px) {
     .mypageStoreNameDate {
         display: flex;
         flex-direction: column;
@@ -146,10 +130,14 @@
     }
     .mypageStoreButton {
         gap: 0;
+        a > button,
+        button {
+            font-size: 0.75rem;
+        }
     }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1050px) {
     .mypage {
         padding: 2rem 4rem;
     }
@@ -204,5 +192,8 @@
     .mypageStoreButton > a > button {
         font-size: 0.5rem;
         padding: 0.3rem 0.4rem;
+    }
+    .mypageMyEmail > h2 {
+        font-size: 1rem;
     }
 }

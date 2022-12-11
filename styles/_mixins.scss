@@ -1,0 +1,88 @@
+@mixin buttonStyle($width, $height, $color, $fontSize: 1rem) {
+    width: $width;
+    height: $height;
+    border: 1px solid $color;
+    border-radius: 1rem;
+    background-color: $color;
+    color: white;
+    font-size: $fontSize;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin view($display, $justify-content: normal, $align-items: normal) {
+    display: $display;
+    justify-content: $justify-content;
+    align-items: $align-items;
+}
+
+@mixin area($width, $height) {
+    width: $width;
+    height: $height;
+}
+
+@mixin border_backcolor($color, $bcolor: $color) {
+    border: 1px solid $color;
+    background-color: $bcolor;
+}
+
+@mixin animation($str) {
+    animation: #{$str};
+}
+
+@mixin keyframe($animation_name) {
+    @keyframes #{$animation-name} {
+        @content;
+    }
+}
+
+@include keyframe(border_to_red) {
+    0% {
+        border-color: $lightwhite;
+    }
+    50% {
+        border-color: $red;
+    }
+    100% {
+        border-color: $lightwhite;
+    }
+}
+
+@include keyframe(border_to_red_addBtn) {
+    0% {
+        border-top-color: $lightwhite;
+        border-right-color: $lightwhite;
+        border-bottom-color: $lightwhite;
+    }
+    50% {
+        border-top-color: $red;
+        border-right-color: $red;
+        border-bottom-color: $red;
+    }
+    100% {
+        border-top-color: $lightwhite;
+        border-right-color: $lightwhite;
+        border-bottom-color: $lightwhite;
+    }
+}
+
+@include keyframe(slide_in) {
+    0% {
+        transform: translateY(25%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@include keyframe(carousel-infinite) {
+    0% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}

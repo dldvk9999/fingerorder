@@ -1,9 +1,8 @@
 .homeMain {
     padding: 0;
-}
-
-.homeMain > section {
-    min-width: 10rem;
+    section {
+        min-width: 10rem;
+    }
 }
 
 @import "./home/home_section_1.scss";

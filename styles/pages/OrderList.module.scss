@@ -1,35 +1,29 @@
 .orderlist {
+    @include view(flex, normal, flex-start);
     width: 100vw;
-    display: flex;
     flex-direction: column;
-    align-items: flex-start;
     padding: 5rem;
-}
-
-.orderlistHeader > h1 {
-    white-space: nowrap;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
 }
 
 .orderlistHeader,
 .orderlistSearch {
-    display: flex;
-    align-items: center;
+    @include view(flex, normal, center);
 }
 
 .orderlistHeader {
     width: 100%;
     justify-content: space-between;
+
+    h1 {
+        @include view(flex, normal, center);
+        white-space: nowrap;
+        gap: 1rem;
+    }
 }
 
 .orderlistExportExcel {
-    border: 1px solid $blue;
-    background-color: $blue;
-    color: white;
+    @include buttonStyle(fit-content, fit-content, $blue);
     padding: 0.5rem 1rem;
-    border-radius: 1rem;
 }
 
 .orderlistSearch {
@@ -49,13 +43,13 @@
     -khtml-user-select: none;
     -webkit-user-select: none;
     user-select: none;
-}
 
-.orderlistSelectDate:focus,
-.orderlistSelectDate:active,
-.orderlistSelectDate:hover {
-    border-color: $blue;
-    outline: none;
+    &:focus,
+    &:active,
+    &:hover {
+        border-color: $blue;
+        outline: none;
+    }
 }
 
 .orderlistTable {
@@ -69,22 +63,21 @@
 
 .orderlistGrid,
 .orderlistGridBody {
+    @include view(grid, center, center);
+    text-align: center;
     width: 100%;
     min-width: 29.25rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    justify-items: center;
-    align-items: center;
-}
+    grid-template-columns: repeat(5, 1fr);
 
-.orderlistGrid > th {
-    width: 100%;
-    background-color: $tableheader;
-    border-top: 4px double black;
-    border-bottom: 4px double black;
-    text-align: center;
-    margin: 0;
-    font-size: 1.3rem;
+    th {
+        width: 100%;
+        background-color: $tableheader;
+        border-top: 4px double black;
+        border-bottom: 4px double black;
+        text-align: center;
+        margin: 0;
+        font-size: 1.3rem;
+    }
 }
 
 .orderlistGridBody {
@@ -94,18 +87,17 @@
     cursor: pointer;
     overflow: hidden;
     transition: max-height 0.5s ease;
-}
 
-.orderlistGridBody > td {
-    line-height: 3rem;
+    td {
+        line-height: 3rem;
+    }
+    &:hover {
+        background-color: $lightwhite;
+    }
 }
 
 .orderlistGridInnerBody {
     line-height: 1rem !important;
-}
-
-.orderlistGridBody:hover {
-    background-color: $lightwhite;
 }
 
 .orderlistGridBlank {
@@ -114,9 +106,8 @@
 }
 
 .orderlistGridHide {
+    @include area(100%, fit-content !important);
     border: 1px solid black;
-    height: fit-content !important;
-    width: 100%;
     text-align: center;
 }
 .orderlistGridShow {

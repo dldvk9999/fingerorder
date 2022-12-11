@@ -1,30 +1,20 @@
 /* Section 2. QR */
 .storeQR {
-    display: none;
+    @include view(none, center, center);
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
     gap: 1rem;
-}
 
-.storeQR > button {
-    width: 13rem;
-    padding: 0.5rem 1rem;
-    border: 1px solid $blue;
-    border-radius: 1rem;
-    background-color: $blue;
-    color: white;
-    font-size: 1.5rem;
-    display: flex;
-    justify-content: center;
-    margin: 2rem 0 3rem;
+    button {
+        @include buttonStyle(13rem, fit-content, $blue, 1.5rem);
+        padding: 0.5rem 1rem;
+        margin: 2rem 0 3rem;
+    }
 }
 
 .storeQRItem {
+    @include view(flex, normal, center);
     width: 10rem;
-    display: flex;
     flex-direction: column;
-    align-items: center;
     border: 1px solid $lightwhite;
     border-radius: 1rem;
     padding: 1rem;
@@ -43,7 +33,7 @@
 
 .storeQRGrid {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: repeat(4, 1fr);
     gap: 0.5rem;
 }
 

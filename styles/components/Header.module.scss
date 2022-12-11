@@ -2,21 +2,16 @@
 .headerRight,
 .headerLogo,
 .headerItems {
-    display: flex;
+    @include view(flex, normal, center);
     gap: 1rem;
-    align-items: center;
-}
-
-.headerLeft {
-    display: flex;
-}
-
-.headerRight {
-    display: flex;
 }
 
 .headerItems {
     list-style: none;
+
+    a {
+        font-weight: 700;
+    }
 }
 
 .headerLogo,
@@ -25,10 +20,6 @@
     border-radius: 10px;
     padding: 0.7rem 1rem;
     transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out;
-}
-
-.headerItems > a {
-    font-weight: 700;
 }
 
 .headerLogo:hover,
@@ -66,19 +57,21 @@
     rotate: 180deg;
 }
 
-.headerNavList > div {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    gap: 1rem;
-}
+.headerNavList {
+    * {
+        list-style: none;
+    }
 
-.headerNavList > div > hr {
-    width: 100%;
-}
+    div {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 1rem;
 
-.headerNavList > * {
-    list-style: none;
+        hr {
+            width: 100%;
+        }
+    }
 }
 
 .headerProfile {

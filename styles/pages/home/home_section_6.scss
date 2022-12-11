@@ -1,27 +1,18 @@
 /* Section 6 - Submit */
 .homeSubmit {
+    @include view(flex, center);
     width: 100vw;
     margin: 3rem 0;
-    display: flex;
-    justify-content: center;
 }
 
 .homeSubmitButton {
-    width: 80vw;
-    padding: 2rem 5rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid $blue;
-    border-radius: 1rem;
-    background-color: $blue;
-    color: white;
+    @include buttonStyle(80vw, fit-content, $blue, 2rem);
     font-weight: 700;
-    font-size: 2rem;
+    padding: 2rem 5rem;
     transition: scale 0.3s ease-in-out;
     cursor: pointer;
-}
 
-.homeSubmitButton:hover {
-    scale: 1.05;
+    &:hover {
+        scale: 1.05;
+    }
 }

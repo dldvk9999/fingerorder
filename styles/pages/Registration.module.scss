@@ -9,70 +9,55 @@
 }
 
 .regiNodeEdge {
-    display: flex;
-    justify-content: center;
-}
+    @include view(flex, center);
 
-.regiNodeEdge > div {
-    width: 30rem;
-    margin-top: 1rem;
-    display: flex;
-}
-
-.regiNodeEdge > div:last-child {
-    width: fit-content;
+    div {
+        margin-top: 1rem;
+        display: flex;
+    }
 }
 
 .regiNode {
-    width: 2rem;
-    height: 2rem;
-    border-radius: 50%;
-    border: 2px solid $lightwhite;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @include buttonStyle(2rem, 2rem, $lightwhite);
     line-height: 0;
+    border-radius: 50%;
     background-color: white;
+    color: black;
     transition: border-color 0.3s ease-in-out 0.6s, scale 0.3s ease-in-out 0.6s;
-}
 
-.regiNode.regiNodeActive {
-    border: 2px solid $blue;
-}
-
-.regiNode.regiNodeScaleActive {
-    scale: 1.2;
+    &.regiNodeActive {
+        border: 2px solid $blue;
+    }
+    &.regiNodeScaleActive {
+        scale: 1.2;
+    }
 }
 
 .regiEdge {
-    background: rgba(0, 0, 0, 0.35);
+    @include area(0%, 2px);
     background-color: $blue;
     font-size: 0px;
     line-height: 0px;
     transition: width 0.6s ease-in-out;
-}
 
-.regiEdge {
-    width: 0%;
-    height: 2px;
-}
-
-.regiEdge.regiEdgeActive {
-    width: 100%;
+    &.regiEdgeActive {
+        width: 100%;
+    }
 }
 
 .regiEdgeToRight {
-    display: flex;
-    align-items: center;
-    width: 100%;
+    @include view(flex, flex-start);
+    width: 30rem;
 }
 
-.regiEdgeToRight {
-    justify-content: flex-start;
+@media (max-width: 1100px) {
+    .regiEdgeToRight {
+        width: 10rem;
+    }
 }
 
-@media (max-width: 800px) {
-    .regiNodeEdge > div {
-        width: 80%;
+@media (max-width: 500px) {
+    .regiEdgeToRight {
+        width: 5rem;
     }
 }

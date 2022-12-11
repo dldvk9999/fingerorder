@@ -1,8 +1,5 @@
 .error {
-    width: 100vw;
-    height: calc(100vh - 4.4rem);
-    display: flex;
+    @include view(flex, center, center);
+    @include area(100vw, calc(100vh - $headerHeight));
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
 }

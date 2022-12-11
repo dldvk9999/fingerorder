@@ -1,13 +1,7 @@
 /* Section 1 - Intro */
-.homeInto,
-.homeIntroSub {
-    display: flex;
-    justify-content: center;
-}
-
 .homeInto {
-    width: 100vw;
-    height: 100vh;
+    @include view(flex, center);
+    @include area(100vw, 100vh);
     min-height: 10rem;
     gap: 1rem;
     align-items: center;
@@ -16,18 +10,18 @@
 }
 
 .homeIntroSub {
+    @include view(flex, center);
     flex-direction: column;
     line-height: 4rem;
     font-size: 2rem;
-}
 
-.homeIntroSub > * {
-    margin: 0;
-}
-
-.homeIntroSub > h1 {
-    font-weight: 700;
-    word-break: keep-all;
+    * {
+        margin: 0;
+    }
+    h1 {
+        font-weight: 700;
+        word-break: keep-all;
+    }
 }
 
 .homeIntroImage,
@@ -42,26 +36,20 @@
 }
 .homeIntroP {
     transform: translateY(10%);
-}
-.homeIntroP > span {
-    color: $red;
+    span {
+        color: $red;
+    }
 }
 .homeIntroH1 {
     transform: translateY(-10%);
-}
-.homeIntroH1 > span {
-    color: $blue;
+    span {
+        color: $blue;
+    }
 }
 
-.homeShow1 {
-    opacity: 1;
-    transform: translateX(0%);
-}
-.homeShow2 {
-    opacity: 1;
-    transform: translateY(0%);
-}
-.homeShow3 {
-    opacity: 1;
-    transform: translateY(0%);
+@for $i from 1 through 3 {
+    .homeShow#{$i} {
+        opacity: 1;
+        transform: if(#{$i} == 1, translateX(0%), translateY(0%));
+    }
 }
