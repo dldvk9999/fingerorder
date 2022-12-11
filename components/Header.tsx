@@ -5,11 +5,7 @@ import { useRecoilState } from "recoil";
 import { editNumber } from "../states";
 import styles from "../styles/components/Header.module.scss";
 
-const router = [
-    ["registration", "서비스 등록"],
-    // ["store", "매장 등록"],
-    // ["menu", "메뉴 등록"],
-];
+const router = [["registration", "서비스 등록"]];
 const routerLogin = [
     ["order", "주문목록"],
     ["", "로그아웃"],
@@ -151,7 +147,7 @@ export default function Header() {
                         </button>
                     </div>
 
-                    <nav ref={nav}>
+                    <nav ref={nav} aria-label="네비게이션 메뉴">
                         <div className={styles.headerNavClose}>
                             <button onClick={closeNav} aria-label="navigation close button">
                                 <svg viewBox="0 0 120.64 122.88" width="17" height="17" xmlSpace="preserve">
