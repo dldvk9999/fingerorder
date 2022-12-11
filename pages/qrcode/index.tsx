@@ -14,15 +14,15 @@ export default function QRCode(props: { tableCount: number; type: string }) {
     const [tableCount, setTableCount] = useState(0);
     const [storeType, setStoreType] = useState("");
     const [STORE_ID, setStoreID] = useState(0);
+    const storeQR = useRef<HTMLButtonElement>(null);
     const storeQRDownload = useRef<HTMLButtonElement>(null);
     const STORE_MANAGER_ID = useRef(0);
 
     // QR 리스트 다운로드
     function downloadQR() {
-        let qr = document.getElementById("QR");
         storeQRDownload.current!.style.display = "none";
         window.onbeforeprint = () => {
-            document.body.innerHTML = qr!.innerHTML;
+            document.body.innerHTML = storeQR.current!.innerHTML;
         };
         window.onafterprint = () => {
             location.href = "/mypage";
@@ -94,12 +94,12 @@ export default function QRCode(props: { tableCount: number; type: string }) {
     }, [props.tableCount, props.type]);
 
     return LoginCheck() && isStoreManager ? (
-        <main>
-            <section id="QR" className={`${styles.storeQR} ${styles.storeQRActive}`}>
+        <article>
+            <section className={styles.storeQR} ref={storeQR}>
                 {isMobile ? (
                     <>
                         {printQRList()}
-                        <button className={styles.storeQRDownload} onClick={downloadQR}>
+                        <button className={styles.storeQRDownload} onClick={downloadQR} ref={storeQRDownload}>
                             QR 다운로드
                         </button>
                     </>
@@ -109,6 +109,6 @@ export default function QRCode(props: { tableCount: number; type: string }) {
                     </div>
                 )}
             </section>
-        </main>
+        </article>
     ) : null;
 }

@@ -127,7 +127,7 @@ export default function Category(props: { category: Array<string>; auth: boolean
     }, []);
 
     return props.auth ? (
-        <main className={styles.categoryMain}>
+        <article className={styles.categoryMain}>
             <section className={styles.category}>
                 <h1>카테고리 추가</h1>
                 <div className={styles.categoryUseButton}>
@@ -177,6 +177,6 @@ export default function Category(props: { category: Array<string>; auth: boolean
                     </button>
                 </div>
             </section>
-        </main>
+        </article>
     ) : null;
 }

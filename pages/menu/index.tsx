@@ -256,7 +256,7 @@ export default function Menu(props: { auth: boolean }) {
     }, []);
 
     return LoginCheck() && props.auth ? (
-        <main className={styles.menuMain}>
+        <article className={styles.menuMain}>
             <div className={styles.menu}>
                 <section className={styles.menuInfo}>
                     <h1>메뉴 등록</h1>
@@ -363,6 +363,6 @@ export default function Menu(props: { auth: boolean }) {
                     </div>
                 </section>
             </div>
-        </main>
+        </article>
     ) : null;
 }

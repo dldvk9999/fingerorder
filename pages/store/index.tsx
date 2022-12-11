@@ -106,7 +106,7 @@ export default function Store(props: {
     }, [props.name, props.tableCount, props.tmpTableCount, props.location, props.type]);
 
     return LoginCheck() && props.auth ? (
-        <main className={styles.store}>
+        <article className={styles.store}>
             <section className={styles.storeInfo}>
                 <h1>{props.name ? "매장 수정" : "매장 등록"}</h1>
                 <input
@@ -159,6 +159,6 @@ export default function Store(props: {
                     다음
                 </button>
             </section>
-        </main>
+        </article>
     ) : null;
 }
