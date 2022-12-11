@@ -81,12 +81,10 @@
 }
 
 .orderlistGridBody {
-    max-height: 3.5rem;
     border-top: 1px solid $lightwhite;
     border-bottom: 1px solid $lightwhite;
-    cursor: pointer;
     overflow: hidden;
-    transition: max-height 0.5s ease;
+    transition: height 0.5s ease-in-out;
 
     td {
         line-height: 3rem;
@@ -96,22 +94,23 @@
     }
 }
 
-.orderlistGridInnerBody {
-    line-height: 1rem !important;
-}
-
-.orderlistGridBlank {
+.orderlistGridItem {
     margin: 0;
-    grid-column: span 1;
+    line-height: 2rem;
 }
 
-.orderlistGridHide {
-    @include area(100%, fit-content !important);
-    border: 1px solid black;
-    text-align: center;
+.orderlistDetails {
+    cursor: pointer;
+    max-height: 3.5rem;
+    transition: max-height 0.5s ease-in-out;
+
+    &[open] {
+        max-height: 100vh;
+    }
 }
-.orderlistGridShow {
-    max-height: 20rem;
+
+.orderlistDetailsHeader {
+    display: none;
 }
 
 @media (max-width: 800px) {

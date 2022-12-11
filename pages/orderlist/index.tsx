@@ -16,27 +16,16 @@ type menu = {
 
 export default function OrderList() {
     const [myOrderList, setOrderList] = useState<any>([]);
-    const [showTableRow, setTableRow] = useState<Array<boolean>>([]);
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
     const tableRef = useRef(null);
-
-    // Row를 클릭했을 때 해당 Row 펼치기
-    function showRow(index: number) {
-        setTableRow(
-            showTableRow
-                .slice(0, index)
-                .concat(!showTableRow[index])
-                .concat(showTableRow.slice(index + 1, showTableRow.length))
-        );
-    }
 
     // 주문 목록 - 메뉴 출력
     function printOrderListMenu(menu: Array<menu>) {
         let result = [];
         for (let i = 0; i < menu.length; i++) {
             result.push(
-                <p key={"orderlist-menu-item-" + i}>
+                <p className={styles.orderlistGridItem} key={"orderlist-menu-item-" + i}>
                     {menu[i].name} * {menu[i].count} = {(menu[i].price * menu[i].count).toLocaleString()}원
                 </p>
             );
@@ -52,21 +41,20 @@ export default function OrderList() {
         for (let i = 0; i < myOrderList.length; i++) {
             if (sDate <= new Date(myOrderList[i].time) && new Date(myOrderList[i].time) <= eDate)
                 result.push(
-                    <tr
-                        className={`${styles.orderlistGridBody} ${showTableRow[i] && styles.orderlistGridShow}`}
-                        onClick={() => showRow(i)}
-                        key={"orderlist-menu-" + i}
-                    >
+                    <tr className={styles.orderlistGridBody} key={"orderlist-menu-" + i}>
                         <td>{myOrderList[i].name}</td>
                         <td>{myOrderList[i].type}</td>
                         <td>{myOrderList[i].number}번</td>
-                        <td>{myOrderList[i].total.toLocaleString()}원</td>
+                        <td>
+                            <details className={styles.orderlistDetails}>
+                                <summary>{myOrderList[i].total.toLocaleString()}원</summary>
+                                <p className={styles.orderlistDetailsHeader}>
+                                    {myOrderList[i].total.toLocaleString()}원
+                                </p>
+                                {printOrderListMenu(myOrderList[i].menu)}
+                            </details>
+                        </td>
                         <td>{myOrderList[i].time}</td>
-                        <td className={styles.orderlistGridBlank}></td>
-                        <td className={styles.orderlistGridBlank}></td>
-                        <td className={styles.orderlistGridBlank}></td>
-                        <td className={styles.orderlistGridInnerBody}>{printOrderListMenu(myOrderList[i].menu)}</td>
-                        <td className={styles.orderlistGridBlank}></td>
                     </tr>
                 );
         }
@@ -75,7 +63,6 @@ export default function OrderList() {
 
     useEffect(() => {
         setOrderList(orderlist);
-        setTableRow(Array.from({ length: orderlist.length }, () => false));
     }, []);
 
     return LoginCheck() ? (
