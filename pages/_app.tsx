@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import type { AppProps } from "next/app";
 import { RecoilRoot } from "recoil";
+import { Analytics } from "@vercel/analytics/react";
 
 export default function App({ Component, pageProps }: AppProps) {
     return (
@@ -13,6 +14,7 @@ export default function App({ Component, pageProps }: AppProps) {
                 <meta name="description" content="Fingerorder - This is project to order system by zerobase project." />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
+            <Analytics />
             <RecoilRoot>
                 <Header />
                 <Component {...pageProps} />
