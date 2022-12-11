@@ -32,20 +32,18 @@ export default function Login() {
         const passRegex = /[^0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣~!@#$%^&*()-_=+,.?]/;
         if (!email || !pass) {
             alert("이메일과 비밀번호를 입력해주세요.");
-            setLoginTry(true);
             e.preventDefault();
         } else if (pass.length < 8) {
             alert("비밀번호를 8자 이상 입력해주세요.");
-            setLoginTry(true);
             e.preventDefault();
         } else if (!emailRegex.exec(email) || passRegex.exec(pass)) {
             alert("알맞는 이메일 및 비밀번호 형식을 사용해주세요.");
-            setLoginTry(true);
             e.preventDefault();
         } else {
             localStorage["login"] = "true";
             localStorage["email"] = email;
         }
+        setLoginTry(true);
     }
 
     return (
