@@ -5,9 +5,14 @@ import styles from "../../styles/pages/Login.module.scss";
 export default function FindPassword() {
     const [email, setEmail] = useState("");
     const [isSend, setSend] = useState(false);
+    const [sendTry, setSendTry] = useState(false);
 
     function emailSend(e: { preventDefault: () => void }) {
-        email === "" ? alert("이메일을 입력해주세요.") : setSend(true);
+        const emailRegex = /[a-zA-Z.].+[@][a-zA-Z].+[.][a-zA-Z]{2,4}$/;
+        if (!email) alert("이메일을 입력해주세요.");
+        else if (!emailRegex.exec(email)) alert("알맞는 이메일 형식을 사용해주세요.");
+        else setSend(true);
+        setSendTry(true);
         e.preventDefault();
     }
 
@@ -20,9 +25,12 @@ export default function FindPassword() {
                         <>
                             <input
                                 type="email"
-                                placeholder="Email"
+                                placeholder="이메일을 입력해주세요."
+                                pattern="[a-zA-Z.].+[@][a-zA-Z].+[.][a-zA-Z]{2,4}$"
                                 className={styles.loginInput}
                                 onChange={(e) => setEmail(e.target.value)}
+                                aria-required={sendTry}
+                                required={sendTry}
                             />
                             <button type="submit">이메일 전송</button>
                         </>

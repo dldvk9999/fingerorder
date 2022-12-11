@@ -13,6 +13,14 @@
         border: 1px solid $lightwhite;
         border-radius: 10px;
         padding: 0.5rem;
+
+        &:focus,
+        &:active {
+            outline: none;
+        }
+        &:invalid {
+            border-color: $red;
+        }
     }
 
     button,

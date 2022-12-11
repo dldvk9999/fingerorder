@@ -6,6 +6,7 @@ import styles from "../../styles/pages/Login.module.scss";
 export default function Login() {
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
+    const [loginTry, setLoginTry] = useState(false);
 
     // 자동 로그인 (테스트할때 재로그인하기 귀찮아서 만듬. 삭제 예정)
     function autoLogin() {
@@ -27,11 +28,19 @@ export default function Login() {
 
     // 로그인 함수
     function login(e: { preventDefault: () => void }) {
+        const emailRegex = /[a-zA-Z.].+[@][a-zA-Z].+[.][a-zA-Z]{2,4}$/;
+        const passRegex = /[^0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣~!@#$%^&*()-_=+,.?]/;
         if (!email || !pass) {
             alert("이메일과 비밀번호를 입력해주세요.");
+            setLoginTry(true);
             e.preventDefault();
         } else if (pass.length < 8) {
             alert("비밀번호를 8자 이상 입력해주세요.");
+            setLoginTry(true);
+            e.preventDefault();
+        } else if (!emailRegex.exec(email) || passRegex.exec(pass)) {
+            alert("알맞는 이메일 및 비밀번호 형식을 사용해주세요.");
+            setLoginTry(true);
             e.preventDefault();
         } else {
             localStorage["login"] = "true";
@@ -44,12 +53,22 @@ export default function Login() {
             <section className={styles.login}>
                 <Image src={"/fingerorder.webp"} alt={"fingerorder"} width={150} height={150} priority />
                 <form className={styles.loginForm} onSubmit={login} action="/">
-                    <input type="email" placeholder="이메일" onChange={(e) => setEmail(e.target.value)} />
+                    <input
+                        type="email"
+                        placeholder="이메일을 입력해주세요."
+                        pattern="[a-zA-Z.].+[@][a-zA-Z].+[.][a-zA-Z]{2,4}$"
+                        onChange={(e) => setEmail(e.target.value)}
+                        aria-required={loginTry}
+                        required={loginTry}
+                    />
                     <input
                         type="password"
-                        placeholder="비밀번호"
+                        placeholder="비밀번호를 입력해주세요."
                         minLength={8}
+                        pattern="[0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣~!@#$%^&*()-_=+,.?]{8,}"
                         onChange={(e) => setPass(e.target.value)}
+                        aria-required={loginTry}
+                        required={loginTry}
                     />
                     <button onClick={loginKakao} type="submit">
                         <Image
