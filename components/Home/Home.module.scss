@@ -1,0 +1,14 @@
+.homeMain {
+    padding: 0;
+    section {
+        min-width: 10rem;
+    }
+}
+
+@import "./styles/home_section_1.scss";
+@import "./styles/home_section_2.scss";
+@import "./styles/home_section_3.scss";
+@import "./styles/home_section_4.scss";
+@import "./styles/home_section_5.scss";
+@import "./styles/home_section_6.scss";
+@import "./styles/home_mobile_layout.scss";
