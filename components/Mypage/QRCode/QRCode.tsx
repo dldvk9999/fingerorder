@@ -3,7 +3,7 @@ import { useQRCode } from "next-qrcode";
 import { useRecoilState } from "recoil";
 import { editNumber } from "../../../states";
 import store from "../../../data/store";
-import LoginCheck from "../../../utils/login_check";
+import LoginCheck from "../../common/Login_Check";
 import styles from "./Qrcode.module.scss";
 
 export default function QRCode(props: { tableCount: number; type: string }) {

@@ -1,4 +1,3 @@
-import type { NextApiRequest, NextApiResponse } from "next";
 import axios from "axios";
 
 const url = "/api";
@@ -9,16 +8,8 @@ const header = {
     },
 };
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
-    if (req.method !== "POST") {
-        res.redirect("/");
-    } else {
-        res.status(200).send(req.body);
-    }
-}
-
 // 조회
-async function get(params: string, data: Object) {
+export async function get(params: string, data: Object) {
     let result = {};
     await axios
         .get(url + params, data)
@@ -32,7 +23,7 @@ async function get(params: string, data: Object) {
 }
 
 // 등록
-async function post(params: string, data: Object) {
+export async function post(params: string, data: Object) {
     let result = {};
     await axios
         .post(url + params, data, header)
@@ -46,7 +37,7 @@ async function post(params: string, data: Object) {
 }
 
 // 수정
-async function patch(params: string, data: Object) {
+export async function patch(params: string, data: Object) {
     let result = {};
     await axios
         .patch(url + params, data, header)
@@ -60,7 +51,7 @@ async function patch(params: string, data: Object) {
 }
 
 // 삭제
-async function del(params: string, data: Object) {
+export async function del(params: string, data: Object) {
     let result = {};
     await axios
         .delete(url + params, data)
@@ -72,5 +63,3 @@ async function del(params: string, data: Object) {
         });
     return result;
 }
-
-export { get, post, patch, del };

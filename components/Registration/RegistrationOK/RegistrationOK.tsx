@@ -1,7 +1,7 @@
 import { Fireworks } from "fireworks-js";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
-import LoginCheck from "../../../utils/login_check";
+import LoginCheck from "../../common/Login_Check";
 import styles from "./Registrationok.module.scss";
 
 export default function RegistrationOk() {

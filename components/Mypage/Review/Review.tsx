@@ -1,10 +1,10 @@
-import Image from "next/image";
 import { useRecoilState } from "recoil";
 import { editNumber } from "../../../states";
 import reviews from "../../../data/reviews";
-import LoginCheck from "../../../utils/login_check";
-import styles from "./Review.module.scss";
+import LoginCheck from "../../common/Login_Check";
+import Img from "../../common/Img";
 import { useEffect, useRef, useState } from "react";
+import styles from "./Review.module.scss";
 
 type reviewTmp = {
     name: string;
@@ -23,16 +23,7 @@ export default function Review() {
 
     // 아이콘 이미지 출력
     function reviewImages(type: string) {
-        return (
-            <Image
-                src={"/" + type + ".webp"}
-                alt={type}
-                width={50}
-                height={50}
-                priority
-                className={`${styles.reviewListImage} ${type === "reply" && styles.reviewListReplyImage}`}
-            />
-        );
+        return Img(type, 50, 50, `${styles.reviewListImage} ${type === "reply" && styles.reviewListReplyImage}`);
     }
 
     // 사장님이 답글 삭제 아이콘을 클릭했을 때
@@ -94,16 +85,10 @@ export default function Review() {
                                     <div className={styles.reviewListManagerTitle}>
                                         <p>사장님</p>
                                         <button onClick={() => onclickReply(reviewIndex, review[reviewIndex].reply)}>
-                                            <Image src={"/edit.webp"} alt={"edit"} width={30} height={30} priority />
+                                            {Img("edit", 30, 30)}
                                         </button>
                                         <button onClick={() => deleteReply(reviewIndex)}>
-                                            <Image
-                                                src={"/delete.webp"}
-                                                alt={"delete"}
-                                                width={20}
-                                                height={20}
-                                                priority
-                                            />
+                                            {Img("delete", 20, 20)}
                                         </button>
                                     </div>
                                     <pre>{review[reviewIndex].reply}</pre>

@@ -1,19 +1,18 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import { editNumber, homeIntro } from "../../states";
+import { homeIntro } from "../../states";
 import Modal from "../../components/Modal/Modal";
-import store from "../../data/store";
-import LoginCheck from "../../utils/login_check";
+import LoginCheck from "../common/Login_Check";
+import { logout } from "../Login/LoginFunction";
+import printStoreList from "./MypageStoreList";
 import styles from "./Mypage.module.scss";
 
 export default function Mypage() {
-    const [_, setPage] = useRecoilState(editNumber);
     const [isHomeIntro, setHomeIntro] = useRecoilState(homeIntro);
     const [myEmail, setEmail] = useState("");
     const [isKakao, setKakao] = useState(false);
     const [isShowModal, setShowModal] = useState(false);
-    const [nowStore, setStore] = useState(store);
 
     // 회원탈퇴에 사용되는 설문 목록
     const qList = [
@@ -26,51 +25,10 @@ export default function Mypage() {
         "기타",
     ];
 
-    // 매장 삭제
-    function deleteStore(index: number) {
-        if (confirm(nowStore[index].id + ". " + nowStore[index].name + " 매장을 삭제하시겠습니까?")) {
-            setStore(nowStore.slice(0, index).concat(nowStore.slice(index + 1, nowStore.length)));
-            alert("매장을 삭제하였습니다.");
-        }
-    }
-
     // 회원 탈퇴 후 로그아웃
     function exeWithdrawal() {
         setShowModal(false);
-        localStorage.removeItem("login");
-        localStorage.removeItem("email");
-        localStorage.removeItem("kakao");
-    }
-
-    // 서비스 등록 완료한 매장 목록 출력
-    function printStoreList() {
-        let result = [];
-        for (let i = 0; i < nowStore.length; i++) {
-            result.push(
-                <div key={"mypage-storelist-" + i}>
-                    <div className={styles.mypageStoreNameDate}>
-                        <span className={styles.mypageStoreName}>
-                            {nowStore[i].id}. {nowStore[i].name}
-                        </span>
-                        <span className={styles.mypageStoreDate}>최근수정 : {nowStore[i].date}</span>
-                    </div>
-                    <div className={styles.mypageStoreBody}>{nowStore[i].locate}</div>
-                    <div className={styles.mypageStoreButton}>
-                        <Link href={"/mypage/qrcode"}>
-                            <button onClick={() => setPage(i)}>QR코드</button>
-                        </Link>
-                        <Link href={"/mypage/review"}>
-                            <button onClick={() => setPage(i)}>리뷰보기</button>
-                        </Link>
-                        <Link href={"/registration"}>
-                            <button onClick={() => setPage(i)}>수정</button>
-                        </Link>
-                        <button onClick={() => deleteStore(i)}>삭제</button>
-                    </div>
-                </div>
-            );
-        }
-        return result;
+        logout();
     }
 
     useEffect(() => {

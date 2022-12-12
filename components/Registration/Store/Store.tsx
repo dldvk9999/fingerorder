@@ -1,7 +1,7 @@
 import { SetStateAction, useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { registrationIndex } from "../../../states";
-import LoginCheck from "../../../utils/login_check";
+import LoginCheck from "../../common/Login_Check";
 import styles from "./Store.module.scss";
 
 export default function Store(props: {

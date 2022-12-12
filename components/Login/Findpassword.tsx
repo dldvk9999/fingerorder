@@ -1,5 +1,6 @@
-import Image from "next/image";
 import { useState } from "react";
+import { emailSend } from "./LoginFunction";
+import Img from "../common/Img";
 import styles from "./Login.module.scss";
 
 export default function FindPassword() {
@@ -7,20 +8,11 @@ export default function FindPassword() {
     const [isSend, setSend] = useState(false);
     const [sendTry, setSendTry] = useState(false);
 
-    function emailSend(e: { preventDefault: () => void }) {
-        const emailRegex = /[a-zA-Z.].+[@][a-zA-Z].+[.][a-zA-Z]{2,4}$/;
-        if (!email) alert("이메일을 입력해주세요.");
-        else if (!emailRegex.exec(email)) alert("알맞는 이메일 형식을 사용해주세요.");
-        else setSend(true);
-        setSendTry(true);
-        e.preventDefault();
-    }
-
     return (
         <main>
             <section className={styles.login}>
-                <Image src={"/fingerorder.webp"} alt={"fingerorder"} width={150} height={150} priority />
-                <form className={styles.loginForm} onSubmit={emailSend} action="/">
+                {Img("fingerorder", 150, 150)}
+                <div className={styles.loginForm}>
                     {!isSend ? (
                         <>
                             <input
@@ -32,7 +24,14 @@ export default function FindPassword() {
                                 aria-required={sendTry}
                                 required={sendTry}
                             />
-                            <button type="submit">이메일 전송</button>
+                            <button
+                                onClick={() => {
+                                    setSend(emailSend(email));
+                                    setSendTry(true);
+                                }}
+                            >
+                                이메일 전송
+                            </button>
                         </>
                     ) : (
                         <p className={styles.findpasswordText}>
@@ -41,7 +40,7 @@ export default function FindPassword() {
                             링크에 접속하여 초기화 부탁드립니다.
                         </p>
                     )}
-                </form>
+                </div>
             </section>
         </main>
     );

@@ -1,8 +1,9 @@
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { editNumber } from "../../states";
+import { logout } from "../Login/LoginFunction";
+import Img from "../common/Img";
 import styles from "./Header.module.scss";
 
 const router = [["registration", "서비스 등록"]];
@@ -26,14 +27,6 @@ export default function Header() {
     // nav close
     function closeNav() {
         nav.current!.classList.remove("active");
-    }
-
-    // sample logout
-    function logout() {
-        localStorage.removeItem("login");
-        localStorage.removeItem("email");
-        localStorage.removeItem("kakao");
-        location.href = "/";
     }
 
     // router click event
@@ -68,14 +61,7 @@ export default function Header() {
                     key={"header-login-profile-" + i}
                 >
                     {i === routerLogin.length - 1 && printWhere !== "nav" ? (
-                        <Image
-                            src={"/profile.webp"}
-                            alt={"profile"}
-                            width={40}
-                            height={40}
-                            className={styles.headerProfile}
-                            priority
-                        />
+                        Img("profile", 40, 40, styles.headerProfile)
                     ) : (
                         <div>{routerLogin[i][1]}</div>
                     )}
@@ -107,7 +93,7 @@ export default function Header() {
             <div className={styles.headerLeft}>
                 <Link href={"/"}>
                     <div className={styles.headerLogo}>
-                        <Image src={"/fingerorder.webp"} alt={"fingerorder"} width={30} height={30} priority />
+                        {Img("fingerorder", 30, 30)}
                         <div className={styles.headerLogoText}>
                             <div>FINGER</div>
                             <div>ORDER</div>
@@ -116,7 +102,8 @@ export default function Header() {
                 </Link>
                 {!isMobile && <div className={styles.headerItems}>{routerList("header")}</div>}
             </div>
-            {!isMobile && (
+
+            {!isMobile ? (
                 <div className={`${styles.headerRight} ${styles.headerItems}`}>
                     {isLogin ? (
                         routerListLogin("header")
@@ -126,9 +113,7 @@ export default function Header() {
                         </Link>
                     )}
                 </div>
-            )}
-
-            {isMobile && (
+            ) : (
                 <>
                     <div className={styles.headerMobileMenu}>
                         <button id="navMenu" onClick={openNav} aria-label="menu">

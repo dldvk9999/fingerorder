@@ -1,11 +1,11 @@
-import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import store from "../../../data/store";
-import LoginCheck from "../../../utils/login_check";
 import { useRecoilState } from "recoil";
 import { registrationIndex } from "../../../states";
+import store from "../../../data/store";
+import LoginCheck from "../../common/Login_Check";
+import Img from "../../common/Img";
 import styles from "./Menu.module.scss";
-import Link from "next/link";
 
 type menuList = {
     name: string;
@@ -52,7 +52,7 @@ export default function Menu(props: { auth: boolean }) {
         // 추가 처리
         if (type === "add") {
             const imagePath =
-                itemImage.trim() === "" || itemImage.length > 100 ? "/sample_menu/fingerorder.webp" : itemImage;
+                itemImage.trim() === "" || itemImage.length > 100 ? "sample_menu/fingerorder.webp" : itemImage;
 
             menu[cate] = [
                 ...menu[cate],
@@ -126,16 +126,7 @@ export default function Menu(props: { auth: boolean }) {
                 if (mCate.name.includes(searchName)) {
                     result.push(
                         <div className={styles.menuItem} key={"menu-list-" + i}>
-                            {isMobile >= 500 && (
-                                <Image
-                                    src={mCate.image}
-                                    alt={mCate.name}
-                                    width={75}
-                                    height={75}
-                                    className={styles.menuItemImage}
-                                    priority
-                                />
-                            )}
+                            {isMobile >= 500 && Img(mCate.image, 75, 75, styles.menuItemImage)}
                             <div className={styles.menuItemNamePrice}>
                                 <p>
                                     {mCate.name}
@@ -145,14 +136,12 @@ export default function Menu(props: { auth: boolean }) {
                                 <div className={styles.menuItemPriceRate}>
                                     {mCate.price.toLocaleString()}원
                                     <div className={styles.menuItemRate}>
-                                        <Image
-                                            src={"/rating.webp"}
-                                            alt={"rating"}
-                                            width={isMobile < 600 ? 15 : 75}
-                                            height={15}
-                                            className={`${styles.menuItemRateImage} ${ratingStyle(mCate.rate)}`}
-                                            priority
-                                        />
+                                        {Img(
+                                            "rating",
+                                            isMobile < 600 ? 15 : 75,
+                                            15,
+                                            `${styles.menuItemRateImage} ${ratingStyle(mCate.rate)}`
+                                        )}
                                         <p>{mCate.rate ? mCate.rate : 0}</p>
                                     </div>
                                 </div>
@@ -262,15 +251,7 @@ export default function Menu(props: { auth: boolean }) {
                     <h1>메뉴 등록</h1>
                     <div className={styles.menuInputImageP}>
                         {itemImage !== "" ? (
-                            <Image
-                                id="preview-image"
-                                src={itemImage}
-                                alt={"preview image"}
-                                width={150}
-                                height={150}
-                                className={`${styles.menuInputImage} ${!itemImage && styles.menuInputHide}`}
-                                loading="lazy"
-                            />
+                            Img(itemImage, 150, 150, `${styles.menuInputImage} ${!itemImage && styles.menuInputHide}`)
                         ) : (
                             <p className={styles.menuInputNoImage}>이미지 추가</p>
                         )}
