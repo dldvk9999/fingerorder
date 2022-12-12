@@ -6,7 +6,7 @@ import store from "../../data/store";
 import styles from "./Mypage.module.scss";
 
 // 서비스 등록 완료한 매장 목록 출력
-export default function printStoreList() {
+export default function PrintStoreList() {
     const [nowStore, setStore] = useState(store);
     const [_, setPage] = useRecoilState(editNumber);
 

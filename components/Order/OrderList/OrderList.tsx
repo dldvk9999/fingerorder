@@ -3,7 +3,7 @@ import { DownloadTableExcel } from "react-export-table-to-excel";
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import LoginCheck from "../../common/Login_Check";
-import printOrderList from "./OrderListPrint";
+import PrintOrderList from "./OrderListPrint";
 import styles from "./OrderList.module.scss";
 import ko from "date-fns/locale/ko";
 registerLocale("ko", ko);
@@ -69,7 +69,7 @@ export default function OrderList() {
                             </tr>
                         </thead>
 
-                        <tbody>{printOrderList(startDate, endDate)}</tbody>
+                        <tbody>{PrintOrderList(startDate, endDate)}</tbody>
                     </table>
                 </div>
             </section>

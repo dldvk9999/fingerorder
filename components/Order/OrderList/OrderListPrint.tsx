@@ -9,7 +9,7 @@ type menu = {
 };
 
 // 주문 목록 출력
-export default function printOrderList(startDate: Date, endDate: Date) {
+export default function PrintOrderList(startDate: Date, endDate: Date) {
     const [myOrderList, setOrderList] = useState<any>([]);
     const sDate = startDate ? startDate : new Date();
     const eDate = endDate ? endDate : new Date();

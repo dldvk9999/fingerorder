@@ -5,7 +5,7 @@ import { homeIntro } from "../../states";
 import Modal from "../../components/Modal/Modal";
 import LoginCheck from "../common/Login_Check";
 import { logout } from "../Login/LoginFunction";
-import printStoreList from "./MypageStoreList";
+import PrintStoreList from "./MypageStoreList";
 import styles from "./Mypage.module.scss";
 
 export default function Mypage() {
@@ -89,7 +89,7 @@ export default function Mypage() {
                     </div>
                     <div className={styles.mypageStoreList}>
                         <h2>나의 매장</h2>
-                        <div className={styles.mypageStoreListItem}>{printStoreList()}</div>
+                        <div className={styles.mypageStoreListItem}>{PrintStoreList()}</div>
                     </div>
                 </div>
             </section>
