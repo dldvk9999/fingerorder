@@ -1,3 +1,6 @@
+import { get as APIGet, post as APIPost, put as APIPut } from "../../apis/api";
+import { isAPI } from "../../states";
+
 const emailRegex = /[a-zA-Z.].+[@][a-zA-Z].+[.][a-zA-Z]{2,4}$/;
 const passRegex = /[^0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣~!@#$%^&*()-_=+,.?]/;
 const alertText = [
@@ -39,24 +42,55 @@ export function login(email: string, pass: string, e: { preventDefault: () => vo
         alert(alertText[2]);
         e.preventDefault();
     } else {
-        localStorage["login"] = "true";
-        localStorage["email"] = email;
+        if (isAPI) {
+            APIPost(
+                "/api/auth/sign-up",
+                JSON.stringify({
+                    email: email,
+                    password: pass,
+                    nickName: "",
+                    type: "merchant",
+                })
+            );
+        } else {
+            localStorage["login"] = "true";
+            localStorage["email"] = email;
+        }
     }
 }
 
 // 로그아웃 함수
 export function logout() {
-    localStorage.removeItem("login");
-    localStorage.removeItem("email");
-    localStorage.removeItem("kakao");
-    location.href = "/";
+    if (isAPI) {
+        APIGet("/api/auth/sign-out");
+    } else {
+        localStorage.removeItem("login");
+        localStorage.removeItem("email");
+        localStorage.removeItem("kakao");
+        location.href = "/";
+    }
 }
 
 // 비밀번호 재설정 링크 보낼 이메일 입력
 export function emailSend(email: string) {
     if (!email) alert(alertText[3]);
     else if (!emailRegex.exec(email)) alert(alertText[4]);
-    else return true;
+    else {
+        if (isAPI) {
+            APIPost(
+                "/api/users/password",
+                JSON.stringify({
+                    email: email,
+                })
+            );
+        } else {
+            localStorage.removeItem("login");
+            localStorage.removeItem("email");
+            localStorage.removeItem("kakao");
+            location.href = "/";
+        }
+        return true;
+    }
     return false;
 }
 
@@ -66,6 +100,45 @@ export function signup(email: string, pass1: string, pass2: string) {
     else if (pass1 !== pass2) alert(alertText[5]);
     else if (pass1.length < 8 || pass2.length < 8) alert(alertText[1]);
     else if (!emailRegex.exec(email) || passRegex.exec(pass1) || passRegex.exec(pass2)) alert(alertText[2]);
-    else return true;
+    else {
+        if (isAPI) {
+            APIPost(
+                "/api/auth/sign-up",
+                JSON.stringify({
+                    email: email,
+                    password: pass1,
+                    nickName: "",
+                    type: "merchant",
+                })
+            );
+        } else {
+            localStorage.removeItem("login");
+            localStorage.removeItem("email");
+            localStorage.removeItem("kakao");
+            location.href = "/";
+        }
+        return true;
+    }
+    return false;
+}
+
+// 비밀번호 초기화
+export function passwordReset(uuid: string, pass1: string, pass2: string) {
+    if (uuid === "" || pass1 === "" || pass2 === "") alert(alertText[0]);
+    else if (pass1 !== pass2) alert(alertText[5]);
+    else if (pass1.length < 8 || pass2.length < 8) alert(alertText[1]);
+    else if (passRegex.exec(pass1) || passRegex.exec(pass2)) alert(alertText[2]);
+    else {
+        if (isAPI) {
+            APIPut(
+                "/api/?",
+                JSON.stringify({
+                    uuid: uuid,
+                    password: pass1,
+                })
+            );
+        }
+        return true;
+    }
     return false;
 }
