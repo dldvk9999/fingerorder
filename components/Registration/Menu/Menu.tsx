@@ -241,6 +241,7 @@ export default function Menu() {
     return LoginCheck() ? (
         <article className={styles.menuMain}>
             <div className={styles.menu}>
+                {/* 죄측 메뉴 추가 및 수정 부분 */}
                 <section className={styles.menuInfo}>
                     <h1>메뉴 등록</h1>
                     <div className={styles.menuInputImageP}>
@@ -325,6 +326,7 @@ export default function Menu() {
                     </div>
                 </section>
 
+                {/* 우측 메뉴 선택 부분 */}
                 <section className={styles.menuList}>
                     <h2>메뉴 리스트</h2>
                     <div className={styles.menuItemCategory}>
