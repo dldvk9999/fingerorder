@@ -16,3 +16,29 @@
         scale: 1.05;
     }
 }
+
+@media (max-width: 1024px) {
+    .homeSubmitButton {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 650px) {
+    .homeSubmitButton {
+        font-size: 1.5rem;
+        padding: 1rem 2.5rem;
+    }
+}
+
+@media (max-width: 500px) {
+    .homeSubmitButton {
+        font-size: 1rem;
+        padding: 1rem 2rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .homeSubmitButton {
+        width: 100vw;
+    }
+}

@@ -6,7 +6,7 @@ import styles from "./styles/Home_Section4.module.scss";
 export default function Home_Section4() {
     const [isMobile, setMobile] = useState(false);
     const [edgeShow, setEdgeShow] = useState(Array.from({ length: flow.length - 1 }, () => false));
-    let isEdgeInit = false;
+    const [isEdgeInit, setEdgeInit] = useState(false);
 
     // Flow의 Node 그리는 함수
     function printNodes(index: number) {
@@ -54,11 +54,13 @@ export default function Home_Section4() {
         window.onresize = () => {
             setMobile(window.innerWidth < 800);
         };
+    }, []);
 
+    useEffect(() => {
         // 로드 시 Edge를 순서대로 펼치게 함
         window.onscroll = () => {
             if (!isEdgeInit && window.scrollY >= window.innerHeight * 2 - 400) {
-                isEdgeInit = true;
+                setEdgeInit(true);
                 for (let i = 0; i < flow.length - 1; i++)
                     setTimeout(() => {
                         setEdgeShow(
@@ -69,7 +71,7 @@ export default function Home_Section4() {
                     }, i * 1000);
             }
         };
-    }, []);
+    }, [isEdgeInit]);
 
     return (
         <section className={styles.homeFlow}>

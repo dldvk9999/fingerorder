@@ -49,3 +49,48 @@
     overflow: hidden;
     cursor: pointer;
 }
+
+@media (max-width: 800px) {
+    .homeWhitebox > * {
+        height: 28rem;
+    }
+    .homeWhiteboxItems {
+        flex-direction: column;
+    }
+    .homeWhiteboxLeft {
+        width: 100%;
+        border-radius: 0 0 10rem 10rem;
+        flex-direction: column;
+    }
+    .homeWhiteboxRight {
+        @include area(100%, 11rem);
+    }
+}
+
+@media (max-width: 650px) {
+    .homeWhitebox > * {
+        height: 26rem;
+    }
+    .homeWhiteboxLeft {
+        height: 15rem;
+    }
+    .homeWhiteboxRight {
+        height: 10rem;
+    }
+}
+
+@media (max-width: 500px) {
+    .homeWhiteboxItem > *,
+    .homeWhiteboxItem > div,
+    .homeWhiteboxItemHighlight {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .homeWhiteboxItem > *,
+    .homeWhiteboxItem > div,
+    .homeWhiteboxItemHighlight {
+        font-size: 0.9rem;
+    }
+}

@@ -1,11 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { registrationIndex } from "../../../states";
 import styles from "./Category.module.scss";
 
-export default function Category(props: { category: Array<string>; auth: boolean }) {
+export default function Category(props: { category: Array<string> }) {
     const [_, setRegiIndex] = useRecoilState(registrationIndex);
-    const [category, setCategory] = useState<Array<string>>([]); // 매장의 메뉴 카테고리
+    const [category, setCategory] = useState<Array<string>>(props.category ? props.category : []); // 매장의 메뉴 카테고리
     const [tmpCategory, setTmpCategory] = useState(""); // 입력중인 매장의 메뉴 카테고리
     const [isSubmitDisable, setSubmitDisable] = useState(false);
     const [isEditIndex, setIsEditIndex] = useState(-1); // 수정 중인 카테고리의 Index
@@ -115,18 +115,7 @@ export default function Category(props: { category: Array<string>; auth: boolean
         if (e.key === "Enter" && !isSubmitDisable) addCategory();
     };
 
-    useEffect(() => {
-        // 접근 경로 체크
-        if (!props.auth) {
-            alert("서비스 등록을 통해 접근해주세요.");
-            location.href = "/registration";
-        }
-
-        // category init
-        setCategory(props.category ? props.category : []);
-    }, []);
-
-    return props.auth ? (
+    return (
         <article className={styles.categoryMain}>
             <section className={styles.category}>
                 <h1>카테고리 추가</h1>
@@ -178,5 +167,5 @@ export default function Category(props: { category: Array<string>; auth: boolean
                 </div>
             </section>
         </article>
-    ) : null;
+    );
 }

@@ -53,3 +53,40 @@
         transform: if(#{$i} == 1, translateX(0%), translateY(0%));
     }
 }
+
+@media (max-width: 650px) {
+    .homeIntroImage {
+        @include area(7.5rem, 7.5rem);
+    }
+    .homeIntroP {
+        font-size: 1.2rem;
+        line-height: 2rem;
+    }
+    .homeIntroH1 {
+        font-size: 2rem;
+        line-height: 3rem;
+    }
+}
+
+@media (max-width: 500px) {
+    .homeInto {
+        flex-direction: column;
+    }
+    .homeIntroImage {
+        @include area(6rem, 6rem);
+    }
+    .homeIntroP {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+    .homeIntroH1 {
+        font-size: 1.5rem;
+        line-height: 2rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .homeIntroH1 {
+        font-size: 1.2rem;
+    }
+}

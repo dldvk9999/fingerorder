@@ -20,7 +20,7 @@ type menu = {
 };
 
 // custom한 mock data를 사용해서 상대적으로 코드가 긴 편인데 백엔드와 연동하면 코드가 약 3~50% 정도 감소될 것 같음
-export default function Menu(props: { auth: boolean }) {
+export default function Menu() {
     const [_, setRegiIndex] = useRecoilState(registrationIndex);
     const [nowStore, setStore] = useState(store);
     const [storeID, setStoreID] = useState(-1); // 매장 ID
@@ -231,12 +231,6 @@ export default function Menu(props: { auth: boolean }) {
     }
 
     useEffect(() => {
-        // 접근 경로 체크
-        if (!props.auth) {
-            alert("서비스 등록을 통해 접근해주세요.");
-            location.href = "/registration";
-        }
-
         // 모바일 인지 아닌지 (width 800px 기준)
         setMobile(window.innerWidth);
         window.onresize = () => {
@@ -244,7 +238,7 @@ export default function Menu(props: { auth: boolean }) {
         };
     }, []);
 
-    return LoginCheck() && props.auth ? (
+    return LoginCheck() ? (
         <article className={styles.menuMain}>
             <div className={styles.menu}>
                 <section className={styles.menuInfo}>

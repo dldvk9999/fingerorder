@@ -1,7 +1,7 @@
 import styles from "./Sales.module.scss";
 
 // 매출 목록 출력
-export default function printSalesList(selectDate: Date) {
+export default function PrintSalesList(selectDate: Date) {
     const days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     let allSum = 0;
     let result = [];

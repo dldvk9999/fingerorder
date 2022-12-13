@@ -3,7 +3,7 @@ import { DownloadTableExcel } from "react-export-table-to-excel";
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import LoginCheck from "../../common/Login_Check";
-import printSalesList from "./SalesPrint";
+import PrintSalesList from "./SalesPrint";
 import styles from "./Sales.module.scss";
 import ko from "date-fns/locale/ko";
 registerLocale("ko", ko);
@@ -70,7 +70,7 @@ export default function Sales() {
                                 <th>매출</th>
                             </tr>
                         </thead>
-                        {printSalesList(selectDate ? selectDate : new Date())}
+                        {PrintSalesList(selectDate ? selectDate : new Date())}
                     </table>
                 </div>
             </section>

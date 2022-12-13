@@ -20,7 +20,7 @@ function changeLabelColor(e: any) {
 }
 
 // 랜덤한 order 중 랜덤한 메뉴 생성
-export function printRandomMenu(index: number, menuList: Array<Array<menuList>>, count: Array<Array<number>>) {
+export function PrintRandomMenu(index: number, menuList: Array<Array<menuList>>, count: Array<Array<number>>) {
     let result = [
         <div className={styles.orderCardMenu} key={"order-random-menu-title"}>
             <p className={styles.orderCardMenuTitle}>이름</p>

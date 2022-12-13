@@ -101,3 +101,48 @@
     @include view(flex, center);
     @include area(100%, 100%);
 }
+
+@media (max-width: 1024px) {
+    .homeFlowItem {
+        padding: 2rem 0.5rem;
+        p {
+            padding: 0 1rem;
+        }
+    }
+}
+
+@media (max-width: 800px) {
+    .homeFlowNormal,
+    .homeFlowReverse {
+        flex-direction: column;
+    }
+    .homeFlowMiddle {
+        @include view(flex, center);
+        height: 7.5rem;
+    }
+    .homeFlowReverse {
+        align-items: center;
+    }
+    .homeFlowToBottom {
+        height: 7.5rem;
+    }
+}
+
+@media (max-width: 500px) {
+    .homeFlow {
+        padding: 4rem 2rem;
+    }
+    .homeFlowNodes {
+        @include area(4.5rem, 4.5rem);
+    }
+    .homeFlowItem > p {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 300px) {
+    .homeFlow > h1 {
+        font-size: 1.2rem;
+        white-space: nowrap;
+    }
+}

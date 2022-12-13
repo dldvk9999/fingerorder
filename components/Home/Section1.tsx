@@ -51,7 +51,7 @@ export default function Home_Section1() {
             setShowIntro([true, true, true]);
             upIntro();
         }
-    }, []);
+    }, [isHomeIntro]);
 
     return (
         <section className={styles.homeInto} ref={homeInto}>

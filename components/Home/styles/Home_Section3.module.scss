@@ -79,3 +79,41 @@
 .homeCompareFrontImage {
     @include view(flex, normal, center);
 }
+
+@media (max-width: 650px) {
+    .homeCompareBackItem {
+        @include area(8rem, 18rem);
+
+        div:nth-child(1) {
+            font-size: 1.2rem;
+            margin-top: 2rem;
+        }
+        div:nth-child(2) {
+            font-size: 5rem;
+        }
+        div:nth-child(3) {
+            font-size: 1rem;
+            margin-bottom: 2rem;
+        }
+    }
+    .homeCompareFront {
+        @include area(12rem, 22rem);
+
+        div:nth-child(1) {
+            font-size: 1.5rem;
+            margin-top: 2rem;
+        }
+        div:nth-child(3) {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+        }
+    }
+    .homeCompareFrontImage {
+        @include area(8rem, 8rem);
+    }
+    .homeCompare > p {
+        font-size: 1.2rem;
+        transform: translate(-50%, 32vh);
+        white-space: nowrap;
+    }
+}

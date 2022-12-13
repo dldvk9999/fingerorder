@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { soundPlay } from "../../states";
-import { printRandomMenu } from "./OrderMenu";
+import { PrintRandomMenu } from "./OrderMenu";
 import LoginCheck from "../common/Login_Check";
 import store from "../../data/store";
 import styles from "./Order.module.scss";
@@ -102,7 +102,7 @@ export default function Order() {
                         {locate[i]}
                         <div>{table[i] + 1}번</div>
                     </div>
-                    {printRandomMenu(i, menuList, count)}
+                    {PrintRandomMenu(i, menuList, count)}
                     <p className={styles.orderCardTotal}>{sum[i].toLocaleString()}원</p>
                     <button
                         className={styles.orderCardClose}

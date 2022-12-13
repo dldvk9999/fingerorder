@@ -7,8 +7,8 @@ import LoginCheck from "../../common/Login_Check";
 import styles from "./Qrcode.module.scss";
 
 export default function QRCode(props: { tableCount: number; type: string }) {
-    const [editPage, _] = useRecoilState(editNumber);
     const { Image } = useQRCode();
+    const [editPage, _] = useRecoilState(editNumber);
     const [isStoreManager, setStoreManager] = useState(true);
     const [isMobile, setMobile] = useState(true);
     const [tableCount, setTableCount] = useState(0);
@@ -91,7 +91,7 @@ export default function QRCode(props: { tableCount: number; type: string }) {
             setTableCount(!props.tableCount ? store[editPage].table : props.tableCount);
             setStoreType(!props.type ? store[editPage].type : props.type);
         }
-    }, [props.tableCount, props.type]);
+    }, [props.tableCount, props.type, editPage]);
 
     return LoginCheck() && isStoreManager ? (
         <article>

@@ -153,7 +153,7 @@ export default function Review() {
         } else {
             setReview(reviews[storeID].review);
         }
-    }, []);
+    }, [storeID]);
 
     useEffect(() => {
         // 답글 달기 버튼을 클릭하여 Input 창이 생길 때 모바일에서는 창이 생겼는지 모를 수 있으므로 auto scroll 처리
@@ -164,7 +164,7 @@ export default function Review() {
 
     useEffect(() => {
         printReviewList();
-    }, [review]);
+    }, []);
 
     return LoginCheck() ? (
         <main>
