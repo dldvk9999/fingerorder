@@ -71,16 +71,14 @@ export default function Modal({
 
             if (selected === "") {
                 alert("체크 사항에 하나라도 기재 부탁드립니다.");
-                return;
             } else if (questClick[questClick.length - 1] && ect === "") {
                 alert("기타 사항에 입력 부탁드립니다.");
-                return;
             } else {
                 alert(selected);
+                alert(accept + "가 완료되었습니다.");
+                onAccept();
             }
         }
-        alert(accept + "가 완료되었습니다.");
-        onAccept();
     };
 
     return (
