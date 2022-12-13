@@ -58,7 +58,6 @@ export default function Registration() {
             <div className={styles.registration} ref={registration}>
                 <section className={styles.regiSection}>
                     <Store
-                        auth
                         name={editPage !== -1 ? store[editPage].name : ""}
                         tableCount={editPage !== -1 ? store[editPage].table : 0}
                         tmpTableCount={editPage !== -1 ? store[editPage].table : 0}
@@ -67,10 +66,10 @@ export default function Registration() {
                     />
                 </section>
                 <section className={styles.regiSection}>
-                    <Category auth category={editPage !== -1 ? store[editPage].category : []} />
+                    <Category category={editPage !== -1 ? store[editPage].category : []} />
                 </section>
                 <section className={styles.regiSection}>
-                    <Menu auth />
+                    <Menu />
                 </section>
             </div>
         </main>
