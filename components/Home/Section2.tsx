@@ -4,9 +4,7 @@ export default function Home_Section2() {
     // WhiteBox 부분에 아래 화살표 클릭 시 아래로 스크롤
     function scrollDown() {
         let compare = document.querySelector<HTMLElement>("#compare");
-        compare?.scrollIntoView({
-            behavior: "smooth",
-        });
+        compare?.scrollIntoView({ behavior: "smooth" });
     }
 
     return (

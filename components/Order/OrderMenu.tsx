@@ -1,12 +1,5 @@
+import { menuList } from "../../types/type";
 import styles from "./Order.module.scss";
-
-type menuList = {
-    name: string;
-    price: number;
-    desc: string;
-    image: string;
-    soldout: boolean;
-};
 
 // Label 클릭 시 처리했다는 표시를 나타내기 위해 색깔과 삭선 표시
 function changeLabelColor(e: any) {

@@ -37,37 +37,31 @@ export default function Header() {
 
     // router 가능한 주소 목록 (재사용 가능 함수)
     function routerList(printWhere: string) {
-        let result = [];
-        for (let i = 0; i < router.length; i++)
-            result.push(
-                <Link href={"/" + router[i][0]} onClick={() => routerClickEvent(printWhere)} key={"header-router-" + i}>
-                    {router[i][1]}
-                </Link>
-            );
-        return result;
+        return router.map((el, i) => (
+            <Link href={"/" + el[0]} onClick={() => routerClickEvent(printWhere)} key={"header-router-" + i}>
+                {el[1]}
+            </Link>
+        ));
     }
 
     // 로그인 후 접근 가능한 주소 목록 (재사용 가능 함수)
     function routerListLogin(printWhere: string) {
-        let result = [];
-        for (let i = 0; i < routerLogin.length; i++)
-            result.push(
-                <Link
-                    href={"/" + routerLogin[i][0]}
-                    onClick={() => {
-                        routerLogin[i][0] === "" && logout();
-                        printWhere === "nav" && closeNav();
-                    }}
-                    key={"header-login-profile-" + i}
-                >
-                    {i === routerLogin.length - 1 && printWhere !== "nav" ? (
-                        Img("profile", 40, 40, styles.headerProfile)
-                    ) : (
-                        <div>{routerLogin[i][1]}</div>
-                    )}
-                </Link>
-            );
-        return result;
+        return routerLogin.map((el, i) => (
+            <Link
+                href={"/" + el[0]}
+                onClick={() => {
+                    el[0] === "" && logout();
+                    printWhere === "nav" && closeNav();
+                }}
+                key={"header-login-profile-" + i}
+            >
+                {i === routerLogin.length - 1 && printWhere !== "nav" ? (
+                    Img("profile", 40, 40, styles.headerProfile)
+                ) : (
+                    <div>{el[1]}</div>
+                )}
+            </Link>
+        ));
     }
 
     useEffect(() => {
@@ -77,14 +71,10 @@ export default function Header() {
         // innerWidth가 800px 이하일때만 nav를 렌더링함
         // onresize를 사용하여 override하면 home에서 또 override해서 덮어써지면서 작동이 안돼 addEventListener로 대체
         setMobile(window.innerWidth < 800);
-        window.addEventListener("resize", () => {
-            setMobile(window.innerWidth < 800);
-        });
+        window.addEventListener("resize", () => setMobile(window.innerWidth < 800));
 
         return () => {
-            window.removeEventListener("resize", () => {
-                setMobile(window.innerWidth < 800);
-            });
+            window.removeEventListener("resize", () => setMobile(window.innerWidth < 800));
         };
     }, []);
 

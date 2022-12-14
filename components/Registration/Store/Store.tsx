@@ -1,4 +1,4 @@
-import { SetStateAction, useEffect, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { registrationIndex } from "../../../states";
 import LoginCheck from "../../common/Login_Check";
@@ -23,21 +23,17 @@ export default function Store(props: {
     function selectQRType(index: number, type: string) {
         setStoreType(type);
         let buttons = inputList.current[3].children;
-        for (let i = 0; i < buttons.length; i++) {
-            if (i === index) buttons[i].classList.add(styles.storeTypeActive);
-            else buttons[i].classList.remove(styles.storeTypeActive);
-        }
+        for (let i = 0; i < buttons.length; i++)
+            i === index
+                ? buttons[i].classList.add(styles.storeTypeActive)
+                : buttons[i].classList.remove(styles.storeTypeActive);
     }
 
     // 입력받는 데이터 체크
     function inputDataCheck(data: any, index: number, type: string = "") {
         let result = [true, ""];
-
-        // 카테고리나 매장 명, 매장 위치
         if (type === "" && data === "") result = [false, "공백은 입력 할 수 없습니다."];
-        // 매장 테이블
         else if (type === "table" && !tableCount) result = [false, "테이블 수를 입력하여 주세요."];
-        // type 버튼
         else if (type === "type" && data === "") result = [false, "QR코드 타입을 선택해주세요."];
 
         // 해당 input 테두리 빨간색으로 지정
@@ -54,16 +50,16 @@ export default function Store(props: {
 
     // 매장 등록 함수
     function storeInput() {
-        for (let i = 0; i < inputList.current.length; i++) inputList.current[i].style.border = "1px solid #eaeaea";
+        inputList.current.map((el) => (el.style.border = "1px solid #eaeaea"));
 
         let name = inputDataCheck(storeName.trim(), 0);
         let location = inputDataCheck(storeLocation.trim(), 1);
         let table = inputDataCheck(tableCount, 2, "table");
         let btn = inputDataCheck(storeType.trim(), 3, "type");
 
-        if (!name[0] || !location[0] || !table[0] || !btn[0]) alert(name[1] || location[1] || table[1] || btn[1]);
-        //서비스 등록 화면 슬라이드
-        else setRegiIndex(1);
+        !name[0] || !location[0] || !table[0] || !btn[0]
+            ? alert(name[1] || location[1] || table[1] || btn[1])
+            : setRegiIndex(1);
     }
 
     useEffect(() => {
@@ -74,26 +70,21 @@ export default function Store(props: {
         <article className={styles.store}>
             <section className={styles.storeInfo}>
                 <h1>{props.name ? "매장 수정" : "매장 등록"}</h1>
-                <input
-                    type="text"
-                    placeholder="매장 명을 입력해주세요."
-                    onChange={(e) => setStoreName(e.target.value)}
-                    value={storeName}
-                    minLength={1}
-                    maxLength={40}
-                    className={styles.storeInput}
-                    ref={(el) => (inputList.current[0] = el!)}
-                />
-                <input
-                    type="text"
-                    placeholder="매장 위치를 입력해주세요."
-                    onChange={(e) => setStoreLocation(e.target.value)}
-                    value={storeLocation}
-                    minLength={1}
-                    maxLength={40}
-                    className={styles.storeInput}
-                    ref={(el) => (inputList.current[1] = el!)}
-                />
+                {[
+                    ["매장 명을 ", setStoreName, storeName],
+                    ["매장 위치를 ", setStoreLocation, storeLocation],
+                ].map((el, i) => (
+                    <input
+                        type="text"
+                        placeholder={el[0] + "입력해주세요."}
+                        onChange={(e) => (el[1] as Dispatch<SetStateAction<string>>)(e.target.value)}
+                        value={el[2] as string}
+                        minLength={1}
+                        maxLength={40}
+                        className={styles.storeInput}
+                        ref={(el) => (inputList.current[i] = el!)}
+                    />
+                ))}
                 <div className={styles.storeUseButton}>
                     <input
                         type="number"
@@ -106,22 +97,16 @@ export default function Store(props: {
                     <p>* QR 코드를 출력하여 각 테이블마다 붙여 사용하세요!</p>
                 </div>
                 <div className={styles.storeType} ref={(el) => (inputList.current[3] = el!)}>
-                    <button onClick={() => selectQRType(0, "TableNumber")} disabled={isSubmitDisable}>
-                        <p>
-                            테이블번호로
-                            <br />
-                            운영되는
-                        </p>
-                        <p>QR코드</p>
-                    </button>
-                    <button onClick={() => selectQRType(1, "OrderNumber")} disabled={isSubmitDisable}>
-                        <p>
-                            주문번호로
-                            <br />
-                            운영되는
-                        </p>
-                        <p>QR코드</p>
-                    </button>
+                    {["TableNumber", "OrderNumber"].map((el, i) => (
+                        <button onClick={() => selectQRType(i, el)} disabled={isSubmitDisable}>
+                            <p>
+                                {i ? "주문번호로" : "테이블번호로"}
+                                <br />
+                                운영되는
+                            </p>
+                            <p>QR코드</p>
+                        </button>
+                    ))}
                 </div>
                 <button className={styles.storeButton} onClick={storeInput} disabled={isSubmitDisable}>
                     다음

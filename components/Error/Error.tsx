@@ -1,11 +1,17 @@
 import Image from "next/image";
 import styles from "./Error.module.scss";
 
-export default function Error(props: {type: string}) {
+export default function Error(props: { type: string }) {
     return (
         <main>
             <section className={styles.error}>
-                <Image src={!props.type ? "/error.gif" : "/notfound.webp"} alt={!props.type ? "error" : "notfound"} width={200} height={200} loading="lazy" />
+                <Image
+                    src={!props.type ? "/error.gif" : "/notfound.webp"}
+                    alt={!props.type ? "error" : "notfound"}
+                    width={200}
+                    height={200}
+                    loading="lazy"
+                />
                 {!props.type ? (
                     <>
                         <p>에러가 발생했습니다.</p>
@@ -21,4 +27,4 @@ export default function Error(props: {type: string}) {
             </section>
         </main>
     );
-};
+}

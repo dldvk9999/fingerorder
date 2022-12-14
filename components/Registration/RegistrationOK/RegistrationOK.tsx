@@ -9,10 +9,7 @@ export default function RegistrationOk() {
 
     useEffect(() => {
         const fireworks = new Fireworks(regiokFire.current!, {
-            delay: {
-                min: 80,
-                max: 100,
-            },
+            delay: { min: 80, max: 100 },
             particles: 200,
             traceSpeed: 5,
         });

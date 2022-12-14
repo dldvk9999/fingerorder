@@ -5,19 +5,8 @@ import { registrationIndex } from "../../../states";
 import store from "../../../data/store";
 import LoginCheck from "../../common/Login_Check";
 import Img from "../../common/Img";
+import { menuList, menu } from "../../../types/type";
 import styles from "./Menu.module.scss";
-
-type menuList = {
-    name: string;
-    price: number;
-    desc: string;
-    image: string;
-    rate: number;
-    soldout: boolean;
-};
-type menu = {
-    [key: string]: Array<Object>;
-};
 
 // custom한 mock data를 사용해서 상대적으로 코드가 긴 편인데 백엔드와 연동하면 코드가 약 3~50% 정도 감소될 것 같음
 export default function Menu() {
@@ -67,8 +56,7 @@ export default function Menu() {
         // 삭제 처리
         else if (type === "delete") {
             if (confirm(menuCategory[index].name + " 메뉴를 삭제하시겠습니까?")) {
-                menuCategory = menuCategory.slice(0, index).concat(menuCategory.slice(index + 1, menuCategory.length));
-                menu[cate] = menuCategory;
+                menu[cate] = menuCategory.filter((_, i) => i !== index);
                 alert("메뉴를 삭제하였습니다.");
             }
         }
@@ -113,92 +101,76 @@ export default function Menu() {
 
     // 매장에 있는 메뉴 - 세부 아이템 출력
     function printStoreMenuListItem(category: string) {
-        let result = [];
         const menu = nowStore[storeID - 1].menu as unknown as menu;
 
         // 만약 매장 - 카테고리 내 메뉴의 개수가 1이상일 경우(즉, 메뉴가 존재할 경우)
-        if (menu[category].length) {
-            // 모든 메뉴를 for문으로 print
-            for (let i = 0; i < menu[category].length; i++) {
-                const mCate = menu[category][i] as menuList;
-
+        return menu[category].length ? (
+            menu[category]
                 // 만약 메뉴 이름에 검색하고자 하는 텍스트가 포함되어있을 경우(검색값이 ""일 경우 모두 출력됨)
-                if (mCate.name.includes(searchName)) {
-                    result.push(
-                        <div className={styles.menuItem} key={"menu-list-" + i}>
-                            {isMobile >= 500 && Img(mCate.image, 75, 75, styles.menuItemImage)}
-                            <div className={styles.menuItemNamePrice}>
-                                <p>
-                                    {mCate.name}
-                                    {mCate.soldout && <span className={styles.menuItemSoldout}>품절</span>}
-                                </p>
-                                {isMobile >= 650 && <p>{mCate.desc}</p>}
-                                <div className={styles.menuItemPriceRate}>
-                                    {mCate.price.toLocaleString()}원
-                                    <div className={styles.menuItemRate}>
-                                        {Img(
-                                            "rating",
-                                            isMobile < 600 ? 15 : 75,
-                                            15,
-                                            `${styles.menuItemRateImage} ${ratingStyle(mCate.rate)}`
-                                        )}
-                                        <p>{mCate.rate ? mCate.rate : 0}</p>
-                                    </div>
+                .filter((el: any) => el.name.includes(searchName))
+                .map((cate: any, i) => (
+                    <div className={styles.menuItem} key={"menu-list-" + i}>
+                        {isMobile >= 500 && Img(cate.image, 75, 75, styles.menuItemImage)}
+                        <div className={styles.menuItemNamePrice}>
+                            <p>
+                                {cate.name}
+                                {cate.soldout && <span className={styles.menuItemSoldout}>품절</span>}
+                            </p>
+                            {isMobile >= 650 && <p>{cate.desc}</p>}
+                            <div className={styles.menuItemPriceRate}>
+                                {cate.price.toLocaleString()}원
+                                <div className={styles.menuItemRate}>
+                                    {Img(
+                                        "rating",
+                                        isMobile < 600 ? 15 : 75,
+                                        15,
+                                        `${styles.menuItemRateImage} ${ratingStyle(cate.rate)}`
+                                    )}
+                                    <p>{cate.rate ? cate.rate : 0}</p>
                                 </div>
                             </div>
-                            <div className={styles.menuItemBtns}>
-                                <button
-                                    className={styles.menuItemBtn}
-                                    onClick={() =>
-                                        menuInfoLoad(category, mCate.name, mCate.price, mCate.desc, mCate.image)
-                                    }
-                                >
-                                    수정
-                                </button>
-                                <button className={styles.menuItemBtn} onClick={() => editMenu("delete", category, i)}>
-                                    삭제
-                                </button>
-                                <button className={styles.menuItemBtn} onClick={() => editMenu("soldout", category, i)}>
-                                    품절
-                                </button>
-                            </div>
                         </div>
-                    );
-                }
-            }
-        }
-        // 매장 - 카테고리 내 매뉴의 개수가 0인 경우(즉, 메뉴가 존재하지 않을 경우(= 메뉴를 등록하지 않았을 경우))
-        else
-            result.push(
-                <div className={styles.menuItemNoExist} key={"menu-list-no-exist"}>
-                    상품이 없습니다.
-                </div>
-            );
-        return result;
+                        <div className={styles.menuItemBtns}>
+                            <button
+                                className={styles.menuItemBtn}
+                                onClick={() => menuInfoLoad(category, cate.name, cate.price, cate.desc, cate.image)}
+                            >
+                                수정
+                            </button>
+                            <button className={styles.menuItemBtn} onClick={() => editMenu("delete", category, i)}>
+                                삭제
+                            </button>
+                            <button className={styles.menuItemBtn} onClick={() => editMenu("soldout", category, i)}>
+                                품절
+                            </button>
+                        </div>
+                    </div>
+                ))
+        ) : (
+            // 매장 - 카테고리 내 매뉴의 개수가 0인 경우(즉, 메뉴가 존재하지 않을 경우(= 메뉴를 등록하지 않았을 경우))
+            <div className={styles.menuItemNoExist} key={"menu-list-no-exist"}>
+                상품이 없습니다.
+            </div>
+        );
     }
 
     // 매장에 있는 메뉴 목록 출력
     function printStoreMenuList() {
-        let result = [];
-
-        // storeID의 값이 default 값인 -1이 아닐 때(즉, 매장 ID가 선택되었을 때)
-        if (storeID !== -1)
-            for (let i = 0; i < nowStore[storeID - 1].category.length; i++)
-                result.push(
-                    <div className={styles.menuItemHeader} key={"menu-list-header-" + i}>
-                        {i !== 0 && <hr />}
-                        <h3>{nowStore[storeID - 1].category[i]}</h3>
-                        {printStoreMenuListItem(nowStore[storeID - 1].category[i])}
-                    </div>
-                );
-        // 매장이 선택되지 않았을 때
-        else
-            result.push(
-                <h3 key={"menu-list-no-select-store"}>
-                    {isMobile < 800 ? "상단에서 매장을 선택해주세요." : "왼쪽에서 매장을 선택해주세요."}
-                </h3>
-            );
-        return result;
+        return storeID !== -1 ? (
+            // storeID의 값이 default 값인 -1이 아닐 때(즉, 매장 ID가 선택되었을 때)
+            nowStore[storeID - 1].category.map((el, i) => (
+                <div className={styles.menuItemHeader} key={"menu-list-header-" + i}>
+                    {i !== 0 && <hr />}
+                    <h3>{el}</h3>
+                    {printStoreMenuListItem(el)}
+                </div>
+            ))
+        ) : (
+            // 매장이 선택되지 않았을 때
+            <h3 key={"menu-list-no-select-store"}>
+                {isMobile < 800 ? "상단에서 매장을 선택해주세요." : "왼쪽에서 매장을 선택해주세요."}
+            </h3>
+        );
     }
 
     // 매장 ID 및 카테고리 드롭다운 선택

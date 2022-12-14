@@ -21,27 +21,9 @@ export default function QRCode(props: { tableCount: number; type: string }) {
     // QR 리스트 다운로드
     function downloadQR() {
         storeQRDownload.current!.style.display = "none";
-        window.onbeforeprint = () => {
-            document.body.innerHTML = storeQR.current!.innerHTML;
-        };
-        window.onafterprint = () => {
-            location.href = "/mypage";
-        };
+        window.onbeforeprint = () => (document.body.innerHTML = storeQR.current!.innerHTML);
+        window.onafterprint = () => (location.href = "/mypage");
         window.print();
-    }
-
-    // QR 리스트 출력 (헤더 포함)
-    function printQRList() {
-        let result = [];
-        for (let i = 0; i < Number(tableCount / 16); i++) {
-            result.push(
-                <div key={"store-QR-list-" + i}>
-                    <h2>QR 코드 리스트 - {i + 1}</h2>
-                    <div className={styles.storeQRGrid}>{printQR(i)}</div>
-                </div>
-            );
-        }
-        return result;
     }
 
     // QR 리스트 출력
@@ -49,28 +31,22 @@ export default function QRCode(props: { tableCount: number; type: string }) {
         const orderURL = "https://fingeroreder-order.netlify.app/";
         // const orderURL = "https://fingerorder.vercel.app/qrcode/test/";
 
-        let result = [];
-        const limit = index * 16 + 16;
-        for (let i = index * 16; i < Math.min(limit, tableCount); i++) {
-            let url = "";
-            if (storeType === "TableNumber")
-                url = orderURL + STORE_MANAGER_ID.current + "/" + STORE_ID + "/" + Number(i + 1);
-            else url = orderURL + STORE_MANAGER_ID.current + "/" + STORE_ID + "/";
-
-            result.push(
-                <div className={styles.storeQRItem} key={"store-QR-" + i}>
-                    <Image
-                        text={url}
-                        options={{
-                            width: 100,
-                        }}
-                    />
-                    <p>TABLE - {i + 1}</p>
-                    <p className={styles.storeQRItemText}>QR코드를 스캔하여 자리에서 메뉴를 주문하세요!</p>
-                </div>
-            );
-        }
-        return result;
+        return Array.from({ length: Math.min(index * 16 + 16, tableCount) + 1 }, () => 0).map((_, i) => (
+            <div className={styles.storeQRItem} key={"store-QR-" + i}>
+                <Image
+                    text={
+                        orderURL + STORE_MANAGER_ID.current + "/" + STORE_ID + "/" + storeType === "TableNumber"
+                            ? Number(i + 1).toString()
+                            : ""
+                    }
+                    options={{
+                        width: 100,
+                    }}
+                />
+                <p>TABLE - {i + 1}</p>
+                <p className={styles.storeQRItemText}>QR코드를 스캔하여 자리에서 메뉴를 주문하세요!</p>
+            </div>
+        ));
     }
 
     useEffect(() => {
@@ -98,7 +74,12 @@ export default function QRCode(props: { tableCount: number; type: string }) {
             <section className={styles.storeQR} ref={storeQR}>
                 {isMobile ? (
                     <>
-                        {printQRList()}
+                        {Array.from({ length: Number(tableCount / 16) + 1 }, () => 0).map((_, i) => (
+                            <div key={"store-QR-list-" + i}>
+                                <h2>QR 코드 리스트 - {i + 1}</h2>
+                                <div className={styles.storeQRGrid}>{printQR(i)}</div>
+                            </div>
+                        ))}
                         <button className={styles.storeQRDownload} onClick={downloadQR} ref={storeQRDownload}>
                             QR 다운로드
                         </button>

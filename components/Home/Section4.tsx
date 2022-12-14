@@ -1,12 +1,23 @@
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import flow from "../../data/flow";
+import Img from "../common/Img";
 import styles from "./styles/Home_Section4.module.scss";
 
 export default function Home_Section4() {
     const [isMobile, setMobile] = useState(false);
     const [edgeShow, setEdgeShow] = useState(Array.from({ length: flow.length - 1 }, () => false));
     const [isEdgeInit, setEdgeInit] = useState(false);
+
+    function printRepeat(start: number, end: number, type: "left" | "right") {
+        return Array.from({ length: end - start + 1 }, (_, index) => index + start).map(function (n) {
+            return (
+                <>
+                    {printNodes(n)}
+                    {n !== end && printEdge(n, type)}
+                </>
+            );
+        });
+    }
 
     // Flow의 Node 그리는 함수
     function printNodes(index: number) {
@@ -22,14 +33,7 @@ export default function Home_Section4() {
                 }
                 onMouseLeave={() => setEdgeShow([true, true, true, true, true])}
             >
-                <Image
-                    src={"/home/" + flow[index].name + ".webp"}
-                    alt={flow[index].alt}
-                    width={100}
-                    height={100}
-                    className={styles.homeFlowNodes}
-                    loading="lazy"
-                />
+                {Img("home/" + flow[index].name, 100, 100, styles.homeFlowNodes)}
                 <p>{flow[index].desc}</p>
             </div>
         );
@@ -76,13 +80,7 @@ export default function Home_Section4() {
     return (
         <section className={styles.homeFlow}>
             {isMobile && <h1>핑거오더의 동작 원리</h1>}
-            <div className={styles.homeFlowNormal}>
-                {printNodes(0)}
-                {printEdge(0, "right")}
-                {printNodes(1)}
-                {printEdge(1, "right")}
-                {printNodes(2)}
-            </div>
+            <div className={styles.homeFlowNormal}>{printRepeat(0, 2, "right")}</div>
             <div className={styles.homeFlowMiddle}>
                 {!isMobile && (
                     <>
@@ -94,13 +92,7 @@ export default function Home_Section4() {
                     <div className={`${styles.homeFlowVertline} ${edgeShow[2] && styles.homeFlowVertlineActive}`} />
                 </div>
             </div>
-            <div className={styles.homeFlowReverse}>
-                {printNodes(3)}
-                {printEdge(3, "left")}
-                {printNodes(4)}
-                {printEdge(4, "left")}
-                {printNodes(5)}
-            </div>
+            <div className={styles.homeFlowReverse}>{printRepeat(3, 5, "left")}</div>
         </section>
     );
 }

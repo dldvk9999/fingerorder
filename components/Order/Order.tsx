@@ -5,18 +5,8 @@ import { soundPlay } from "../../states";
 import { PrintRandomMenu } from "./OrderMenu";
 import LoginCheck from "../common/Login_Check";
 import store from "../../data/store";
+import { menuList, menu } from "../../types/type";
 import styles from "./Order.module.scss";
-
-type menuList = {
-    name: string;
-    price: number;
-    desc: string;
-    image: string;
-    soldout: boolean;
-};
-type menu = {
-    [key: string]: Array<Object>;
-};
 
 export default function Order() {
     const [isSoundPlay, setSoundPlay] = useRecoilState(soundPlay);
@@ -26,70 +16,49 @@ export default function Order() {
     const [table, setTable] = useState<Array<number>>([]);
     const [sum, setSum] = useState<Array<number>>([]);
     const [date, setDate] = useState<Array<Date>>([]);
-    const [result, setResult] = useState<JSX.Element[]>([]);
+    const [result, setResult] = useState<Array<any>>([]);
     const [notiAudio, setAudio] = useState<any>();
     const [isClickNew, setClickNew] = useState(false);
     let storeID = Math.floor(Math.random() * 3);
-    let category = "";
-    let menu: menuList = {
-        name: "",
-        price: 0,
-        desc: "",
-        image: "",
-        soldout: false,
-    };
 
     // 주문 내역 삭제
     function deleteOrder(index: number) {
         if (confirm("삭제하시겠습니까?")) {
             let del = [setResult, setMenuList, setCount, setLocate, setSum, setTable, setDate];
             let delValue = [result, menuList, count, locate, sum, table, date];
-            for (let i = 0; i < del.length; i++)
-                del[i]((delValue[i].slice(0, index) as any).concat(delValue[i].slice(index + 1, delValue[i].length)));
+            del.map((func, i) => func(delValue[i].filter((_: any, i: number) => i !== index)));
         }
     }
 
     // 주문을 랜덤하게 만드는 함수
     function makeRandomOrder() {
         storeID = Math.floor(Math.random() * 3);
-        let tmpCount: number[] = [];
-        let tmpMenuList: Array<menuList> = [];
-        let tmpLocate = "";
-        let tmpSum = 0;
-        let tmpTable = 0;
-        let tmpDate = new Date();
+        let funcList = [setDate, setLocate, setTable, setMenuList, setCount, setSum];
+        let valList = [new Date(), "", 0, [] as any, [], 0];
 
         // 주문 중 메뉴의 개수 랜덤
         for (let i = 0; i < Math.floor(Math.random() * 10) + 1; i++) {
-            const categoryLength = store[storeID].category.length;
-            category = store[storeID].category[Math.floor(Math.random() * categoryLength)];
-            const storeMenu = store[storeID].menu as unknown as menu;
-            const menuLength = storeMenu[category].length;
-            let tm = Math.floor(Math.random() * menuLength);
-            menu = storeMenu[category][tm] as menuList;
+            const tmpStore = store[storeID];
+            let category = tmpStore.category[Math.floor(Math.random() * tmpStore.category.length)];
+            const storeMenu = (tmpStore.menu as unknown as menu)[category];
+            let menu = storeMenu[Math.floor(Math.random() * storeMenu.length)] as menuList;
 
-            tmpTable = Math.floor(Math.random() * store[storeID].table);
-            tmpLocate = store[storeID].locate;
-            tmpCount.push(Math.floor(Math.random() * 10) + 1);
-            tmpMenuList = [...tmpMenuList, menu];
-            tmpSum += tmpCount[tmpCount.length - 1] * menu.price;
+            valList[1] = tmpStore.locate;
+            valList[2] = Math.floor(Math.random() * tmpStore.table);
+            valList[3].push(menu);
+            valList[4].push(Math.floor(Math.random() * 10) + 1);
+            valList[5] += valList[4][valList[4].length - 1] * menu.price;
         }
 
-        setLocate([...locate, tmpLocate]);
-        setCount([...count, tmpCount]);
-        setMenuList([...menuList, tmpMenuList]);
-        setSum([...sum, tmpSum]);
-        setTable([...table, tmpTable]);
-        setDate([...date, tmpDate]);
+        funcList.map((func, i) => func((el: any) => [...el, valList[i]]));
 
         if (localStorage["soundplay"] == "true") notiAudio && notiAudio.play();
     }
 
     // 랜덤한 order 생성
     function printRandomOrder() {
-        let tmp = [];
-        for (let i = 0; i < menuList.length; i++)
-            tmp.push(
+        setResult(
+            menuList.map((_, i) => (
                 <div
                     className={`${styles.orderCard} ${
                         i === menuList.length - 1 && isClickNew && styles.orderCardSlideIn
@@ -114,8 +83,8 @@ export default function Order() {
                         삭제
                     </button>
                 </div>
-            );
-        setResult(tmp);
+            ))
+        );
     }
 
     useEffect(() => {

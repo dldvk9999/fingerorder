@@ -14,30 +14,6 @@ export default function Registration() {
     const registration = useRef<HTMLDivElement>(null);
     const main = useRef<HTMLElement>(null);
 
-    // Step 표시 출력
-    function printStep() {
-        let result = [];
-        for (let i = 0; i < 3; i++) {
-            result.push(
-                <div key={"regi-step-" + i}>
-                    <div
-                        className={`${styles.regiNode} ${regiIndex >= i && styles.regiNodeActive} ${
-                            regiIndex === i && styles.regiNodeScaleActive
-                        }`}
-                    >
-                        {i + 1}
-                    </div>
-                    {i !== 2 && (
-                        <div className={styles.regiEdgeToRight}>
-                            <div className={`${styles.regiEdge} ${regiIndex >= i + 1 && styles.regiEdgeActive}`} />
-                        </div>
-                    )}
-                </div>
-            );
-        }
-        return result;
-    }
-
     useEffect(() => {
         setRegiIndex(0);
     }, []);
@@ -53,7 +29,24 @@ export default function Registration() {
     return LoginCheck() ? (
         <main ref={main}>
             {/* 서비스 등록 Step 표시 */}
-            <div className={styles.regiNodeEdge}>{printStep()}</div>
+            <div className={styles.regiNodeEdge}>
+                {[1, 2, 3].map((n) => (
+                    <div key={"regi-step-" + (n - 1)}>
+                        <div
+                            className={`${styles.regiNode} ${regiIndex >= n - 1 && styles.regiNodeActive} ${
+                                regiIndex === n - 1 && styles.regiNodeScaleActive
+                            }`}
+                        >
+                            {n}
+                        </div>
+                        {n !== 3 && (
+                            <div className={styles.regiEdgeToRight}>
+                                <div className={`${styles.regiEdge} ${regiIndex >= n && styles.regiEdgeActive}`} />
+                            </div>
+                        )}
+                    </div>
+                ))}
+            </div>
             {/* 서비스 등록 Body 부분 */}
             <div className={styles.registration} ref={registration}>
                 <section className={styles.regiSection}>

@@ -1,12 +1,7 @@
 import { useEffect, useState } from "react";
 import orderlist from "../../../data/orderlist";
+import { menuOrder } from "../../../types/type";
 import styles from "./OrderList.module.scss";
-
-type menu = {
-    name: string;
-    price: number;
-    count: number;
-};
 
 // 주문 목록 출력
 export default function PrintOrderList(startDate: Date, endDate: Date) {
@@ -15,16 +10,12 @@ export default function PrintOrderList(startDate: Date, endDate: Date) {
     const eDate = endDate ? endDate : new Date();
 
     // 주문 목록 - 메뉴 출력
-    function printOrderListMenu(menu: Array<menu>) {
-        let result = [];
-        for (let i = 0; i < menu.length; i++) {
-            result.push(
-                <p className={styles.orderlistGridItem} key={"orderlist-menu-item-" + i}>
-                    {menu[i].name} * {menu[i].count} = {(menu[i].price * menu[i].count).toLocaleString()}원
-                </p>
-            );
-        }
-        return result;
+    function printOrderListMenu(menuItem: Array<menuOrder>) {
+        return menuItem.map((el, i) => (
+            <p className={styles.orderlistGridItem} key={"orderlist-menu-item-" + i}>
+                {el.name} * {el.count} = {(el.price * el.count).toLocaleString()}원
+            </p>
+        ));
     }
 
     useEffect(() => {

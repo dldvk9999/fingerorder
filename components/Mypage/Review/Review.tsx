@@ -1,17 +1,11 @@
+import { useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { editNumber } from "../../../states";
 import reviews from "../../../data/reviews";
 import LoginCheck from "../../common/Login_Check";
 import Img from "../../common/Img";
-import { useEffect, useRef, useState } from "react";
+import { reviewTmp } from "../../../types/type";
 import styles from "./Review.module.scss";
-
-type reviewTmp = {
-    name: string;
-    time: string;
-    comment: string;
-    reply: string;
-};
 
 export default function Review() {
     const [storeID, _] = useRecoilState(editNumber);
@@ -29,10 +23,9 @@ export default function Review() {
     // 사장님이 답글 삭제 아이콘을 클릭했을 때
     function deleteReply(index: number) {
         if (confirm("리뷰 답글을 삭제하시겠습니까?")) {
-            let tmp = review;
-            tmp[index].reply = "";
-            setReview(tmp);
-            setReview([...review, tmp[index]]);
+            let tmp = review[index];
+            tmp.reply = "";
+            setReview([...review, tmp]);
             alert("삭제되었습니다.");
         }
     }
@@ -43,9 +36,7 @@ export default function Review() {
             setReply(isReply ? isReply : "");
             setTmpReview(review[index]);
             setTmpReviewIndex(index);
-            reviewList.current!.scrollIntoView({
-                behavior: "smooth",
-            });
+            reviewList.current!.scrollIntoView({ behavior: "smooth" });
         } else {
             setReply("");
             setTmpReview(undefined);
@@ -131,18 +122,14 @@ export default function Review() {
 
     // 리뷰 리스트 출력
     function printReviewList() {
-        let result = [];
-        for (let i = 0; i < review.length; i++) {
-            result.push(
-                <div className={styles.reviewListItem} key={"review-item-" + i}>
-                    <hr />
-                    {printReviewItem("profile", i)}
-                    <hr />
-                    {printReviewItem("reply", i)}
-                </div>
-            );
-        }
-        return result;
+        return review.map((_, i) => (
+            <div className={styles.reviewListItem} key={"review-item-" + i}>
+                <hr />
+                {printReviewItem("profile", i)}
+                <hr />
+                {printReviewItem("reply", i)}
+            </div>
+        ));
     }
 
     useEffect(() => {
@@ -150,16 +137,12 @@ export default function Review() {
         if (storeID === -1) {
             alert("마이페이지를 통해 접근해주세요.");
             location.href = "/mypage";
-        } else {
-            setReview(reviews[storeID].review);
-        }
+        } else setReview(reviews[storeID].review);
     }, [storeID]);
 
     useEffect(() => {
         // 답글 달기 버튼을 클릭하여 Input 창이 생길 때 모바일에서는 창이 생겼는지 모를 수 있으므로 auto scroll 처리
-        document.querySelector("." + styles.reviewInput)?.scrollIntoView({
-            behavior: "smooth",
-        });
+        document.querySelector("." + styles.reviewInput)?.scrollIntoView({ behavior: "smooth" });
     }, [tmpReview]);
 
     useEffect(() => {
