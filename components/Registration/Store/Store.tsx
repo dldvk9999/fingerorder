@@ -83,6 +83,7 @@ export default function Store(props: {
                         maxLength={40}
                         className={styles.storeInput}
                         ref={(el) => (inputList.current[i] = el!)}
+                        key={"store-title-" + i}
                     />
                 ))}
                 <div className={styles.storeUseButton}>
@@ -98,7 +99,7 @@ export default function Store(props: {
                 </div>
                 <div className={styles.storeType} ref={(el) => (inputList.current[3] = el!)}>
                     {["TableNumber", "OrderNumber"].map((el, i) => (
-                        <button onClick={() => selectQRType(i, el)} disabled={isSubmitDisable}>
+                        <button onClick={() => selectQRType(i, el)} disabled={isSubmitDisable} key={"store-btns-" + i}>
                             <p>
                                 {i ? "주문번호로" : "테이블번호로"}
                                 <br />
