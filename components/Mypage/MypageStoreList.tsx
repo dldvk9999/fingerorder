@@ -35,7 +35,7 @@ export default function PrintStoreList() {
                 <span className={styles.mypageStoreDate}>최근수정 : {el.date}</span>
             </div>
             <div className={styles.mypageStoreBody}>{el.locate}</div>
-            <div className={styles.mypageStoreButton}>
+            <div className={`${styles.mypageStoreButton} ${styles.mypageStoreButtonUp}`}>
                 <Link href={"/mypage/qrcode"}>
                     <button onClick={() => setPage(i)}>QR코드</button>
                 </Link>
@@ -46,6 +46,14 @@ export default function PrintStoreList() {
                     <button onClick={() => setPage(i)}>수정</button>
                 </Link>
                 <button onClick={() => deleteStoreButton(i)}>삭제</button>
+            </div>
+            <div className={`${styles.mypageStoreButton} ${styles.mypageStoreButtonDown}`}>
+                <Link href={"/mypage/orderlist"}>
+                    <button onClick={() => setPage(i)}>주문 내역</button>
+                </Link>
+                <Link href={"/mypage/sales"}>
+                    <button onClick={() => setPage(i)}>매출 내역</button>
+                </Link>
             </div>
         </div>
     ));

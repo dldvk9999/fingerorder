@@ -44,18 +44,53 @@
 }
 
 .mypageStoreButton {
-    @include view(flex, flex-end, center);
-    margin-top: 1rem;
-    gap: 1rem;
-    padding: 1rem 0 !important;
+    @include view(flex, center, center);
+    padding: 0 !important;
 
     a {
         padding: 0;
+        width: 100%;
+    }
+    > button {
+        border-top-right-radius: 1rem !important;
     }
     button,
     a > button {
-        @include buttonStyle(fit-content, fit-content, $blue, 0.9rem);
+        @include buttonStyle(100%, 100%, $blue, 0.9rem);
         padding: 0.5rem 1rem;
+        border-radius: 0;
+    }
+    &:last-child > a {
+        button {
+            @include buttonStyle(100%, 100%, $blue, 0.9rem);
+            border-radius: 0;
+        }
+    }
+}
+
+.mypageStoreButtonUp {
+    margin-top: 1rem;
+    > a {
+        &:first-child > button {
+            border-top-left-radius: 1rem;
+        }
+    }
+}
+
+.mypageStoreButtonDown > a {
+    > button {
+        color: $blue !important;
+        background-color: white !important;
+        &:hover {
+            color: white !important;
+            background-color: $blue !important;
+        }
+    }
+    &:first-child > button {
+        border-bottom-left-radius: 1rem;
+    }
+    &:last-child > button {
+        border-bottom-right-radius: 1rem;
     }
 }
 
