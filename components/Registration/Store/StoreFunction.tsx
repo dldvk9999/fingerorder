@@ -12,7 +12,7 @@ export function getStore() {
 // 매장 등록
 export function createStore(name: string, location: string, tableCount: number, type: string) {
     if (isAPI) {
-        APIPost("/api/store/regist", {
+        APIPost("/api/store/", {
             name: name,
             location: location,
             tableNum: tableCount,
@@ -38,7 +38,7 @@ export function editStore(id: number, name: string, location: string, tableCount
 // 매장 삭제
 export function deleteStore(id: number) {
     if (isAPI) {
-        APIDel("/api/store/" + id + "/delete", {});
+        APIDel("/api/store/" + id, {});
     }
     return true;
 }
