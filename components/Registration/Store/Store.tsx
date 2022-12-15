@@ -1,8 +1,9 @@
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
-import { registrationIndex } from "../../../states";
+import { editNumber, registrationIndex } from "../../../states";
 import LoginCheck from "../../common/Login_Check";
 import styles from "./Store.module.scss";
+import { createStore, editStore } from "./StoreFunction";
 
 export default function Store(props: {
     name: SetStateAction<string>;
@@ -11,6 +12,7 @@ export default function Store(props: {
     location: SetStateAction<string>;
     type: string;
 }) {
+    const [editPage, setEditPage] = useRecoilState(editNumber);
     const [_, setRegiIndex] = useRecoilState(registrationIndex);
     const [storeName, setStoreName] = useState(props.name ? props.name.toString() : ""); // 매장 이름
     const [tableCount, setTableCount] = useState(props.tableCount ? Number(props.tableCount) : 0); // 매장 테이블 수
@@ -60,6 +62,11 @@ export default function Store(props: {
         !name[0] || !location[0] || !table[0] || !btn[0]
             ? alert(name[1] || location[1] || table[1] || btn[1])
             : setRegiIndex(1);
+
+        // 매장 등록 or 수정
+        props.name
+            ? editStore(editPage, storeName, storeLocation, tableCount, storeType)
+            : createStore(storeName, storeLocation, tableCount, storeType);
     }
 
     useEffect(() => {
