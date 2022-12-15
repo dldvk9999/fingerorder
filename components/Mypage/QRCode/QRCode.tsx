@@ -31,22 +31,28 @@ export default function QRCode(props: { tableCount: number; type: string }) {
         const orderURL = "https://fingeroreder-order.netlify.app/";
         // const orderURL = "https://fingerorder.vercel.app/qrcode/test/";
 
-        return Array.from({ length: Math.min(index * 16 + 16, tableCount) + 1 }, () => 0).map((_, i) => (
-            <div className={styles.storeQRItem} key={"store-QR-" + i}>
-                <Image
-                    text={
-                        orderURL + STORE_MANAGER_ID.current + "/" + STORE_ID + "/" + storeType === "TableNumber"
-                            ? Number(i + 1).toString()
-                            : ""
-                    }
-                    options={{
-                        width: 100,
-                    }}
-                />
-                <p>TABLE - {i + 1}</p>
-                <p className={styles.storeQRItemText}>QR코드를 스캔하여 자리에서 메뉴를 주문하세요!</p>
-            </div>
-        ));
+        let result = [];
+        const limit = index * 16 + 16;
+        for (let i = index * 16; i < Math.min(limit, tableCount); i++) {
+            let url = "";
+            if (storeType === "TableNumber")
+                url = orderURL + STORE_MANAGER_ID.current + "/" + STORE_ID + "/" + Number(i + 1);
+            else url = orderURL + STORE_MANAGER_ID.current + "/" + STORE_ID + "/";
+
+            result.push(
+                <div className={styles.storeQRItem} key={"store-QR-" + i}>
+                    <Image
+                        text={url}
+                        options={{
+                            width: 100,
+                        }}
+                    />
+                    <p>TABLE - {i + 1}</p>
+                    <p className={styles.storeQRItemText}>QR코드를 스캔하여 자리에서 메뉴를 주문하세요!</p>
+                </div>
+            );
+        }
+        return result;
     }
 
     useEffect(() => {
