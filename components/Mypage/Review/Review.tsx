@@ -5,6 +5,7 @@ import reviews from "../../../data/reviews";
 import LoginCheck from "../../common/Login_Check";
 import Img from "../../common/Img";
 import { reviewTmp } from "../../../types/type";
+import { editReview, deleteReview, getReview } from "./ReviewFunction";
 import styles from "./Review.module.scss";
 
 export default function Review() {
@@ -26,6 +27,7 @@ export default function Review() {
             let tmp = review[index];
             tmp.reply = "";
             setReview([...review, tmp]);
+            deleteReview(storeID, index);
             alert("삭제되었습니다.");
         }
     }
@@ -49,6 +51,7 @@ export default function Review() {
         let tmp = review;
         tmp[tmpReviewIndex].reply = reply;
         setReview(tmp);
+        editReview(storeID, tmpReviewIndex, reply);
         setTmpReview(undefined);
         setReply("");
         setTmpReviewIndex(-1);
@@ -137,17 +140,16 @@ export default function Review() {
         if (storeID === -1) {
             alert("마이페이지를 통해 접근해주세요.");
             location.href = "/mypage";
-        } else setReview(reviews[storeID].review);
+        } else {
+            const apiReview = getReview(storeID);
+            setReview(Object.keys(apiReview).length ? (apiReview as Array<reviewTmp>) : reviews[storeID].review);
+        }
     }, [storeID]);
 
     useEffect(() => {
         // 답글 달기 버튼을 클릭하여 Input 창이 생길 때 모바일에서는 창이 생겼는지 모를 수 있으므로 auto scroll 처리
         document.querySelector("." + styles.reviewInput)?.scrollIntoView({ behavior: "smooth" });
     }, [tmpReview]);
-
-    useEffect(() => {
-        printReviewList();
-    }, []);
 
     return LoginCheck() ? (
         <main>
