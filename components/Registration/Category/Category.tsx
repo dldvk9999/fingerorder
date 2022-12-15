@@ -1,9 +1,11 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
-import { registrationIndex } from "../../../states";
+import { registrationIndex, editNumber } from "../../../states";
+import { createCategory, editCategory, deleteCategory, getCategory } from "./CategoryFunction";
 import styles from "./Category.module.scss";
 
 export default function Category(props: { category: Array<string> }) {
+    const [editPage, __] = useRecoilState(editNumber);
     const [_, setRegiIndex] = useRecoilState(registrationIndex);
     const [category, setCategory] = useState<Array<string>>(props.category ? props.category : []); // 매장의 메뉴 카테고리
     const [tmpCategory, setTmpCategory] = useState(""); // 입력중인 매장의 메뉴 카테고리
@@ -19,14 +21,17 @@ export default function Category(props: { category: Array<string> }) {
     }
 
     // 추가한 카테고리에서 삭제
-    function deleteCategory(index: number) {
-        if (confirm("선택하신 " + category[index] + " 카테고리를 삭제하시겠습니까?"))
+    function delCategory(index: number) {
+        if (confirm("선택하신 " + category[index] + " 카테고리를 삭제하시겠습니까?")) {
             setCategory((cate) => cate.filter((el) => el !== category[index]));
+            deleteCategory(editPage);
+        }
     }
 
     // 추가한 카테고리 수정
-    function editCategory() {
+    function changeCategory() {
         setCategory((cate) => cate.map((el, i) => (i !== isEditIndex ? el : tmpCategory)));
+        editCategory(editPage, tmpCategory);
         setTmpCategory("");
         setIsEdit(false);
     }
@@ -66,7 +71,11 @@ export default function Category(props: { category: Array<string> }) {
     function addCategory() {
         const data = tmpCategory.trim();
         const result = inputDataCheck(data);
-        !result[0] ? alert(result[1]) : setCategory([...category, data]);
+        if (!result[0]) alert(result[1]);
+        else {
+            setCategory([...category, data]);
+            createCategory(editPage, data);
+        }
         setTmpCategory("");
     }
 
@@ -93,7 +102,7 @@ export default function Category(props: { category: Array<string> }) {
                     />
                     <button
                         className={styles.categoryInputButton}
-                        onClick={() => (isEdit ? editCategory() : addCategory())}
+                        onClick={() => (isEdit ? changeCategory() : addCategory())}
                         disabled={isSubmitDisable}
                         ref={addBtn}
                     >
@@ -113,7 +122,7 @@ export default function Category(props: { category: Array<string> }) {
                                         <button onClick={() => changeEditStatus(!isEdit ? i : undefined)}>
                                             {isEdit ? "취소" : "수정"}
                                         </button>
-                                        <button onClick={() => deleteCategory(i)}>삭제</button>
+                                        <button onClick={() => delCategory(i)}>삭제</button>
                                     </div>
                                     {i !== category.length - 1 && <hr />}
                                 </div>
