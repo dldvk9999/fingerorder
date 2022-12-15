@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
+import { editNumber } from "../../../states";
 import orderlist from "../../../data/orderlist";
 import { menuOrder } from "../../../types/type";
+import { getOrderList } from "./OrderListFunction";
 import styles from "./OrderList.module.scss";
 
 // 주문 목록 출력
 export default function PrintOrderList(startDate: Date, endDate: Date) {
+    const [editPage, _] = useRecoilState(editNumber);
     const [myOrderList, setOrderList] = useState<any>([]);
     const sDate = startDate ? startDate : new Date();
     const eDate = endDate ? endDate : new Date();
@@ -19,7 +23,8 @@ export default function PrintOrderList(startDate: Date, endDate: Date) {
     }
 
     useEffect(() => {
-        setOrderList(orderlist);
+        const apiOrderList = getOrderList(editPage, sDate, eDate);
+        setOrderList(Object.keys(apiOrderList).length ? apiOrderList : orderlist);
     }, []);
 
     let result = [];
