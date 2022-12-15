@@ -9,6 +9,7 @@ export default function Category(props: { category: Array<string> }) {
     const [_, setRegiIndex] = useRecoilState(registrationIndex);
     const [category, setCategory] = useState<Array<string>>(props.category ? props.category : []); // 매장의 메뉴 카테고리
     const [tmpCategory, setTmpCategory] = useState(""); // 입력중인 매장의 메뉴 카테고리
+    const [oldCategory, setOldCategory] = useState("");
     const [isSubmitDisable, setSubmitDisable] = useState(false);
     const [isEditIndex, setIsEditIndex] = useState(-1); // 수정 중인 카테고리의 Index
     const [isEdit, setIsEdit] = useState(false); // 현재 수정 중인지
@@ -24,14 +25,14 @@ export default function Category(props: { category: Array<string> }) {
     function delCategory(index: number) {
         if (confirm("선택하신 " + category[index] + " 카테고리를 삭제하시겠습니까?")) {
             setCategory((cate) => cate.filter((el) => el !== category[index]));
-            deleteCategory(editPage);
+            deleteCategory(editPage, category[index]);
         }
     }
 
     // 추가한 카테고리 수정
     function changeCategory() {
         setCategory((cate) => cate.map((el, i) => (i !== isEditIndex ? el : tmpCategory)));
-        editCategory(editPage, tmpCategory);
+        editCategory(editPage, oldCategory, tmpCategory);
         setTmpCategory("");
         setIsEdit(false);
     }
@@ -40,6 +41,7 @@ export default function Category(props: { category: Array<string> }) {
     function changeEditStatus(index: number = -1) {
         setTmpCategory(index !== -1 ? category[index] : "");
         setIsEditIndex(index);
+        setOldCategory(category[index]);
         setIsEdit(index !== -1 ? true : false);
     }
 

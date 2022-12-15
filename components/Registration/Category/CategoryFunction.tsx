@@ -13,26 +13,29 @@ export function getCategory(id: number) {
 export function createCategory(id: number, category: string) {
     if (isAPI) {
         APIPost("/api/store/" + id + "/category", {
-            category: category
+            category: category,
         });
     }
     return true;
 }
 
 // 카테고리 수정
-export function editCategory(id: number, category: string) {
+export function editCategory(id: number, oldCategory: string, newCategory: string) {
     if (isAPI) {
         APIPut("/api/store/" + id + "/category", {
-            category: category
+            oldCategory: oldCategory,
+            newCategory: newCategory,
         });
     }
     return true;
 }
 
 // 카테고리 삭제
-export function deleteCategory(id: number) {
+export function deleteCategory(id: number, oldCategory: string) {
     if (isAPI) {
-        APIDel("/api/store/" + id + "/category", {});
+        APIDel("/api/store/" + id + "/category", {
+            oldCategory: oldCategory,
+        });
     }
     return true;
 }
