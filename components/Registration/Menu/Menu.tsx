@@ -1,17 +1,19 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
-import { registrationIndex } from "../../../states";
+import { registrationIndex, editNumber } from "../../../states";
 import store from "../../../data/store";
 import LoginCheck from "../../common/Login_Check";
 import Img from "../../common/Img";
 import { menuList, menu } from "../../../types/type";
+import { createMenu, editMenu, deleteMenu, getMenu } from "./MenuFunction";
 import styles from "./Menu.module.scss";
 
 // custom한 mock data를 사용해서 상대적으로 코드가 긴 편인데 백엔드와 연동하면 코드가 약 3~50% 정도 감소될 것 같음
 export default function Menu() {
+    const [editPage, __] = useRecoilState(editNumber);
     const [_, setRegiIndex] = useRecoilState(registrationIndex);
-    const [nowStore, setStore] = useState(store);
+    const [nowStore, setStore] = useState<any>(store);
     const [storeID, setStoreID] = useState(-1); // 매장 ID
     const [category, setCategory] = useState(""); // 매장의 카테고리
     const [itemName, setItemName] = useState(""); // 메뉴 이름
@@ -33,7 +35,7 @@ export default function Menu() {
     }
 
     // 메뉴 Edit 함수 (추가, 삭제, 품절 처리)
-    function editMenu(type: string, cate: string, index: number = 0) {
+    function changeMenu(type: string, cate: string, index: number = 0) {
         let storeInfo = nowStore[storeID - 1];
         let menu = storeInfo.menu as unknown as menu;
         let menuCategory = menu[cate] as Array<menuList>;
@@ -48,6 +50,7 @@ export default function Menu() {
                 { name: itemName, price: itemPrice, desc: itemDesc, image: imagePath, soldout: false },
             ];
 
+            createMenu(editPage, cate, itemName, itemPrice, itemDesc, itemImage);
             menuInfoLoad("", "", 0, "", "");
             setItemImage("");
             alert("메뉴 추가 완료하였습니다.");
@@ -57,6 +60,7 @@ export default function Menu() {
         else if (type === "delete") {
             if (confirm(menuCategory[index].name + " 메뉴를 삭제하시겠습니까?")) {
                 menu[cate] = menuCategory.filter((_, i) => i !== index);
+                deleteMenu(editPage, cate, index);
                 alert("메뉴를 삭제하였습니다.");
             }
         }
@@ -65,6 +69,7 @@ export default function Menu() {
         else {
             menuCategory[index].soldout = !menuCategory[index].soldout;
             menu[cate] = menuCategory;
+            editMenu(editPage, cate, index, itemName, itemPrice, itemDesc, itemImage, !menuCategory[index].soldout);
         }
         storeInfo.menu = menu as any;
         setStore([...store, storeInfo]);
@@ -95,7 +100,7 @@ export default function Menu() {
                     setDisableBtn(false);
                     menuName.current!.classList.remove(styles.menuInputRequire);
                 }, 4000);
-            } else editMenu("add", cate);
+            } else changeMenu("add", cate);
         } else alert("매장 ID와 카테고리를 먼저 선택해주세요.");
     }
 
@@ -137,10 +142,10 @@ export default function Menu() {
                             >
                                 수정
                             </button>
-                            <button className={styles.menuItemBtn} onClick={() => editMenu("delete", category, i)}>
+                            <button className={styles.menuItemBtn} onClick={() => changeMenu("delete", category, i)}>
                                 삭제
                             </button>
-                            <button className={styles.menuItemBtn} onClick={() => editMenu("soldout", category, i)}>
+                            <button className={styles.menuItemBtn} onClick={() => changeMenu("soldout", category, i)}>
                                 품절
                             </button>
                         </div>
@@ -158,7 +163,7 @@ export default function Menu() {
     function printStoreMenuList() {
         return storeID !== -1 ? (
             // storeID의 값이 default 값인 -1이 아닐 때(즉, 매장 ID가 선택되었을 때)
-            nowStore[storeID - 1].category.map((el, i) => (
+            nowStore[storeID - 1].category.map((el: any, i: number) => (
                 <div className={styles.menuItemHeader} key={"menu-list-header-" + i}>
                     {i !== 0 && <hr />}
                     <h3>{el}</h3>
@@ -208,6 +213,9 @@ export default function Menu() {
         window.onresize = () => {
             setMobile(window.innerWidth);
         };
+
+        const apiMenu = getMenu(editPage);
+        setStore(Object.keys(apiMenu).length ? apiMenu : store);
     }, []);
 
     return LoginCheck() ? (
