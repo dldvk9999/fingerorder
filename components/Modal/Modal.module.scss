@@ -73,6 +73,20 @@
     margin: 1rem;
 }
 
+.modalPassword {
+    padding: 0 2rem 2rem 2rem;
+
+    p {
+        font-weight: 700;
+    }
+    input {
+        @include area(20rem, 2rem);
+        padding: 1rem;
+        border: 1px solid $lightwhite;
+        border-radius: 1rem;
+    }
+}
+
 .modalBtn {
     @include view(flex, space-evenly);
     width: 100%;

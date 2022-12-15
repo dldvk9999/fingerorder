@@ -4,7 +4,7 @@ import { useRecoilState } from "recoil";
 import { homeIntro } from "../../states";
 import Modal from "../../components/Modal/Modal";
 import LoginCheck from "../common/Login_Check";
-import { logout } from "../Login/LoginFunction";
+import { withdrawal, logout } from "../Login/LoginFunction";
 import PrintStoreList from "./MypageStoreList";
 import styles from "./Mypage.module.scss";
 
@@ -26,8 +26,9 @@ export default function Mypage() {
     ];
 
     // 회원 탈퇴 후 로그아웃
-    function exeWithdrawal() {
+    function exeWithdrawal(pass: string) {
         setShowModal(false);
+        withdrawal(pass);
         logout();
     }
 
@@ -78,7 +79,7 @@ export default function Mypage() {
                                 isCheckbox={true}
                                 checkboxList={qList}
                                 onClose={() => setShowModal(false)}
-                                onAccept={() => exeWithdrawal()}
+                                onAccept={(pass: string) => exeWithdrawal(pass)}
                                 cancel={"취소"}
                                 accept={"탈퇴"}
                                 subChildren={"* 중복도 가능합니다"}

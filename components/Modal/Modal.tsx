@@ -5,6 +5,7 @@ import styles from "./Modal.module.scss";
 export default function Modal(props: modal) {
     const [ect, setEct] = useState("");
     const [questClick, setQuestClick] = useState(Array.from({ length: props.checkboxList.length }, () => false));
+    const [pass, setPass] = useState("");
 
     // useState Array update
     function updateQuestClick(index: number) {
@@ -33,7 +34,7 @@ export default function Modal(props: modal) {
             else {
                 alert(selected);
                 alert(props.accept + "가 완료되었습니다.");
-                props.onAccept();
+                props.onAccept(pass);
             }
         }
     };
@@ -67,6 +68,10 @@ export default function Modal(props: modal) {
                         onChange={(e) => setEct(e.target.value)}
                         disabled={!questClick[questClick.length - 1]}
                     ></textarea>
+                </div>
+                <div className={styles.modalPassword}>
+                    <p>비밀번호 확인</p>
+                    <input type="password" value={pass} onChange={(e) => setPass(e.target.value)} />
                 </div>
                 <div className={styles.modalBtn}>
                     <button onClick={handleCloseClick}>{props.cancel}</button>

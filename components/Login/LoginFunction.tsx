@@ -1,4 +1,4 @@
-import { get as APIGet, post as APIPost, put as APIPut } from "../../apis/api";
+import { get as APIGet, post as APIPost, put as APIPut, del as APIDel } from "../../apis/api";
 import { isAPI } from "../../states";
 
 const emailRegex = /[a-zA-Z.].+[@][a-zA-Z].+[.][a-zA-Z]{2,4}$/;
@@ -135,6 +135,27 @@ export function passwordReset(uuid: string, pass1: string, pass2: string) {
                 JSON.stringify({
                     uuid: uuid,
                     password: pass1,
+                })
+            );
+        }
+        return true;
+    }
+    return false;
+}
+
+// 회원 탈퇴
+export function withdrawal(pass: string) {
+    const email = localStorage["email"];
+    if (email === "" || pass === "") alert(alertText[0]);
+    else if (pass.length < 8) alert(alertText[1]);
+    else if (passRegex.exec(pass)) alert(alertText[2]);
+    else {
+        if (isAPI) {
+            APIDel(
+                "/api/users",
+                JSON.stringify({
+                    email: email,
+                    password: pass,
                 })
             );
         }
