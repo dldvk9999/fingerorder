@@ -2,27 +2,30 @@
 .footerSub {
     @include view(flex, center, flex-start);
     gap: 0.8rem;
+    transition: color 0s ease-in-out !important;
 }
 
 .footer {
     flex: 1;
     padding: 2rem 0;
-    border-top: 1px solid $lightwhite;
+    border-top: 1px solid var(--lightwhite);
     font-size: 0.8rem;
+    background-color: var(--white);
+    color: var(--black);
+    transition: background-color 0.7s ease-in-out, color 0s ease-in-out !important;
 }
 
 .footerLink {
-    transition: color 0.3s ease-in-out;
     border: 1px solid transparent;
     outline: none;
 
     &:hover {
-        color: $blue;
+        color: var(--blue);
     }
     &:focus,
     &:active {
-        color: $blue;
-        border: 1px solid $blue;
+        color: var(--blue);
+        border: 1px solid var(--blue);
         border-radius: 1rem;
     }
 }
@@ -30,6 +33,7 @@
 .footerSubMaker {
     display: flex;
     gap: 0.8rem;
+    transition: color 0s ease-in-out !important;
 }
 
 @media (max-width: 700px) {

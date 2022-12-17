@@ -28,7 +28,7 @@
 }
 
 .mypageKakaoSymbol {
-    fill: $kakaosymbol;
+    fill: var(--kakaosymbol);
     fill-opacity: 1;
     fill-rule: nonzero;
     stroke: none;
@@ -37,10 +37,10 @@
 .mypageChangePassword,
 .mypageWithdrawal,
 .mypageHomeIntro {
-    @include buttonStyle(15rem, 3rem, $blue, 1.3rem);
+    @include buttonStyle(15rem, 3rem, var(--blue), 1.3rem);
     padding: 1rem;
     font-weight: 700;
-    box-shadow: 4px 5px 10px 1px $gray;
+    box-shadow: 4px 5px 10px 1px var(--gray);
 }
 
 .mypageStoreButton {
@@ -56,13 +56,13 @@
     }
     button,
     a > button {
-        @include buttonStyle(100%, 100%, $blue, 0.9rem);
+        @include buttonStyle(100%, 100%, var(--blue), 0.9rem);
         padding: 0.5rem 1rem;
         border-radius: 0;
     }
     &:last-child > a {
         button {
-            @include buttonStyle(100%, 100%, $blue, 0.9rem);
+            @include buttonStyle(100%, 100%, var(--blue), 0.9rem);
             border-radius: 0;
         }
     }
@@ -79,11 +79,11 @@
 
 .mypageStoreButtonDown > a {
     > button {
-        color: $blue !important;
-        background-color: $white !important;
+        color: var(--blue) !important;
+        background-color: var(--white) !important;
         &:hover {
-            color: $white !important;
-            background-color: $blue !important;
+            color: var(--white) !important;
+            background-color: var(--blue) !important;
         }
     }
     &:first-child > button {
@@ -95,18 +95,18 @@
 }
 
 .mypageHomeIntro {
-    background-color: $white;
-    color: $blue;
+    background-color: var(--white);
+    color: var(--blue);
 }
 
 .mypageHomeIntroActive {
-    background-color: $blue;
-    color: $white;
+    background-color: var(--blue);
+    color: var(--white);
 }
 
 .mypageStoreButton > button,
 .mypageWithdrawal {
-    @include border_backcolor($red);
+    @include border_backcolor(var(--red));
 }
 
 .mypageStoreList {
@@ -115,8 +115,8 @@
     min-width: 16rem;
     padding: 1rem 1rem 3rem 1rem;
     flex-direction: column;
-    background-color: $lightgray;
-    box-shadow: 10px 10px 24px -10px $gray;
+    background-color: var(--lightgray);
+    box-shadow: 10px 10px 24px -10px var(--gray);
 
     h2 {
         font-size: 1.5rem;
@@ -132,7 +132,7 @@
     overflow-y: scroll;
 
     * {
-        background-color: $white;
+        background-color: var(--white);
         border-radius: 1rem;
     }
     div {
@@ -148,7 +148,7 @@
 .mypageStoreDate {
     font-size: 1rem;
     margin-left: 1rem;
-    color: $gray;
+    color: var(--gray);
 }
 
 .mypageStoreBody {

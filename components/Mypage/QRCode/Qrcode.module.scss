@@ -6,7 +6,7 @@
     padding-top: 4.4rem;
 
     button {
-        @include buttonStyle(13rem, fit-content, $blue, 1.5rem);
+        @include buttonStyle(13rem, fit-content, var(--blue), 1.5rem);
         padding: 0.5rem 1rem;
         margin: 2rem 0 3rem;
     }
@@ -16,7 +16,7 @@
     @include view(flex, normal, center);
     width: 10rem;
     flex-direction: column;
-    border: 1px solid $lightwhite;
+    border: 1px solid var(--lightwhite);
     border-radius: 1rem;
     padding: 1rem;
     text-align: center;

@@ -4,7 +4,8 @@
     padding: 7rem 5rem;
 
     div {
-        @include view(flex, space-between);
+        display: flex;
+        justify-content: space-between;
         h1 {
             @include view(flex, normal, center);
             gap: 1rem;
@@ -15,15 +16,15 @@
 }
 
 .order > div > h1 > button {
-    @include buttonStyle(fit-content, 2rem, $blue, 0.8rem);
-    color: $blue;
-    background-color: $white;
+    @include buttonStyle(fit-content, 2rem, var(--blue), 0.8rem);
+    color: var(--blue);
+    background-color: var(--white);
     padding: 0.5rem 1rem;
 }
 
 .orderSoundActive {
-    background-color: $blue !important;
-    color: $white !important;
+    background-color: var(--blue) !important;
+    color: var(--white) !important;
 }
 
 .orderSubText {
@@ -43,9 +44,9 @@
     display: flex;
     flex-direction: column;
     padding: 1rem;
-    border: 1px solid $lightwhite;
+    border: 1px solid var(--lightwhite);
     border-radius: 1rem;
-    box-shadow: 10px 10px 15px -15px $gray;
+    box-shadow: 10px 10px 15px -15px var(--gray);
 
     h2 {
         margin: 0.3rem 0;
@@ -85,10 +86,10 @@
 
 .orderCardClose {
     @include view(flex, center);
-    @include border_backcolor($blue);
+    @include border_backcolor(var(--blue));
     border-radius: 1rem;
     padding: 0.5rem 1rem;
-    color: $white;
+    color: var(--white);
     font-size: 1rem;
 }
 
@@ -102,12 +103,12 @@
 }
 
 .orderCardLabel {
-    @include buttonStyle(2rem, 1.5rem, $red);
+    @include buttonStyle(2rem, 1.5rem, var(--red));
     cursor: pointer;
 }
 
 .orderCardLabelActive {
-    @include border_backcolor($blue);
+    @include border_backcolor(var(--blue));
 }
 
 @media (max-width: 400px) {

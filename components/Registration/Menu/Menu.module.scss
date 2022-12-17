@@ -28,7 +28,7 @@
 .menuInputLabel {
     @include area(150px, 150px);
     border-radius: 50%;
-    background-color: $lightgray;
+    background-color: var(--lightgray);
     cursor: pointer;
 }
 
@@ -76,7 +76,7 @@
 
 .menuInput {
     @include area(20rem, 3.5rem);
-    border: 1px solid $lightwhite;
+    border: 1px solid var(--lightwhite);
     border-radius: 1rem;
     padding: 0.5rem;
 
@@ -92,7 +92,7 @@
 }
 
 .menuAddBtn {
-    @include buttonStyle(13rem, fit-content, $blue, 1.5rem);
+    @include buttonStyle(13rem, fit-content, var(--blue), 1.5rem);
     padding: 0.5rem 1rem;
     margin: 2rem 0 2rem;
 }
@@ -103,12 +103,12 @@
 }
 
 .menuReset {
-    @include buttonStyle(3rem, 3rem, $lightwhite);
+    @include buttonStyle(3rem, 3rem, var(--lightwhite));
     padding: 0.5rem 0.5rem;
 
     &:hover {
-        @include border_backcolor($red);
-        fill: $white;
+        @include border_backcolor(var(--red));
+        fill: var(--white);
     }
 }
 
@@ -127,15 +127,15 @@
     min-width: 260px;
     padding: 2rem 1rem 2rem 1rem;
     flex-direction: column;
-    background-color: $lightgray;
-    box-shadow: 10px 10px 24px -10px $gray;
+    background-color: var(--lightgray);
+    box-shadow: 10px 10px 24px -10px var(--gray);
 }
 
 .menuItemCategory > div {
     @include view(flex, normal, center);
     flex-direction: column;
     padding: 1rem;
-    border: 1px solid $gray;
+    border: 1px solid var(--gray);
     border-radius: 1rem;
     overflow-y: scroll;
     max-height: 75vh;
@@ -153,7 +153,7 @@
     background-color: transparent;
     text-align: center;
     border: none;
-    border-bottom: 1px solid $black;
+    border-bottom: 1px solid var(--black);
 
     &:focus,
     &:active {
@@ -181,11 +181,11 @@
     @include area(6rem, 2rem);
     padding: 0.3rem 0.5rem;
     border-radius: 1rem;
-    color: $white;
+    color: var(--white);
     font-size: 0.7rem;
 }
 
-@each $index, $color in (1: $blue, 2: $red, 3: $darkslategray) {
+@each $index, $color in (1: var(--blue), 2: var(--red), 3: var(--darkslategray)) {
     .menuItemBtn:nth-child(#{$index}) {
         @include border_backcolor(#{$color});
     }
@@ -231,10 +231,10 @@
 }
 
 .menuItemSoldout {
-    @include border_backcolor($darkslategray);
+    @include border_backcolor(var(--darkslategray));
     font-size: 0.7rem;
     border-radius: 1rem;
-    color: $white;
+    color: var(--white);
     padding: 0.1rem 0.5rem;
 }
 
@@ -263,6 +263,7 @@
 }
 
 .menuInputSelect {
+    color: var(--black);
     appearance: none;
     cursor: pointer;
 }

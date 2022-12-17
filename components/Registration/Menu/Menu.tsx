@@ -11,7 +11,7 @@ import styles from "./Menu.module.scss";
 
 // custom한 mock data를 사용해서 상대적으로 코드가 긴 편인데 백엔드와 연동하면 코드가 약 3~50% 정도 감소될 것 같음
 export default function Menu() {
-    const [editPage, __] = useRecoilState(editNumber);
+    const [editPage] = useRecoilState(editNumber);
     const [_, setRegiIndex] = useRecoilState(registrationIndex);
     const [nowStore, setStore] = useState<any>(store);
     const [storeID, setStoreID] = useState(-1); // 매장 ID
@@ -126,7 +126,7 @@ export default function Menu() {
                                 {cate.price.toLocaleString()}원
                                 <div className={styles.menuItemRate}>
                                     {Img(
-                                        "rating",
+                                        "sample_menu/rating",
                                         isMobile < 600 ? 15 : 75,
                                         15,
                                         `${styles.menuItemRateImage} ${ratingStyle(cate.rate)}`

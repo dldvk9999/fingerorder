@@ -4,7 +4,12 @@
     min-width: 260px;
     flex-direction: column;
     padding: 1.5rem;
+    z-index: 1;
+    position: relative;
 
+    * {
+        color: var(--black);
+    }
     h1 {
         font-size: 3rem;
     }
@@ -17,11 +22,10 @@
     @include area(100vw, 100vh);
     position: absolute;
     top: 0;
-    z-index: -1;
 }
 
 .regiokMypage {
-    @include buttonStyle(13rem, fit-content, $blue);
+    @include buttonStyle(13rem, fit-content, var(--blue));
     padding: 0.5rem 1rem;
     margin: 1rem;
 }

@@ -1,15 +1,17 @@
 import { useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
-import { editNumber } from "../../../states";
+import { editNumber, isDarkmode } from "../../../states";
 import reviews from "../../../data/reviews";
 import LoginCheck from "../../common/Login_Check";
 import Img from "../../common/Img";
+import InvertImage from "../../common/Invert_Img";
 import { reviewTmp } from "../../../types/type";
 import { editReview, deleteReview, getReview } from "./ReviewFunction";
 import styles from "./Review.module.scss";
 
 export default function Review() {
     const [storeID, _] = useRecoilState(editNumber);
+    const [darkmode, setDarkmode] = useRecoilState<boolean>(isDarkmode);
     const [review, setReview] = useState<Array<reviewTmp>>([]);
     const [tmpReview, setTmpReview] = useState<reviewTmp>();
     const [tmpReviewIndex, setTmpReviewIndex] = useState(-1);
@@ -55,6 +57,7 @@ export default function Review() {
         setTmpReview(undefined);
         setReply("");
         setTmpReviewIndex(-1);
+        setTimeout(() => InvertImage(darkmode), 300);
     }
 
     // Review의 Item 요소들은 재활용가능한 코드로 구현

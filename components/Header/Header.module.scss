@@ -20,6 +20,7 @@
     border-radius: 10px;
     padding: 0.7rem 1rem;
     transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+    color: var(--black);
 }
 
 .headerLogo:hover,
@@ -30,10 +31,50 @@
 .headerLeft > a:active,
 .headerItems > a:hover,
 .headerItems > a:focus,
-.headerItems > a:active {
-    color: $blue;
-    border-color: $blue;
+.headerItems > a:active,
+.headerDarkmode:hover,
+.headerDarkmode:focus,
+.headerDarkmode:active {
+    color: var(--blue);
+    border-color: var(--blue);
     outline: none;
+}
+
+.headerDarkmode {
+    @include view(flex, center, center);
+
+    & > svg {
+        position: absolute;
+        transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out, color 0.3s ease-in-out,
+            border-color 0.3s ease-in-out;
+        padding: 0.5rem;
+        fill: var(--black);
+        &:first-child {
+            @include buttonStyle(2.5rem, 2.5rem, transparent);
+        }
+        &:last-child {
+            @include buttonStyle(3rem, 3rem, transparent);
+        }
+    }
+}
+
+.headerDarkmodeSunActive {
+    opacity: 1;
+    transform: rotate(0deg);
+}
+.headerDarkmodeSunInactive {
+    opacity: 0;
+    transform: rotate(45deg);
+    z-index: -1;
+}
+.headerDarkmodeMoonActive {
+    opacity: 1;
+    transform: rotate(0deg);
+}
+.headerDarkmodeMoonInactive {
+    opacity: 0;
+    transform: rotate(-45deg);
+    z-index: -1;
 }
 
 .headerLogoText {
@@ -44,7 +85,8 @@
 }
 
 .headerMobileMenu {
-    display: flex;
+    @include view(flex, center, center);
+    gap: 1rem;
 }
 
 .headerNavClose,

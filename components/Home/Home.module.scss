@@ -3,4 +3,7 @@
     section {
         min-width: 10rem;
     }
+    & * {
+        color: var(--black);
+    }
 }

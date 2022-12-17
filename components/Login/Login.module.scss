@@ -1,5 +1,6 @@
 .login {
     padding: 10rem;
+    height: calc(90vh - $headerHeight);
 }
 
 .login,
@@ -10,7 +11,7 @@
 
     input {
         @include area(20rem, 3rem);
-        border: 1px solid $lightwhite;
+        border: 1px solid var(--lightwhite);
         border-radius: 10px;
         padding: 0.5rem;
 
@@ -19,13 +20,13 @@
             outline: none;
         }
         &:invalid {
-            border-color: $red;
+            border-color: var(--red);
         }
     }
 
     button,
     a > button {
-        @include buttonStyle(15rem, 3rem, $blue);
+        @include buttonStyle(15rem, 3rem, var(--blue));
     }
 }
 

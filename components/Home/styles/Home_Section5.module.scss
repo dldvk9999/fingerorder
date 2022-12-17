@@ -15,9 +15,9 @@
     gap: 5rem;
     align-items: center;
     padding: 3rem;
-    border: 1px solid $lightwhite;
+    border: 1px solid var(--lightwhite);
     border-radius: 1rem;
-    box-shadow: 15px 13px 22px -7px $gray;
+    box-shadow: 15px 13px 22px -7px var(--gray);
 }
 
 .homeStrongthSub {
@@ -31,10 +31,10 @@
     }
     li {
         list-style: none;
-        border: 1px solid $lightwhite;
+        border: 1px solid var(--lightwhite);
         border-radius: 1rem;
         padding: 1rem;
-        box-shadow: 11px 10px 23px -14px $gray;
+        box-shadow: 11px 10px 23px -14px var(--gray);
     }
 }
 

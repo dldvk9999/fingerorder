@@ -1,5 +1,5 @@
 .error {
     @include view(flex, center, center);
-    @include area(100vw, calc(100vh - $headerHeight));
+    @include area(100vw, calc(100vh - var(--headerHeight)));
     flex-direction: column;
 }

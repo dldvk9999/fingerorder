@@ -1,5 +1,4 @@
 import Img from "../common/Img";
-import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { LoginDefault, LoginKakao, autoLogin, login } from "./LoginFunction";
@@ -40,14 +39,7 @@ export default function Login() {
                         required={loginTry}
                     />
                     <button onClick={LoginKakao} type="submit">
-                        <Image
-                            src={"/kakao_login.webp"}
-                            alt={"kakao_login"}
-                            width={240}
-                            height={50}
-                            className={styles.loginForKakao}
-                            priority
-                        />
+                        {Img("sample_menu/kakao_login", 240, 50, styles.loginForKakao)}
                     </button>
                     <button onClick={LoginDefault} type="submit">
                         로그인

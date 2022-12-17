@@ -1,16 +1,39 @@
-$red: #ff314b;
-$blue: #0070f3;
-$lightgray: #e0e0e0;
-$kakaosymbol: #3c1e1e;
-$lightwhite: #eaeaea;
-$darkwhite: #f9f9f9;
-$disable: #bbbbbb;
-$tableheader: #ccd1ff;
-$reviewinput: #888;
-$gray: gray;
-$white: white;
-$half-transparent: #00000050;
-$black: black;
-$darkslategray: darkslategray;
-
 $headerHeight: 4.4rem;
+
+body.light {
+    --red: #ff314b;
+    --blue: #0070f3;
+    --lightgray: #e0e0e0;
+    --kakaosymbol: #3c1e1e;
+    --lightwhite: #eaeaea;
+    --darkwhite: #f9f9f9;
+    --disable: #bbbbbb;
+    --tableheader: #ccd1ff;
+    --reviewinput: #888;
+    --gray: gray;
+    --white: white;
+    --half-transparent: #00000050;
+    --black: black;
+    --darkslategray: darkslategray;
+    --background-item: #f9f9f9;
+    --main-background-color: transparent;
+}
+
+body.dark {
+    --red: #ff314b;
+    --blue: #0070f3;
+    --lightgray: #202020;
+    --kakaosymbol: #3c1e1e;
+    --lightwhite: #2a2a2a;
+    --darkwhite: #f9f9f9;
+    --disable: #555555;
+    --tableheader: #33357a;
+    --reviewinput: #888;
+    --gray: gray;
+    --white: black;
+    --half-transparent: #00000050;
+    --black: white;
+    --darkslategray: darkslategray;
+    --background-item: #555555;
+    --main-background-color: black;
+}

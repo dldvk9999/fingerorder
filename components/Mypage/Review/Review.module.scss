@@ -34,9 +34,9 @@
     flex-direction: column;
     max-height: 40rem;
     overflow-y: scroll;
-    background-color: $lightwhite;
+    background-color: var(--lightwhite);
     padding: 2rem;
-    box-shadow: 15px 15px 15px -15px $gray;
+    box-shadow: 15px 15px 15px -15px var(--gray);
 }
 
 .reviewListUserInfo {
@@ -63,7 +63,7 @@
 }
 
 .reviewListReplyBtn {
-    @include buttonStyle(20rem, fit-content, $blue);
+    @include buttonStyle(20rem, fit-content, var(--blue));
     padding: 0.5rem 1rem;
     margin: auto;
 }
@@ -78,7 +78,7 @@
 
 .reviewInputArea {
     @include area(100%, 10rem);
-    border: 2px solid $reviewinput;
+    border: 2px solid var(--reviewinput);
     border-radius: 1rem 1rem 0 0;
     padding: 1rem;
     resize: none;
@@ -86,12 +86,12 @@
     &:focus,
     &:active {
         outline: none;
-        border: 2px solid $blue;
+        border: 2px solid var(--blue);
     }
 }
 
 .reviewInputAreaSubmit {
-    @include buttonStyle(100%, 3rem, $blue);
+    @include buttonStyle(100%, 3rem, var(--blue));
     border-radius: 0 0 1rem 1rem;
 }
 

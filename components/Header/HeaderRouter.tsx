@@ -53,7 +53,7 @@ export function routerListLogin(nav: any, printWhere: string) {
             {i === routerLogin.length - 1 && printWhere !== "nav" ? (
                 Img("profile", 40, 40, styles.headerProfile)
             ) : (
-                <div>{el[1]}</div>
+                <>{el[1]}</>
             )}
         </Link>
     ));

@@ -37,13 +37,13 @@
 .homeIntroP {
     transform: translateY(10%);
     span {
-        color: $red;
+        color: var(--red);
     }
 }
 .homeIntroH1 {
     transform: translateY(-10%);
     span {
-        color: $blue;
+        color: var(--blue);
     }
 }
 

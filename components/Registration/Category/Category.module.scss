@@ -19,7 +19,7 @@
 }
 
 .categoryInputButton {
-    @include border_backcolor($lightwhite);
+    @include border_backcolor(var(--lightwhite));
     width: 4rem;
     position: absolute;
     padding: 0.3rem;
@@ -32,7 +32,7 @@
 
 .categoryInput {
     @include area(40rem, 3.5rem);
-    border: 1px solid $lightwhite;
+    border: 1px solid var(--lightwhite);
     border-radius: 1rem;
     padding: 0.5rem;
 
@@ -56,14 +56,14 @@
     width: 50vw;
     min-width: 260px;
     padding: 2rem;
-    background-color: $lightgray;
-    box-shadow: 10px 10px 24px -10px $gray;
+    background-color: var(--lightgray);
+    box-shadow: 10px 10px 24px -10px var(--gray);
     margin-top: 2rem;
     text-align: center;
 }
 
 .categoryMenuListInnerBox {
-    border: 1px solid $black;
+    border: 1px solid var(--black);
     border-radius: 1rem;
     display: flex;
     flex-direction: column;
@@ -78,7 +78,7 @@
         gap: 1rem;
 
         button {
-            @include buttonStyle(5rem, 2rem, $red);
+            @include buttonStyle(5rem, 2rem, var(--red));
             margin-bottom: 1rem;
             font-weight: 700;
         }
@@ -91,7 +91,7 @@
 }
 
 .storeButton {
-    @include buttonStyle(13rem, 3rem, $blue);
+    @include buttonStyle(13rem, 3rem, var(--blue));
     padding: 0.5rem 1rem;
     margin: 2rem 0 3rem;
 }

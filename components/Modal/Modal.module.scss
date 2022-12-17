@@ -2,7 +2,7 @@
     @include view(flex, center, center);
     @include area(100vw, 100vh);
     z-index: 1000;
-    background-color: $half-transparent;
+    background-color: var(--half-transparent);
     position: fixed;
     left: 0;
     top: 0;
@@ -16,13 +16,13 @@
     position: fixed;
     flex-direction: column;
     border-radius: 1rem;
-    background-color: $white;
+    background-color: var(--white);
 
     h1 {
         width: 100%;
         padding: 2rem;
         margin: 0;
-        background-color: $lightgray;
+        background-color: var(--lightgray);
         border-radius: 1rem 1rem 0 0;
     }
 }
@@ -62,7 +62,7 @@
     @include view(flex, center, center);
     @include area(1rem, 1rem);
     margin: 0 1rem;
-    border: 1px solid $gray;
+    border: 1px solid var(--gray);
     border-radius: 50%;
 }
 
@@ -82,7 +82,7 @@
     input {
         @include area(20rem, 2rem);
         padding: 1rem;
-        border: 1px solid $lightwhite;
+        border: 1px solid var(--lightwhite);
         border-radius: 1rem;
     }
 }
@@ -95,15 +95,15 @@
         @include view(flex, center);
         width: 15rem;
         border-radius: 1rem;
-        color: $white;
+        color: var(--white);
         padding: 0.5rem 1rem;
         font-size: 1.2rem;
     }
     button:nth-child(1) {
-        @include border_backcolor($blue);
+        @include border_backcolor(var(--blue));
     }
     button:nth-child(2) {
-        @include border_backcolor($red);
+        @include border_backcolor(var(--red));
     }
 }
 

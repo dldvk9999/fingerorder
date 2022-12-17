@@ -4,6 +4,11 @@ import { v1 } from "uuid";
 // Backend API 통신 할지 (백엔드 서버 안정화되면 연동 예정)
 export const isAPI = false;
 
+export const isDarkmode = atom({
+    key: "isDarkmode-" + v1(),
+    default: false,
+});
+
 // 매장 수정 시 선택한 매장의 ID
 export const editNumber = atom({
     key: "editNumber-" + v1(),
