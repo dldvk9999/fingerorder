@@ -22,16 +22,16 @@ export function closeNav(nav: any) {
     nav.current!.classList.remove("active");
 }
 
-// router click event
-function routerClickEvent(nav: any, printWhere: string) {
-    const [_, setEditPage] = useRecoilState(editNumber);
-
-    if (printWhere === "nav") closeNav(nav);
-    setEditPage(-1);
-}
-
 // router 가능한 주소 목록 (재사용 가능 함수)
 export function routerList(nav: any, printWhere: string) {
+    const [_, setEditPage] = useRecoilState(editNumber);
+
+    // router click event
+    function routerClickEvent(nav: any, printWhere: string) {
+        if (printWhere === "nav") closeNav(nav);
+        setEditPage(-1);
+    }
+
     return router.map((el, i) => (
         <Link href={"/" + el[0]} onClick={() => routerClickEvent(nav, printWhere)} key={"header-router-" + i}>
             {el[1]}
