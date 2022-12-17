@@ -5,7 +5,7 @@
 .homeWhiteboxBackground {
     width: 100vw;
     background-color: $darkwhite;
-    box-shadow: 0px 0px 30px -15px grey;
+    box-shadow: 0px 0px 30px -15px $gray;
 }
 
 .homeWhiteboxItems {
@@ -17,15 +17,15 @@
 .homeWhiteboxLeft {
     @include view(flex, space-evenly, center);
     @include area(60%, 17rem);
-    @include border_backcolor($lightwhite, white);
+    @include border_backcolor($lightwhite, $white);
     border-radius: 0 10rem 10rem 0;
-    box-shadow: 10px 10px 30px -15px gray;
+    box-shadow: 10px 10px 30px -15px $gray;
 }
 
 .homeWhiteboxRight {
     @include view(flex, center);
     width: 40%;
-    color: #bbbbbb;
+    color: $disable;
 }
 
 .homeWhiteboxItem {

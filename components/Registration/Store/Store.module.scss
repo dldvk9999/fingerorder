@@ -81,7 +81,7 @@
 .storeTypeActive,
 .storeType > button:hover {
     @include border_backcolor($blue);
-    color: white;
+    color: $white;
 }
 
 .storeButton {

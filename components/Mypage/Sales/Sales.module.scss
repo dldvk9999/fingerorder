@@ -59,8 +59,8 @@
     }
     thead > tr > th {
         background-color: $tableheader;
-        border-top: 4px double black;
-        border-bottom: 4px double black;
+        border-top: 4px double $black;
+        border-bottom: 4px double $black;
         text-align: center;
         margin: 0;
         font-size: 1.3rem;
@@ -71,8 +71,8 @@
 }
 
 .salesTableTotal > td {
-    border-top: 2px solid black;
-    border-bottom: 2px solid black;
+    border-top: 2px solid $black;
+    border-bottom: 2px solid $black;
     font-size: 1.1rem;
     text-align: center;
 }

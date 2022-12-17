@@ -108,7 +108,7 @@
 
     &:hover {
         @include border_backcolor($red);
-        fill: white;
+        fill: $white;
     }
 }
 
@@ -128,14 +128,14 @@
     padding: 2rem 1rem 2rem 1rem;
     flex-direction: column;
     background-color: $lightgray;
-    box-shadow: 10px 10px 24px -10px grey;
+    box-shadow: 10px 10px 24px -10px $gray;
 }
 
 .menuItemCategory > div {
     @include view(flex, normal, center);
     flex-direction: column;
     padding: 1rem;
-    border: 1px solid gray;
+    border: 1px solid $gray;
     border-radius: 1rem;
     overflow-y: scroll;
     max-height: 75vh;
@@ -153,7 +153,7 @@
     background-color: transparent;
     text-align: center;
     border: none;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid $black;
 
     &:focus,
     &:active {
@@ -181,11 +181,11 @@
     @include area(6rem, 2rem);
     padding: 0.3rem 0.5rem;
     border-radius: 1rem;
-    color: white;
+    color: $white;
     font-size: 0.7rem;
 }
 
-@each $index, $color in (1: $blue, 2: $red, 3: darkslategrey) {
+@each $index, $color in (1: $blue, 2: $red, 3: $darkslategray) {
     .menuItemBtn:nth-child(#{$index}) {
         @include border_backcolor(#{$color});
     }
@@ -231,10 +231,10 @@
 }
 
 .menuItemSoldout {
-    @include border_backcolor(darkslategrey);
+    @include border_backcolor($darkslategray);
     font-size: 0.7rem;
     border-radius: 1rem;
-    color: white;
+    color: $white;
     padding: 0.1rem 0.5rem;
 }
 

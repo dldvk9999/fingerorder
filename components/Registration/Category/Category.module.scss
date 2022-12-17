@@ -57,13 +57,13 @@
     min-width: 260px;
     padding: 2rem;
     background-color: $lightgray;
-    box-shadow: 10px 10px 24px -10px grey;
+    box-shadow: 10px 10px 24px -10px $gray;
     margin-top: 2rem;
     text-align: center;
 }
 
 .categoryMenuListInnerBox {
-    border: 1px solid black;
+    border: 1px solid $black;
     border-radius: 1rem;
     display: flex;
     flex-direction: column;
