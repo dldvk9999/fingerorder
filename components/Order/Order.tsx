@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { soundPlay } from "../../states";
@@ -124,14 +123,6 @@ export default function Order() {
                         TestOrder
                     </button>
                 </h1>
-                <div>
-                    <Link href={"/order/orderlist"}>
-                        <button>주문내역 조회</button>
-                    </Link>
-                    <Link href={"/order/sales"}>
-                        <button>매출내역 조회</button>
-                    </Link>
-                </div>
             </div>
             <p className={styles.orderSubText}>* 상태를 클릭하여 준비 완료 표시로 변경할 수 있습니다.</p>
             <section className={styles.orderSection}>{result}</section>
