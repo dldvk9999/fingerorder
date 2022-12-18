@@ -23,7 +23,7 @@ export function closeNav(nav: any) {
 }
 
 // router 가능한 주소 목록 (재사용 가능 함수)
-export function routerList(nav: any, printWhere: string) {
+export function RouterList(nav: any, printWhere: string) {
     const [_, setEditPage] = useRecoilState(editNumber);
 
     // router click event
@@ -40,7 +40,7 @@ export function routerList(nav: any, printWhere: string) {
 }
 
 // 로그인 후 접근 가능한 주소 목록 (재사용 가능 함수)
-export function routerListLogin(nav: any, printWhere: string, darkmode: boolean) {
+export function RouterListLogin(nav: any, printWhere: string, darkmode: boolean) {
     return routerLogin.map((el, i) => (
         <Link
             href={"/" + el[0]}

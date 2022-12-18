@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { openNav, closeNav, routerList, routerListLogin } from "./HeaderRouter";
+import { openNav, closeNav, RouterList, RouterListLogin } from "./HeaderRouter";
 import { useRecoilState } from "recoil";
 import { isDarkmode } from "../../states";
 import Img from "../common/Img";
@@ -87,14 +87,14 @@ export default function Header() {
                         </div>
                     </div>
                 </Link>
-                {!isMobile && <div className={styles.headerItems}>{routerList(nav, "header")}</div>}
+                {!isMobile && <div className={styles.headerItems}>{RouterList(nav, "header")}</div>}
             </div>
 
             {!isMobile ? (
                 <div className={`${styles.headerRight} ${styles.headerItems}`}>
                     {printDarkmode()}
                     {isLogin ? (
-                        routerListLogin(nav, "header", darkmode)
+                        RouterListLogin(nav, "header", darkmode)
                     ) : (
                         <Link href={"/login"}>
                             <div>로그인</div>
@@ -122,10 +122,10 @@ export default function Header() {
                         </div>
                         <div className={styles.headerNavList}>
                             <div>
-                                {routerList(nav, "nav")}
+                                {RouterList(nav, "nav")}
                                 <hr />
                                 {isLogin ? (
-                                    routerListLogin(nav, "nav", darkmode)
+                                    RouterListLogin(nav, "nav", darkmode)
                                 ) : (
                                     <Link href={"/login"} onClick={() => closeNav(nav)}>
                                         로그인
