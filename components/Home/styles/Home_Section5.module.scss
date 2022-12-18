@@ -20,6 +20,10 @@
     box-shadow: 15px 13px 22px -7px var(--gray);
 }
 
+.homeStrongthInvert {
+    filter: invert(1);
+}
+
 .homeStrongthSub {
     flex-direction: column;
 

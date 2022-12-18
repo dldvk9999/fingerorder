@@ -1,10 +1,13 @@
 import Img from "../common/Img";
 import Link from "next/link";
 import { useState } from "react";
+import { useRecoilState } from "recoil";
+import { isDarkmode } from "../../states";
 import { LoginDefault, LoginKakao, autoLogin, login } from "./LoginFunction";
 import styles from "./Login.module.scss";
 
 export default function Login() {
+    const [darkmode] = useRecoilState<boolean>(isDarkmode);
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
     const [loginTry, setLoginTry] = useState(false);
@@ -12,7 +15,7 @@ export default function Login() {
     return (
         <main>
             <section className={styles.login}>
-                {Img("fingerorder", 150, 150)}
+                {Img("fingerorder", 150, 150, `${darkmode ? styles.loginInvert : ""}`)}
                 <form
                     className={styles.loginForm}
                     onSubmit={(e) => {

@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import Router from "next/router";
 import { useRecoilState } from "recoil";
-import { homeIntro } from "../../states";
+import { homeIntro, isDarkmode } from "../../states";
 import Img from "../common/Img";
 import styles from "./styles/Home_Section1.module.scss";
 
 export default function Home_Section1() {
-    const [isHomeIntro, _] = useRecoilState(homeIntro);
+    const [darkmode] = useRecoilState<boolean>(isDarkmode);
+    const [isHomeIntro] = useRecoilState(homeIntro);
     const [showIntro, setShowIntro] = useState([false, false, false]);
     const homeInto = useRef<HTMLElement>(null);
 
@@ -55,7 +56,14 @@ export default function Home_Section1() {
 
     return (
         <section className={styles.homeInto} ref={homeInto}>
-            {Img("fingerorder", 200, 200, `${styles.homeIntroImage} ${showIntro[0] && styles.homeShow1}`)}
+            {Img(
+                "fingerorder",
+                200,
+                200,
+                `${styles.homeIntroImage} ${showIntro[0] && styles.homeShow1} ${
+                    darkmode ? styles.homeIntroImageInvert : ""
+                }`
+            )}
             <div className={styles.homeIntroSub}>
                 <p className={`${styles.homeIntroP} ${showIntro[1] && styles.homeShow2}`}>
                     더 <span>빠르게!</span> 더 <span>간편하게!</span>

@@ -1,12 +1,21 @@
+import { useRecoilState } from "recoil";
+import { isDarkmode } from "../../states";
 import Img from "../common/Img";
 import styles from "./styles/Home_Section5.module.scss";
 
 export default function Home_Section5() {
+    const [darkmode] = useRecoilState<boolean>(isDarkmode);
+
     return (
         <section className={styles.homeStrongth}>
             <div className={styles.homeStrongthCard}>
                 <div className={styles.homeStrongthSub}>
-                    {Img("fingerorder", 200, 200, styles.homeStrongthLogo)}
+                    {Img(
+                        "fingerorder",
+                        200,
+                        200,
+                        `${styles.homeStrongthLogo} ${darkmode ? styles.homeStrongthInvert : ""}`
+                    )}
                     <h2>핑거오더의 장점</h2>
                 </div>
                 <ul className={styles.homeStrongthSub}>

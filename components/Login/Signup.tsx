@@ -1,10 +1,13 @@
 import Link from "next/link";
 import { useState } from "react";
+import { useRecoilState } from "recoil";
+import { isDarkmode } from "../../states";
 import { signup } from "./LoginFunction";
 import Img from "../common/Img";
 import styles from "./Login.module.scss";
 
 export default function Signup() {
+    const [darkmode] = useRecoilState<boolean>(isDarkmode);
     const [email, setEmail] = useState("");
     const [pass1, setPass1] = useState("");
     const [pass2, setPass2] = useState("");
@@ -14,7 +17,7 @@ export default function Signup() {
     return (
         <main>
             <section className={styles.login}>
-                {Img("fingerorder", 150, 150)}
+                {Img("fingerorder", 150, 150, `${darkmode ? styles.loginInvert : ""}`)}
                 {!signupOK ? (
                     <div className={styles.loginForm}>
                         <input

@@ -98,6 +98,10 @@ pre {
         Helvetica Neue, sans-serif;
 }
 
+input {
+    transition: color 0.7s ease-in-out, background-color 0.7s ease-in-out, border-color 0.7s ease-in-out;
+}
+
 h1,
 h2,
 h3,
@@ -108,6 +112,14 @@ option,
 button,
 textarea {
     color: var(--black);
+}
+
+.react-datepicker__month,
+.react-datepicker__month-container,
+.react-datepicker__time-list,
+.react-datepicker__month-text {
+    color: black;
+    background-color: white;
 }
 
 select,

@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { emailSend } from "./LoginFunction";
 import Img from "../common/Img";
+import { useRecoilState } from "recoil";
+import { isDarkmode } from "../../states";
 import styles from "./Login.module.scss";
 
 export default function FindPassword() {
+    const [darkmode] = useRecoilState<boolean>(isDarkmode);
     const [email, setEmail] = useState("");
     const [isSend, setSend] = useState(false);
     const [sendTry, setSendTry] = useState(false);
@@ -11,7 +14,7 @@ export default function FindPassword() {
     return (
         <main>
             <section className={styles.login}>
-                {Img("fingerorder", 150, 150)}
+                {Img("fingerorder", 150, 150, `${darkmode ? styles.loginInvert : ""}`)}
                 <div className={styles.loginForm}>
                     {!isSend ? (
                         <>

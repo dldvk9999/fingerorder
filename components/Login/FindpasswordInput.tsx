@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { useRecoilState } from "recoil";
+import { isDarkmode } from "../../states";
 import { passwordReset } from "./LoginFunction";
 import Img from "../common/Img";
 import styles from "./Login.module.scss";
@@ -7,6 +9,7 @@ import styles from "./Login.module.scss";
 export default function FindPassword() {
     const router = useRouter();
     const { params } = router.query;
+    const [darkmode] = useRecoilState<boolean>(isDarkmode);
     const [uuid, setUuid] = useState("");
     const [pass1, setPass1] = useState("");
     const [pass2, setPass2] = useState("");
@@ -20,7 +23,7 @@ export default function FindPassword() {
     return (
         <main>
             <section className={styles.login}>
-                {Img("fingerorder", 150, 150)}
+                {Img("fingerorder", 150, 150, `${darkmode ? styles.loginInvert : ""}`)}
                 <div className={styles.loginForm}>
                     {!isSend ? (
                         <>

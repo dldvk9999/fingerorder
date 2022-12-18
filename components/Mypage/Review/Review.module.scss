@@ -6,6 +6,10 @@
     flex-direction: column;
 }
 
+.reviewInvert {
+    filter: invert(1);
+}
+
 .review > div,
 .reviewListUserProfile {
     display: flex;

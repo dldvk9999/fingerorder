@@ -79,6 +79,9 @@
 .homeCompareFrontImage {
     @include view(flex, normal, center);
 }
+.homeCompareFrontImageInvert {
+    filter: invert(1);
+}
 
 @media (max-width: 650px) {
     .homeCompareBackItem {

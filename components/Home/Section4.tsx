@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
+import { isDarkmode } from "../../states";
 import flow from "../../data/flow";
 import Img from "../common/Img";
 import styles from "./styles/Home_Section4.module.scss";
 
 export default function Home_Section4() {
+    const [darkmode] = useRecoilState<boolean>(isDarkmode);
     const [isMobile, setMobile] = useState(false);
     const [edgeShow, setEdgeShow] = useState(Array.from({ length: flow.length - 1 }, () => false));
     const [isEdgeInit, setEdgeInit] = useState(false);
@@ -35,7 +38,12 @@ export default function Home_Section4() {
                 }
                 onMouseLeave={() => setEdgeShow([true, true, true, true, true])}
             >
-                {Img("home/" + flow[index].name, 100, 100, styles.homeFlowNodes)}
+                {Img(
+                    "home/" + flow[index].name,
+                    100,
+                    100,
+                    `${styles.homeFlowNodes} ${darkmode ? styles.homeFlowInvert : ""}`
+                )}
                 <p>{flow[index].desc}</p>
             </div>
         );

@@ -1,4 +1,7 @@
 /* Section 4 - Flow */
+.homeFlowInvert {
+    filter: invert(1);
+}
 .homeFlow {
     @include view(flex, center, center);
     width: 100vw;

@@ -40,7 +40,7 @@ export function routerList(nav: any, printWhere: string) {
 }
 
 // 로그인 후 접근 가능한 주소 목록 (재사용 가능 함수)
-export function routerListLogin(nav: any, printWhere: string) {
+export function routerListLogin(nav: any, printWhere: string, darkmode: boolean) {
     return routerLogin.map((el, i) => (
         <Link
             href={"/" + el[0]}
@@ -51,7 +51,7 @@ export function routerListLogin(nav: any, printWhere: string) {
             key={"header-login-profile-" + i}
         >
             {i === routerLogin.length - 1 && printWhere !== "nav" ? (
-                Img("profile", 40, 40, styles.headerProfile)
+                Img("profile", 40, 40, `${styles.headerProfile} ${darkmode ? styles.headerLogoInvert : ""}`)
             ) : (
                 <>{el[1]}</>
             )}

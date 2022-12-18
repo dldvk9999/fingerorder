@@ -34,6 +34,9 @@
 .homeIntroImage {
     transform: translateX(-10%);
 }
+.homeIntroImageInvert {
+    filter: invert(1);
+}
 .homeIntroP {
     transform: translateY(10%);
     span {

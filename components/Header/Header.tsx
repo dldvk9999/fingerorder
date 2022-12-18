@@ -1,11 +1,9 @@
 import Link from "next/link";
-import Router from "next/router";
 import { useEffect, useRef, useState } from "react";
 import { openNav, closeNav, routerList, routerListLogin } from "./HeaderRouter";
 import { useRecoilState } from "recoil";
 import { isDarkmode } from "../../states";
 import Img from "../common/Img";
-import InvertImage from "../common/Invert_Img";
 import styles from "./Header.module.scss";
 
 export default function Header() {
@@ -56,7 +54,7 @@ export default function Header() {
         });
 
         // 라우터 변경 시 && 다크모드일 시 이미지 반전
-        Router.events.on("routeChangeComplete", () => InvertImage(darkmode));
+        // Router.events.on("routeChangeComplete", () => InvertImage(darkmode));
 
         // innerWidth가 800px 이하일때만 nav를 렌더링함
         // onresize를 사용하여 override하면 home에서 또 override해서 덮어써지면서 작동이 안돼 addEventListener로 대체
@@ -74,7 +72,7 @@ export default function Header() {
     useEffect(() => {
         document.body.setAttribute("class", darkmode ? "dark" : "light");
 
-        InvertImage(darkmode);
+        // InvertImage(darkmode);
     }, [darkmode]);
 
     return (
@@ -82,7 +80,7 @@ export default function Header() {
             <div className={styles.headerLeft}>
                 <Link href={"/"}>
                     <div className={styles.headerLogo}>
-                        {Img("fingerorder", 30, 30)}
+                        {Img("fingerorder", 30, 30, darkmode ? styles.headerLogoInvert : "")}
                         <div className={styles.headerLogoText}>
                             <div>FINGER</div>
                             <div>ORDER</div>
@@ -96,7 +94,7 @@ export default function Header() {
                 <div className={`${styles.headerRight} ${styles.headerItems}`}>
                     {printDarkmode()}
                     {isLogin ? (
-                        routerListLogin(nav, "header")
+                        routerListLogin(nav, "header", darkmode)
                     ) : (
                         <Link href={"/login"}>
                             <div>로그인</div>
@@ -127,7 +125,7 @@ export default function Header() {
                                 {routerList(nav, "nav")}
                                 <hr />
                                 {isLogin ? (
-                                    routerListLogin(nav, "nav")
+                                    routerListLogin(nav, "nav", darkmode)
                                 ) : (
                                     <Link href={"/login"} onClick={() => closeNav(nav)}>
                                         로그인

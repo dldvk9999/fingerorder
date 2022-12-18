@@ -3,6 +3,10 @@
     height: calc(90vh - $headerHeight);
 }
 
+.loginInvert {
+    filter: invert(1);
+}
+
 .login,
 .loginForm {
     @include view(flex, center, center);

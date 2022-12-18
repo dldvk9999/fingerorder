@@ -4,14 +4,13 @@ import { editNumber, isDarkmode } from "../../../states";
 import reviews from "../../../data/reviews";
 import LoginCheck from "../../common/Login_Check";
 import Img from "../../common/Img";
-import InvertImage from "../../common/Invert_Img";
 import { reviewTmp } from "../../../types/type";
 import { editReview, deleteReview, getReview } from "./ReviewFunction";
 import styles from "./Review.module.scss";
 
 export default function Review() {
-    const [storeID, _] = useRecoilState(editNumber);
-    const [darkmode, setDarkmode] = useRecoilState<boolean>(isDarkmode);
+    const [storeID] = useRecoilState(editNumber);
+    const [darkmode] = useRecoilState<boolean>(isDarkmode);
     const [review, setReview] = useState<Array<reviewTmp>>([]);
     const [tmpReview, setTmpReview] = useState<reviewTmp>();
     const [tmpReviewIndex, setTmpReviewIndex] = useState(-1);
@@ -20,7 +19,14 @@ export default function Review() {
 
     // 아이콘 이미지 출력
     function reviewImages(type: string) {
-        return Img(type, 50, 50, `${styles.reviewListImage} ${type === "reply" && styles.reviewListReplyImage}`);
+        return Img(
+            type,
+            50,
+            50,
+            `${styles.reviewListImage} ${type === "reply" && styles.reviewListReplyImage} ${
+                darkmode ? styles.reviewInvert : ""
+            }`
+        );
     }
 
     // 사장님이 답글 삭제 아이콘을 클릭했을 때
@@ -57,7 +63,6 @@ export default function Review() {
         setTmpReview(undefined);
         setReply("");
         setTmpReviewIndex(-1);
-        setTimeout(() => InvertImage(darkmode), 300);
     }
 
     // Review의 Item 요소들은 재활용가능한 코드로 구현
@@ -82,10 +87,10 @@ export default function Review() {
                                     <div className={styles.reviewListManagerTitle}>
                                         <p>사장님</p>
                                         <button onClick={() => onclickReply(reviewIndex, review[reviewIndex].reply)}>
-                                            {Img("edit", 30, 30)}
+                                            {Img("edit", 30, 30, `${darkmode ? styles.reviewInvert : ""}`)}
                                         </button>
                                         <button onClick={() => deleteReply(reviewIndex)}>
-                                            {Img("delete", 20, 20)}
+                                            {Img("delete", 20, 20, `${darkmode ? styles.reviewInvert : ""}`)}
                                         </button>
                                     </div>
                                     <pre>{review[reviewIndex].reply}</pre>
