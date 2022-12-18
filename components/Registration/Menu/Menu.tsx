@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { registrationIndex, editNumber } from "../../../states";
@@ -11,10 +12,9 @@ import styles from "./Menu.module.scss";
 
 // custom한 mock data를 사용해서 상대적으로 코드가 긴 편인데 백엔드와 연동하면 코드가 약 3~50% 정도 감소될 것 같음
 export default function Menu() {
-    const [editPage] = useRecoilState(editNumber);
+    const [storeID] = useRecoilState(editNumber);
     const [_, setRegiIndex] = useRecoilState(registrationIndex);
     const [nowStore, setStore] = useState<any>(store);
-    const [storeID, setStoreID] = useState(-1); // 매장 ID
     const [category, setCategory] = useState(""); // 매장의 카테고리
     const [itemName, setItemName] = useState(""); // 메뉴 이름
     const [itemPrice, setItemPrice] = useState(0); // 메뉴 가격
@@ -36,7 +36,7 @@ export default function Menu() {
 
     // 메뉴 Edit 함수 (추가, 삭제, 품절 처리)
     function changeMenu(type: string, cate: string, index: number = 0) {
-        let storeInfo = nowStore[storeID - 1];
+        let storeInfo = nowStore[storeID !== -1 ? storeID : 0];
         let menu = storeInfo.menu as unknown as menu;
         let menuCategory = menu[cate] as Array<menuList>;
 
@@ -50,7 +50,7 @@ export default function Menu() {
                 { name: itemName, price: itemPrice, desc: itemDesc, image: imagePath, soldout: false },
             ];
 
-            createMenu(editPage, cate, itemName, itemPrice, itemDesc, itemImage);
+            createMenu(storeID, cate, itemName, itemPrice, itemDesc, itemImage);
             menuInfoLoad("", "", 0, "", "");
             setItemImage("");
             alert("메뉴 추가 완료하였습니다.");
@@ -60,7 +60,7 @@ export default function Menu() {
         else if (type === "delete") {
             if (confirm(menuCategory[index].name + " 메뉴를 삭제하시겠습니까?")) {
                 menu[cate] = menuCategory.filter((_, i) => i !== index);
-                deleteMenu(editPage, cate, index);
+                deleteMenu(storeID, cate, index);
                 alert("메뉴를 삭제하였습니다.");
             }
         }
@@ -69,7 +69,7 @@ export default function Menu() {
         else {
             menuCategory[index].soldout = !menuCategory[index].soldout;
             menu[cate] = menuCategory;
-            editMenu(editPage, cate, index, itemName, itemPrice, itemDesc, itemImage, !menuCategory[index].soldout);
+            editMenu(storeID, cate, index, itemName, itemPrice, itemDesc, itemImage, !menuCategory[index].soldout);
         }
         storeInfo.menu = menu as any;
         setStore([...store, storeInfo]);
@@ -86,7 +86,7 @@ export default function Menu() {
 
     // 메뉴 추가 함수
     function addMenu(cate: string) {
-        if (storeID !== -1 && category !== "" && confirm("메뉴를 추가하시겠습니까?")) {
+        if (category !== "" && confirm("메뉴를 추가하시겠습니까?")) {
             // 정규식으로 이름만 체크함
             const naming = /[^a-zA-Z가-힣0-9 ()]/;
             if (itemName.trim() === "" || naming.exec(itemName)) {
@@ -106,7 +106,7 @@ export default function Menu() {
 
     // 매장에 있는 메뉴 - 세부 아이템 출력
     function printStoreMenuListItem(category: string) {
-        const menu = nowStore[storeID - 1].menu as unknown as menu;
+        const menu = nowStore[storeID].menu as unknown as menu;
 
         // 만약 매장 - 카테고리 내 메뉴의 개수가 1이상일 경우(즉, 메뉴가 존재할 경우)
         return menu[category].length ? (
@@ -163,7 +163,7 @@ export default function Menu() {
     function printStoreMenuList() {
         return storeID !== -1 ? (
             // storeID의 값이 default 값인 -1이 아닐 때(즉, 매장 ID가 선택되었을 때)
-            nowStore[storeID - 1].category.map((el: any, i: number) => (
+            nowStore[storeID].category.map((el: any, i: number) => (
                 <div className={styles.menuItemHeader} key={"menu-list-header-" + i}>
                     {i !== 0 && <hr />}
                     <h3>{el}</h3>
@@ -178,18 +178,18 @@ export default function Menu() {
         );
     }
 
-    // 매장 ID 및 카테고리 드롭다운 선택
-    function printStoreIDCategory(type: "ID" | "category") {
+    // 매장 카테고리 드롭다운 선택
+    function printStoreIDCategory() {
         let result = [
-            <option value={type === "ID" ? -1 : ""} hidden key={"menu-IDCategory-default"}>
-                {type === "ID" ? "매장 ID를 선택해주세요." : "카테고리를 선택해주세요."}
+            <option value={""} hidden key={"menu-Category-default"}>
+                카테고리를 선택해주세요.
             </option>,
         ];
-        const data = type === "ID" ? nowStore : storeID !== -1 ? nowStore[storeID - 1].category : nowStore[0].category;
+        const data = storeID !== -1 ? nowStore[storeID].category : nowStore[0].category;
         for (let i = 0; i < data.length; i++)
             result.push(
-                <option value={type === "ID" ? (data[i] as any).id : data[i]} key={"menu-storeCategory-" + i}>
-                    {type === "ID" ? (data[i] as any).id : i + 1}. {type === "ID" ? (data[i] as any).name : data[i]}
+                <option value={data[i]} key={"menu-storeCategory-" + i}>
+                    {i + 1}. {data[i]}
                 </option>
             );
         return result;
@@ -214,7 +214,7 @@ export default function Menu() {
             setMobile(window.innerWidth);
         };
 
-        const apiMenu = getMenu(editPage);
+        const apiMenu = getMenu(storeID);
         setStore(Object.keys(apiMenu).length ? apiMenu : store);
     }, []);
 
@@ -226,7 +226,14 @@ export default function Menu() {
                     <h1>메뉴 등록</h1>
                     <div className={styles.menuInputImageP}>
                         {itemImage !== "" ? (
-                            Img(itemImage, 150, 150, `${styles.menuInputImage} ${!itemImage && styles.menuInputHide}`)
+                            // 아래 이미지는 base64로 된 이미지를 미리보기 해야하기 때문에 Img 모듈 사용하지 않음
+                            <Image
+                                src={itemImage}
+                                alt={"메뉴 이미지"}
+                                width={150}
+                                height={150}
+                                className={`${styles.menuInputImage} ${!itemImage && styles.menuInputHide}`}
+                            />
                         ) : (
                             <p className={styles.menuInputNoImage}>이미지 추가</p>
                         )}
@@ -242,28 +249,18 @@ export default function Menu() {
                         </div>
                     </div>
                     <select
-                        value={storeID}
-                        onChange={(e) => setStoreID(Number(e.target.value))}
-                        className={`${styles.menuInput} ${styles.menuInputSelect} ${
-                            storeID === -1 && styles.menuInputFirstSelect
-                        }`}
-                    >
-                        {printStoreIDCategory("ID")}
-                    </select>
-                    <select
                         value={category}
                         onChange={(e) => setCategory(e.target.value)}
                         className={`${styles.menuInput} ${styles.menuInputSelect}`}
-                        disabled={storeID === -1}
                     >
-                        {printStoreIDCategory("category")}
+                        {printStoreIDCategory()}
                     </select>
                     <input
                         type="text"
                         placeholder="메뉴 이름을 입력해주세요."
                         onChange={(e) => setItemName(e.target.value)}
                         value={itemName}
-                        disabled={storeID === -1 || category === ""}
+                        disabled={category === ""}
                         className={styles.menuInput}
                         ref={menuName}
                     />
@@ -272,14 +269,14 @@ export default function Menu() {
                         placeholder="가격을 입력해주세요."
                         onChange={(e) => setItemPrice(Number(e.target.value))}
                         value={itemPrice.toString()}
-                        disabled={storeID === -1 || category === ""}
+                        disabled={category === ""}
                         className={styles.menuInput}
                     />
                     <textarea
                         placeholder="메뉴 설명을 입력해주세요."
                         onChange={(e) => setItemDesc(e.target.value)}
                         value={itemDesc}
-                        disabled={storeID === -1 || category === ""}
+                        disabled={category === ""}
                         className={`${styles.menuInput} ${styles.menuInputTextarea}`}
                     />
                     <div className={styles.menuBtnList}>
