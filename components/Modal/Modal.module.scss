@@ -107,9 +107,35 @@
     }
 }
 
+@media (max-height: 800px) {
+    .modal > h1 {
+        padding: 1rem 2rem;
+    }
+    .modalBody > h2 {
+        margin: 0;
+    }
+    .modalTextarea {
+        height: 3rem;
+        margin: 0 1rem;
+    }
+    .modalPassword {
+        padding: 0.5rem 2rem;
+        & > p {
+            margin: 0.5rem 0;
+        }
+    }
+}
+
 @media (max-width: 700px) {
     .modal {
         width: 80vw;
+    }
+}
+
+@media (max-height: 600px) {
+    .modal {
+        height: 100vh;
+        overflow-y: scroll;
     }
 }
 
@@ -120,6 +146,9 @@
     .modalBtn > button:nth-child(1),
     .modalBtn > button:nth-child(2) {
         font-size: 0.75rem;
+    }
+    .modalPassword > input {
+        width: 100%;
     }
 }
 
