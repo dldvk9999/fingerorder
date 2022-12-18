@@ -98,7 +98,9 @@ pre {
         Helvetica Neue, sans-serif;
 }
 
-input {
+input,
+select,
+textarea {
     transition: color 0.7s ease-in-out, background-color 0.7s ease-in-out, border-color 0.7s ease-in-out;
 }
 
