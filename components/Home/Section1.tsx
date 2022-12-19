@@ -22,14 +22,15 @@ export default function Home_Section1() {
             // Intro 텍스트 순차적 slide 처리
             setTimeout(() => {
                 window.scrollTo(0, 0);
-                setShowIntro([true, false, false]);
+                setShowIntro([true, false, false]); // Logo Slide
             }, 100);
             setTimeout(() => {
-                setShowIntro([true, true, false]);
+                setShowIntro([true, true, false]); // "더 빠르게! 더 간편하게!" Slide
             }, 500);
             setTimeout(() => {
-                setShowIntro([true, true, true]);
+                setShowIntro([true, true, true]); // 키오스크를 대신할 새로운 플랫폼 Slide
             }, 1000);
+
             setTimeout(() => {
                 upIntro();
             }, 2000);
