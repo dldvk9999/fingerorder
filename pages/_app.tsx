@@ -5,6 +5,8 @@ import Footer from "../components/Footer/Footer";
 import type { AppProps } from "next/app";
 import { RecoilRoot } from "recoil";
 import { Analytics } from "@vercel/analytics/react";
+import { QueryClient, QueryClientProvider } from "react-query";
+const queryClient = new QueryClient();
 
 export default function App({ Component, pageProps }: AppProps) {
     return (
@@ -15,11 +17,13 @@ export default function App({ Component, pageProps }: AppProps) {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <Analytics />
-            <RecoilRoot>
-                <Header />
-                <Component {...pageProps} />
-                <Footer />
-            </RecoilRoot>
+            <QueryClientProvider client={queryClient}>
+                <RecoilRoot>
+                    <Header />
+                    <Component {...pageProps} />
+                    <Footer />
+                </RecoilRoot>
+            </QueryClientProvider>
         </>
     );
 }

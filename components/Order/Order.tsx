@@ -5,6 +5,7 @@ import { PrintRandomMenu } from "./OrderMenu";
 import LoginCheck from "../common/Login_Check";
 import store from "../../data/store";
 import { menuList, menu } from "../../types/type";
+import { getOrder, deleteOrder } from "./OrderFunction";
 import styles from "./Order.module.scss";
 
 export default function Order() {
@@ -21,11 +22,12 @@ export default function Order() {
     let storeID = Math.floor(Math.random() * 3);
 
     // 주문 내역 삭제
-    function deleteOrder(index: number) {
+    function delOrder(index: number) {
         if (confirm("삭제하시겠습니까?")) {
             let del = [setResult, setMenuList, setCount, setLocate, setSum, setTable, setDate];
             let delValue = [result, menuList, count, locate, sum, table, date];
             del.map((func, i) => func(delValue[i].filter((_: any, i: number) => i !== index)));
+            deleteOrder(storeID);
         }
     }
 
@@ -76,7 +78,7 @@ export default function Order() {
                         className={styles.orderCardClose}
                         onClick={() => {
                             setClickNew(false);
-                            deleteOrder(i);
+                            delOrder(i);
                         }}
                     >
                         삭제
@@ -90,6 +92,8 @@ export default function Order() {
         setAudio(new Audio("/noti.mp3"));
         localStorage["soundplay"] = false;
         setSoundPlay(false);
+
+        getOrder(storeID);
 
         return () => {
             localStorage.removeItem("soundplay");
