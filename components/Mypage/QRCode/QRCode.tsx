@@ -28,7 +28,7 @@ export default function QRCode(props: { tableCount: number; type: string }) {
 
     // QR 리스트 출력
     function printQR(index: number) {
-        const orderURL = "https://fingeroreder-order.netlify.app/";
+        const orderURL = "https://fingeroreder-order.netlify.app/menu/";
         // const orderURL = "https://fingerorder.vercel.app/qrcode/test/";
 
         let result = [];
