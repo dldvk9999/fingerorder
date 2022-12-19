@@ -3,7 +3,7 @@ import { get as APIGet, del as APIDel } from "../../apis/api";
 import { isAPI } from "../../states";
 
 // 주문 조회
-export function getOrder(id: number) {
+export function GetOrder(id: number) {
     if (isAPI) {
         let result = useQuery("getOrder", () => APIGet("/api/store/" + id + "/order"), { refetchInterval: 1000 });
         return result;

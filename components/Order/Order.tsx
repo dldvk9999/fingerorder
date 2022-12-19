@@ -5,7 +5,7 @@ import { PrintRandomMenu } from "./OrderMenu";
 import LoginCheck from "../common/Login_Check";
 import store from "../../data/store";
 import { menuList, menu } from "../../types/type";
-import { getOrder, deleteOrder } from "./OrderFunction";
+import { GetOrder, deleteOrder } from "./OrderFunction";
 import styles from "./Order.module.scss";
 
 export default function Order() {
@@ -93,7 +93,7 @@ export default function Order() {
         localStorage["soundplay"] = false;
         setSoundPlay(false);
 
-        getOrder(storeID);
+        GetOrder(storeID);
 
         return () => {
             localStorage.removeItem("soundplay");
