@@ -47,8 +47,10 @@ export default function Header() {
 
         // 다크모드 localStorage 체크
         if (localStorage["theme"]) setDarkmode(localStorage["theme"] === "true");
-        else localStorage["theme"] = false;
-        setDarkmode(localStorage["theme"]);
+        else {
+            localStorage["theme"] = false;
+            setDarkmode(localStorage["theme"]);
+        }
 
         // prefers-color-scheme의 변경을 감지하여 다크모드 변경
         window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (event) => {
