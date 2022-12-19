@@ -21,6 +21,19 @@ export default function Category(props: { category: Array<string> }) {
         !category.length ? alert("카테고리를 입력해주세요.") : setRegiIndex(2);
     }
 
+    // 추가한 카테고리 순서 변경
+    function bubbleCategory(index: number, type: "up" | "down") {
+        let tmp = category.slice();
+        if (type === "up") {
+            tmp[index - 1] = category[index];
+            tmp[index] = category[index - 1];
+        } else {
+            tmp[index + 1] = category[index];
+            tmp[index] = category[index + 1];
+        }
+        setCategory(tmp);
+    }
+
     // 추가한 카테고리에서 삭제
     function delCategory(index: number) {
         if (confirm("선택하신 " + category[index] + " 카테고리를 삭제하시겠습니까?")) {
@@ -121,10 +134,14 @@ export default function Category(props: { category: Array<string> }) {
                                 <div className={styles.categoryMenuListItem} key={"category-item-" + i}>
                                     <h2>{el}</h2>
                                     <div>
+                                        {i !== 0 && <button onClick={() => bubbleCategory(i, "up")}>&uarr;</button>}
                                         <button onClick={() => changeEditStatus(!isEdit ? i : undefined)}>
                                             {isEdit ? "취소" : "수정"}
                                         </button>
                                         <button onClick={() => delCategory(i)}>삭제</button>
+                                        {i !== category.length - 1 && (
+                                            <button onClick={() => bubbleCategory(i, "down")}>&darr;</button>
+                                        )}
                                     </div>
                                     {i !== category.length - 1 && <hr />}
                                 </div>
