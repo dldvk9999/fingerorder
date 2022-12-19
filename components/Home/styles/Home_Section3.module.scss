@@ -40,7 +40,7 @@
     @include border_backcolor(var(--background-item));
 
     * {
-        color: var(--disable) !important;
+        opacity: 0.5;
     }
     div:nth-child(1) {
         font-size: 2rem;
