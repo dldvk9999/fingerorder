@@ -74,8 +74,9 @@
     flex-direction: column;
 
     div {
-        display: flex;
+        @include view(flex, center);
         gap: 1rem;
+        flex-wrap: wrap;
 
         button {
             @include buttonStyle(4rem, 2rem, var(--red));
