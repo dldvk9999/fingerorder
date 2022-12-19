@@ -5,11 +5,11 @@ import { isAPI } from "../../states";
 // 주문 조회
 export function GetOrder(id: number) {
     if (isAPI) {
-        const { data: result } = useQuery(["getOrder", isAPI], () => APIGet("/api/store/" + id + "/order"), {
-            enabled: isAPI,
-            refetchInterval: 1000,
-        });
-        return result;
+        // const { data: result } = useQuery(["getOrder", isAPI], () => APIGet("/api/store/" + id + "/order"), {
+        //     enabled: isAPI,
+        //     refetchInterval: 1000,
+        // });
+        return {};
     }
     return {};
 }
