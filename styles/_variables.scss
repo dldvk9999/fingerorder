@@ -17,6 +17,7 @@ body.light {
     --darkslategray: darkslategray;
     --background-item: #f9f9f9;
     --main-background-color: transparent;
+    --main-shadow-color: #00000020;
 }
 
 body.dark {
@@ -35,5 +36,6 @@ body.dark {
     --black: white;
     --darkslategray: darkslategray;
     --background-item: #555555;
-    --main-background-color: #101010;
+    --main-background-color: #10101000;
+    --main-shadow-color: #ffffff20;
 }

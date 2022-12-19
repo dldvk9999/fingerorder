@@ -9,6 +9,7 @@ export default function Home_Section1() {
     const [darkmode] = useRecoilState<boolean>(isDarkmode);
     const [isHomeIntro] = useRecoilState(homeIntro);
     const [showIntro, setShowIntro] = useState([false, false, false]);
+    const [slideBackground, setSlideBackground] = useState(false);
     const homeInto = useRef<HTMLElement>(null);
 
     // 페이지 로드 후에 2초 있다가 Intro의 Height가 짧아지게 하는 함수
@@ -28,9 +29,11 @@ export default function Home_Section1() {
                 setShowIntro([true, true, false]); // "더 빠르게! 더 간편하게!" Slide
             }, 500);
             setTimeout(() => {
-                setShowIntro([true, true, true]); // 키오스크를 대신할 새로운 플랫폼 Slide
+                setShowIntro([true, true, true]); // "키오스크를 대신할 새로운 플랫폼" Slide
             }, 1000);
-
+            setTimeout(() => {
+                setSlideBackground(true);
+            }, 1300);
             setTimeout(() => {
                 upIntro();
             }, 2000);
@@ -56,7 +59,10 @@ export default function Home_Section1() {
     }, [isHomeIntro]);
 
     return (
-        <section className={styles.homeInto} ref={homeInto}>
+        <section className={styles.homeIntro} ref={homeInto}>
+            <div className={`${styles.homeIntroBackground} ${slideBackground && styles.homeIntroBackgroundActive}`}>
+                <div className={styles.homeIntroBackground1}></div>
+            </div>
             {Img(
                 "fingerorder",
                 200,

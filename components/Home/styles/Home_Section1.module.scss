@@ -1,5 +1,5 @@
 /* Section 1 - Intro */
-.homeInto {
+.homeIntro {
     @include view(flex, center);
     @include area(100vw, 100vh);
     min-height: 10rem;
@@ -7,6 +7,24 @@
     align-items: center;
     padding: 0 3rem;
     transition: height 0.7s ease-in-out, padding-top 0.7s ease-in-out;
+}
+
+.homeIntroBackground {
+    position: fixed;
+    @include area(100vw, 100vh);
+    z-index: -1;
+    & > * {
+        position: fixed;
+        @include area(100vw, 2000rem);
+        background-image: linear-gradient(90deg, transparent, var(--main-shadow-color), transparent);
+        transform: translate(-50%, -54%) rotate(30deg);
+    }
+}
+.homeIntroBackground1 {
+    transition: transform 0.7s ease-in-out;
+}
+.homeIntroBackgroundActive > .homeIntroBackground1 {
+    transform: translate(220%, -54%) rotate(30deg);
 }
 
 .homeIntroSub {
