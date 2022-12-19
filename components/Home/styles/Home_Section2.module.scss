@@ -25,7 +25,7 @@
 .homeWhiteboxRight {
     @include view(flex, center);
     width: 40%;
-    color: var(--disable);
+    opacity: 0.5;
 }
 
 .homeWhiteboxItem {
@@ -38,7 +38,7 @@
 }
 
 .homeWhiteboxItemHighlight {
-    color: var(--blue);
+    color: var(--blue) !important;
     font-weight: 700;
 }
 
