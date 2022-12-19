@@ -48,13 +48,13 @@ export default function Header() {
         // 다크모드 localStorage 체크
         if (localStorage["theme"]) setDarkmode(localStorage["theme"] === "true");
         else localStorage["theme"] = false;
+        setDarkmode(localStorage["theme"]);
 
+        // prefers-color-scheme의 변경을 감지하여 다크모드 변경
         window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (event) => {
+            setDarkmode(event.matches);
             localStorage["theme"] = event.matches;
         });
-
-        // 라우터 변경 시 && 다크모드일 시 이미지 반전
-        // Router.events.on("routeChangeComplete", () => InvertImage(darkmode));
 
         // innerWidth가 800px 이하일때만 nav를 렌더링함
         // onresize를 사용하여 override하면 home에서 또 override해서 덮어써지면서 작동이 안돼 addEventListener로 대체
@@ -71,8 +71,6 @@ export default function Header() {
 
     useEffect(() => {
         document.body.setAttribute("class", darkmode ? "dark" : "light");
-
-        // InvertImage(darkmode);
     }, [darkmode]);
 
     return (
