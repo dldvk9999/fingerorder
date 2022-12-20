@@ -12,13 +12,15 @@ export default function Signup() {
     const [pass1, setPass1] = useState("");
     const [pass2, setPass2] = useState("");
     const [signupOK, setSignupOK] = useState(false);
+    const [signupAPI, setSignupAPI] = useState(false);
+    const [signupData, setSignupData] = useState<any>({});
     const [signupTry, setSignupTry] = useState(false);
 
     return (
         <main>
             <section className={styles.login}>
                 {Img("fingerorder", 150, 150, `${darkmode ? styles.loginInvert : ""}`)}
-                {!signupOK ? (
+                {!signupAPI ? (
                     <div className={styles.loginForm}>
                         <input
                             type="email"
@@ -47,9 +49,14 @@ export default function Signup() {
                             required={signupTry}
                         />
                         <button
-                            onClick={() => {
+                            onClick={async () => {
                                 setSignupTry(true);
-                                setSignupOK(signup(email, pass1, pass2));
+                                const result = (await signup(email, pass1, pass2)) as any;
+                                setSignupAPI(result.api);
+                                if (result.api) {
+                                    setSignupOK(result.result);
+                                    setSignupData(result.data);
+                                }
                             }}
                         >
                             회원가입
@@ -57,8 +64,14 @@ export default function Signup() {
                     </div>
                 ) : (
                     <>
-                        <p>회원가입이 완료되었습니다.</p>
-                        <p>이메일 인증을 완료하신 후 로그인하여 주세요.</p>
+                        {signupOK ? (
+                            <>
+                                <p>회원가입이 완료되었습니다.</p>
+                                <p>이메일 인증을 완료하신 후 로그인하여 주세요.</p>
+                            </>
+                        ) : (
+                            <p>{signupData.message}</p>
+                        )}
                         <Link href={"/login"}>
                             <button>로그인</button>
                         </Link>
