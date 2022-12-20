@@ -4,28 +4,34 @@ const url = "";
 const header = {
     withCredentials: false, // cors 통신 설정
     headers: {
-        "Content-Type": "charset=UTF-8",
+        "Content-Type": "application/json",
     },
 };
 
 // 조회
 export async function get(params: string) {
-    let result = {};
-    await axios
+    return await axios
         .get(url + params)
-        .then((res) => (result = res))
-        .catch((e) => console.log(e));
-    return result;
+        .then((res: any) => {
+            return res.response;
+        })
+        .catch((res) => {
+            console.log(res);
+            return res.response;
+        });
 }
 
 // 등록
 export async function post(params: string, data: Object) {
-    let result = {};
-    await axios
+    return await axios
         .post(url + params, data, header)
-        .then((res) => (result = res))
-        .catch((e) => console.log(e));
-    return result;
+        .then((res: any) => {
+            return res.response;
+        })
+        .catch((res) => {
+            console.log(res);
+            return res.response;
+        });
 }
 
 // 수정
@@ -33,8 +39,13 @@ export async function put(params: string, data: Object) {
     let result = {};
     await axios
         .put(url + params, data, header)
-        .then((res) => (result = res))
-        .catch((e) => console.log(e));
+        .then((res: any) => {
+            return res.response;
+        })
+        .catch((res) => {
+            console.log(res);
+            return res.response;
+        });
     return result;
 }
 
@@ -43,7 +54,12 @@ export async function del(params: string, data: Object) {
     let result = {};
     await axios
         .delete(url + params, data)
-        .then((res) => (result = res))
-        .catch((e) => console.log(e));
+        .then((res: any) => {
+            return res.response;
+        })
+        .catch((res) => {
+            console.log(res);
+            return res.response;
+        });
     return result;
 }
