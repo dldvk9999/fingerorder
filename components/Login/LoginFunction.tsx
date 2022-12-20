@@ -49,7 +49,7 @@ export function login(email: string, pass: string, e: { preventDefault: () => vo
                     email: email,
                     password: pass,
                     nickName: "",
-                    type: "merchant",
+                    type: "MERCHANT",
                 })
             );
         } else {
@@ -108,14 +108,9 @@ export function signup(email: string, pass1: string, pass2: string) {
                     email: email,
                     password: pass1,
                     nickName: "",
-                    type: "merchant",
+                    type: "MERCHANT",
                 })
             );
-        } else {
-            localStorage.removeItem("login");
-            localStorage.removeItem("email");
-            localStorage.removeItem("kakao");
-            location.href = "/";
         }
         return true;
     }
