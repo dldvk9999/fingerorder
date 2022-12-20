@@ -16,7 +16,7 @@ export default function Registration() {
 
     useEffect(() => {
         setRegiIndex(0);
-    }, []);
+    }, [registrationIndex]);
 
     useEffect(() => {
         // 각 Step transform 처리

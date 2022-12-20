@@ -8,7 +8,7 @@ import styles from "./OrderList.module.scss";
 
 // 주문 목록 출력
 export default function PrintOrderList(startDate: Date, endDate: Date) {
-    const [editPage, _] = useRecoilState(editNumber);
+    const [editPage] = useRecoilState(editNumber);
     const [myOrderList, setOrderList] = useState<any>([]);
     const sDate = startDate ? startDate : new Date();
     const eDate = endDate ? endDate : new Date();
@@ -25,7 +25,7 @@ export default function PrintOrderList(startDate: Date, endDate: Date) {
     useEffect(() => {
         const apiOrderList = getOrderList(editPage, sDate, eDate);
         setOrderList(Object.keys(apiOrderList).length ? apiOrderList : orderlist);
-    }, []);
+    }, [editPage]);
 
     let result = [];
     for (let i = 0; i < myOrderList.length; i++) {

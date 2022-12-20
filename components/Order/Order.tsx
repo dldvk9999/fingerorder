@@ -112,13 +112,15 @@ export default function Order() {
         localStorage["soundplay"] = false;
         setSoundPlay(false);
 
-        // 주문 목록 호출
-        setResult(isLoading || error || isFetching ? [] : data ? data : []);
-
         return () => {
             localStorage.removeItem("soundplay");
         };
-    }, []);
+    }, [isSoundPlay]);
+
+    useEffect(() => {
+        // 주문 목록 호출
+        setResult(isLoading || error || isFetching ? [] : data ? data : []);
+    }, [isLoading, error, isFetching, data]);
 
     useEffect(() => {
         printRandomOrder();

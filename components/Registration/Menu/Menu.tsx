@@ -101,7 +101,7 @@ export default function Menu() {
                     menuName.current!.classList.remove(styles.menuInputRequire);
                 }, 4000);
             } else changeMenu("add", cate);
-        } else alert("매장 ID와 카테고리를 먼저 선택해주세요.");
+        } else alert("매장 카테고리를 먼저 선택해주세요.");
     }
 
     // 매장에 있는 메뉴 - 세부 아이템 출력
@@ -173,7 +173,7 @@ export default function Menu() {
         ) : (
             // 매장이 선택되지 않았을 때
             <h3 key={"menu-list-no-select-store"}>
-                {isMobile < 800 ? "상단에서 매장을 선택해주세요." : "왼쪽에서 매장을 선택해주세요."}
+                {isMobile < 800 ? "상단에서 메뉴를 추가해주세요." : "왼쪽에서 메뉴를 추가해주세요."}
             </h3>
         );
     }
@@ -210,13 +210,13 @@ export default function Menu() {
     useEffect(() => {
         // 모바일 인지 아닌지 (width 800px 기준)
         setMobile(window.innerWidth);
-        window.onresize = () => {
-            setMobile(window.innerWidth);
-        };
+        window.onresize = () => setMobile(window.innerWidth);
+    }, []);
 
+    useEffect(() => {
         const apiMenu = getMenu(storeID);
         setStore(Object.keys(apiMenu).length ? apiMenu : store);
-    }, []);
+    }, [storeID]);
 
     return LoginCheck() ? (
         <article className={styles.menuMain}>
