@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
+import axios from "axios";
 import { useRecoilState } from "recoil";
 import { soundPlay } from "../../states";
 import { PrintRandomMenu } from "./OrderMenu";
 import LoginCheck from "../common/Login_Check";
 import store from "../../data/store";
 import { menuList, menu } from "../../types/type";
-import { GetOrder, deleteOrder } from "./OrderFunction";
+import { deleteOrder } from "./OrderFunction";
+import { isAPI } from "../../states";
 import styles from "./Order.module.scss";
 
 export default function Order() {
@@ -20,6 +23,22 @@ export default function Order() {
     const [notiAudio, setAudio] = useState<any>();
     const [isClickNew, setClickNew] = useState(false);
     let storeID = Math.floor(Math.random() * 3);
+
+    // useQuery를 통해 Interval하게 query를 요청하여 실시간 주문 목록 호출
+    const { isLoading, error, data, isFetching } = useQuery(
+        "getOrder",
+        async () => {
+            await axios
+                .get("/api/store/" + storeID + "/order")
+                .then((res) => res)
+                .catch((e) => console.log(e));
+        },
+        {
+            enabled: isAPI,
+            refetchInterval: 10000, // 1000 = 1초
+            retry: 0, // 재시도 횟수
+        }
+    );
 
     // 주문 내역 삭제
     function delOrder(index: number) {
@@ -93,7 +112,8 @@ export default function Order() {
         localStorage["soundplay"] = false;
         setSoundPlay(false);
 
-        GetOrder(storeID);
+        // 주문 목록 호출
+        setResult(isLoading || error || isFetching ? [] : data ? data : []);
 
         return () => {
             localStorage.removeItem("soundplay");
