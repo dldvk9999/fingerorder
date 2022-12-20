@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = "/api";
+const url = "";
 const header = {
     withCredentials: false, // cors 통신 설정
     headers: {
