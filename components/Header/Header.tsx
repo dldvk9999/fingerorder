@@ -2,14 +2,13 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { openNav, closeNav, RouterList, RouterListLogin } from "./HeaderRouter";
 import { useRecoilState } from "recoil";
-import { isDarkmode, editNumber, grantType } from "../../states";
+import { isDarkmode, editNumber } from "../../states";
 import Img from "../common/Img";
 import styles from "./Header.module.scss";
 
 export default function Header() {
     const [darkmode, setDarkmode] = useRecoilState<boolean>(isDarkmode);
     const [_, setEditPage] = useRecoilState(editNumber);
-    const [__, setGrant] = useRecoilState(grantType);
     const [isLogin, setLogin] = useState(false);
     const [isMobile, setMobile] = useState(false);
     const nav = useRef<HTMLElement>(null);
@@ -96,7 +95,7 @@ export default function Header() {
                 <div className={`${styles.headerRight} ${styles.headerItems}`}>
                     {printDarkmode()}
                     {isLogin ? (
-                        RouterListLogin(nav, "header", darkmode, setGrant)
+                        RouterListLogin(nav, "header", darkmode)
                     ) : (
                         <Link href={"/login"}>
                             <div>로그인</div>
@@ -139,7 +138,7 @@ export default function Header() {
                                 {RouterList(nav, "nav", setEditPage)}
                                 <hr />
                                 {isLogin ? (
-                                    RouterListLogin(nav, "nav", darkmode, setGrant)
+                                    RouterListLogin(nav, "nav", darkmode)
                                 ) : (
                                     <Link href={"/login"} onClick={() => closeNav(nav)}>
                                         로그인

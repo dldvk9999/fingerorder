@@ -36,16 +36,16 @@ export function RouterList(nav: any, printWhere: string, setEdit: Function) {
 }
 
 // 로그인 후 접근 가능한 주소 목록 (재사용 가능 함수)
-export function RouterListLogin(nav: any, printWhere: string, darkmode: boolean, setGrant: Function) {
+export function RouterListLogin(nav: any, printWhere: string, darkmode: boolean) {
     return routerLogin.map((el, i) => (
         <Link
             href={"/" + el[0]}
-            onClick={() => {
-                if (el[0] === "") {
-                    logout();
-                    setGrant("");
-                }
+            onClick={async () => {
                 printWhere === "nav" && closeNav(nav);
+                if (el[0] === "") {
+                    const result = await logout(localStorage["accessToken"]);
+                    console.log(result);
+                }
             }}
             key={"header-login-profile-" + i}
         >

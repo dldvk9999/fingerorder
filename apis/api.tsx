@@ -1,6 +1,4 @@
 import axios from "axios";
-import { useRecoilState } from "recoil";
-import { grantType } from "../states";
 
 const url = "";
 const header = {
@@ -60,7 +58,7 @@ export async function post2(params: string, data: Object, accessToken: string) {
         withCredentials: false, // cors 통신 설정
         headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer " + accessToken,
+            Authorization: accessToken,
         },
     };
     return await axios
@@ -78,7 +76,7 @@ export async function put2(params: string, data: Object, accessToken: string) {
         withCredentials: false, // cors 통신 설정
         headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer " + accessToken,
+            Authorization: accessToken,
         },
     };
     return await axios

@@ -2,13 +2,12 @@ import Img from "../common/Img";
 import Link from "next/link";
 import { useState } from "react";
 import { useRecoilState } from "recoil";
-import { isDarkmode, grantType } from "../../states";
+import { isDarkmode } from "../../states";
 import { LoginDefault, LoginKakao, autoLogin, login } from "./LoginFunction";
 import styles from "./Login.module.scss";
 
 export default function Login() {
     const [darkmode] = useRecoilState<boolean>(isDarkmode);
-    const [_, setGrant] = useRecoilState<string>(grantType);
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
     const [loginTry, setLoginTry] = useState(false);
@@ -53,9 +52,7 @@ export default function Login() {
                                 if (result.result) {
                                     localStorage["email"] = email;
                                     localStorage["accessToken"] = result.data.accessToken;
-                                    localStorage["refreshToken"] = result.data.refreshToken;
                                     location.href = "/";
-                                    setGrant(result.data.grantType);
                                 }
                             }
                             setLoginTry(true);

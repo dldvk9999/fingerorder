@@ -5,6 +5,7 @@ import { isDarkmode } from "../../states";
 import { passwordReset } from "./LoginFunction";
 import Img from "../common/Img";
 import styles from "./Login.module.scss";
+import Link from "next/link";
 
 export default function FindPassword() {
     const router = useRouter();
@@ -18,7 +19,7 @@ export default function FindPassword() {
     const [sendTry, setSendTry] = useState(false);
 
     useEffect(() => {
-        setUuid(params ? params[0] : "");
+        setUuid(params ? params[0].slice(5) : "");
     }, [params]);
 
     return (
@@ -50,9 +51,9 @@ export default function FindPassword() {
                             />
                             {isData && <p>{isData.message}</p>}
                             <button
-                                onClick={() => {
-                                    const result = passwordReset(uuid, pass1, pass2);
-                                    setSend(result.api && result.result);
+                                onClick={async () => {
+                                    const result = await passwordReset(uuid, pass1, pass2, localStorage["accessToken"]);
+                                    setSend(result.api);
                                     setData(result.data);
                                     setSendTry(true);
                                 }}
@@ -61,11 +62,16 @@ export default function FindPassword() {
                             </button>
                         </>
                     ) : (
-                        <p className={styles.findpasswordText}>
-                            비밀번호 재설정이 완료되었습니다.
-                            <br />
-                            재설정한 비밀번호로 다시 로그인해주시기 바랍니다.
-                        </p>
+                        <>
+                            <p className={styles.findpasswordText}>
+                                비밀번호 재설정이 완료되었습니다.
+                                <br />
+                                재설정한 비밀번호로 다시 로그인해주시기 바랍니다.
+                            </p>
+                            <Link href="/login">
+                                <button>로그인</button>
+                            </Link>
+                        </>
                     )}
                 </div>
             </section>

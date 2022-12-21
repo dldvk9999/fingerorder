@@ -1,11 +1,20 @@
 import Link from "next/link";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 import { useRecoilState } from "recoil";
 import { isDarkmode } from "../../states";
 import Img from "../common/Img";
+import { signupAuth } from "./LoginFunction";
 import styles from "./Login.module.scss";
 
 export default function Signup() {
     const [darkmode] = useRecoilState<boolean>(isDarkmode);
+    const router = useRouter();
+    const { params } = router.query;
+
+    useEffect(() => {
+        signupAuth(params ? params[0].slice(5) : "");
+    }, [params]);
 
     return (
         <main>

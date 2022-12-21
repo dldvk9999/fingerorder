@@ -1,4 +1,11 @@
-import { get as APIGet, post as APIPost, put as APIPut, del as APIDel, post2 as APIPost2 } from "../../apis/api";
+import {
+    get as APIGet,
+    post as APIPost,
+    put as APIPut,
+    del as APIDel,
+    put2 as APIPut2,
+    post2 as APIPost2,
+} from "../../apis/api";
 import { isAPI } from "../../states";
 
 const emailRegex = /[a-zA-Z.].+[@][a-zA-Z].+[.][a-zA-Z]{2,4}$/;
@@ -30,7 +37,7 @@ export function LoginDefault() {
 export function LoginKakao() {
     localStorage["kakao"] = "true";
     APIGet("/api/auth/kakao/sign-in").then((res) => {
-        console.log(res);
+        window.open(res.data.slice(9), "kakaoLogin", "width=500, height=600");
     });
 }
 
@@ -46,76 +53,48 @@ export function login(email: string, pass: string, e: { preventDefault: () => vo
         alert(alertText[2]);
         e.preventDefault();
     } else {
-        if (true) {
-            return APIPost(
-                "/api/auth/sign-in",
-                JSON.stringify({
-                    email: email,
-                    password: pass,
-                    nickName: "",
-                    type: "MERCHANT",
-                })
-            ).then((res: any) => {
-                return {
-                    api: true,
-                    result: res.status === 200,
-                    data: res.data,
-                };
-            });
-        } else {
-            localStorage["login"] = "true";
-            localStorage["email"] = email;
-        }
-    }
-    return { api: false, result: true, data: {} };
-}
-
-// 로그아웃 함수 - 동기화
-export function logout() {
-    if (isAPI) {
-        APIGet("/api/auth/sign-out").then((res) => {
+        return APIPost(
+            "/api/auth/sign-in",
+            JSON.stringify({
+                email: email,
+                password: pass,
+                type: "MERCHANT",
+            })
+        ).then((res: any) => {
             return {
                 api: true,
                 result: res.status === 200,
                 data: res.data,
             };
         });
-    } else {
-        localStorage.removeItem("login");
-        localStorage.removeItem("email");
-        localStorage.removeItem("kakao");
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
-        location.href = "/";
     }
+    return { api: false, result: true, data: {} };
 }
 
-// 비밀번호 재설정 링크 보낼 이메일 입력 - 동기화
-export function emailSend(email: string) {
-    if (!email) alert(alertText[3]);
-    else if (!emailRegex.exec(email)) alert(alertText[4]);
-    else {
-        if (true) {
-            APIPost(
-                "/api/users/password",
-                JSON.stringify({
-                    email: email,
-                })
-            ).then((res) => {
-                return {
-                    api: true,
-                    result: res.status === 200,
-                    data: res.data,
-                };
-            });
-        } else {
+// 로그아웃 함수 - 동기화
+export function logout(accessToken: string) {
+    return APIPost2(
+        "/api/auth/sign-out",
+        JSON.stringify({
+            accessToken: accessToken.slice(6),
+            refreshToken: "",
+        }),
+        accessToken
+    ).then((res) => {
+        if (res.status === 200) {
             localStorage.removeItem("login");
             localStorage.removeItem("email");
             localStorage.removeItem("kakao");
+            localStorage.removeItem("accessToken");
+            localStorage.removeItem("refreshToken");
             location.href = "/";
         }
-    }
-    return { api: false, result: true, data: {} };
+        return {
+            api: true,
+            result: res.status === 200,
+            data: res.data,
+        };
+    });
 }
 
 // 회원가입 - 동기화
@@ -125,48 +104,80 @@ export function signup(email: string, pass1: string, pass2: string) {
     else if (pass1.length < 8 || pass2.length < 8) alert(alertText[1]);
     else if (!emailRegex.exec(email) || passRegex.exec(pass1) || passRegex.exec(pass2)) alert(alertText[2]);
     else {
-        if (true) {
-            return APIPost(
-                "/api/auth/sign-up",
-                JSON.stringify({
-                    email: email,
-                    password: pass1,
-                    nickName: "",
-                    type: "MERCHANT",
-                })
-            ).then((res: any) => {
-                return {
-                    api: true,
-                    result: res.status === 200,
-                    data: res.data,
-                };
-            });
-        }
+        return APIPost(
+            "/api/auth/sign-up",
+            JSON.stringify({
+                email: email,
+                password: pass1,
+                nickName: "",
+                type: "MERCHANT",
+            })
+        ).then((res: any) => {
+            return {
+                api: true,
+                result: res.status === 200,
+                data: res.data,
+            };
+        });
+    }
+    return { api: false, result: true, data: {} };
+}
+
+// 회원가입 이메일 인증 완료 - 동기화
+export function signupAuth(uuid: string) {
+    if (uuid !== "") {
+        APIPut("/api/auth/sign-up?uuid=" + uuid, "").then((res: any) => {
+            return {
+                api: true,
+                result: res.status === 200,
+                data: res.data,
+            };
+        });
+    }
+    return { api: false, result: true, data: {} };
+}
+
+// 비밀번호 재설정 링크 보낼 이메일 입력 - 동기화
+export function emailSend(email: string) {
+    if (!email) alert(alertText[3]);
+    else if (!emailRegex.exec(email)) alert(alertText[4]);
+    else {
+        APIPost(
+            "/api/users/password",
+            JSON.stringify({
+                email: email,
+            })
+        ).then((res) => {
+            return {
+                api: true,
+                result: res.status === 200,
+                data: res.data,
+            };
+        });
     }
     return { api: false, result: true, data: {} };
 }
 
 // 비밀번호 초기화 - 동기화
-export function passwordReset(uuid: string, pass1: string, pass2: string) {
+export function passwordReset(uuid: string, pass1: string, pass2: string, accessToken: string) {
     if (uuid === "" || pass1 === "" || pass2 === "") alert(alertText[0]);
     else if (pass1 !== pass2) alert(alertText[5]);
     else if (pass1.length < 8 || pass2.length < 8) alert(alertText[1]);
     else if (passRegex.exec(pass1) || passRegex.exec(pass2)) alert(alertText[2]);
     else {
-        if (true) {
-            APIPut(
-                "/api/auth/resetPassword?uuid=" + uuid,
-                JSON.stringify({
-                    password: pass1,
-                })
-            ).then((res: any) => {
-                return {
-                    api: true,
-                    result: res.status === 200,
-                    data: res.data,
-                };
-            });
-        }
+        return APIPut2(
+            "/api/auth/resetPassword?uuid=" + uuid,
+            JSON.stringify({
+                password: pass1,
+            }),
+            accessToken
+        ).then((res: any) => {
+            return {
+                api: true,
+                result: res.status === 200,
+                data: res.data,
+            };
+        });
     }
     return { api: false, result: true, data: {} };
 }
