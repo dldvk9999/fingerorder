@@ -11,19 +11,15 @@ export default function Login() {
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
     const [loginTry, setLoginTry] = useState(false);
+    const [loginAPI, setLoginAPI] = useState(false);
+    const [loginResult, setLoginResult] = useState(false);
+    const [loginData, setLoginData] = useState<any>(false);
 
     return (
         <main>
             <section className={styles.login}>
                 {Img("fingerorder", 150, 150, `${darkmode ? styles.loginInvert : ""}`)}
-                <form
-                    className={styles.loginForm}
-                    onSubmit={(e) => {
-                        login(email, pass, e);
-                        setLoginTry(true);
-                    }}
-                    action="/"
-                >
+                <div className={styles.loginForm}>
                     <input
                         type="email"
                         placeholder="이메일을 입력해주세요."
@@ -41,10 +37,24 @@ export default function Login() {
                         aria-required={loginTry}
                         required={loginTry}
                     />
+                    {loginAPI && <p>{loginData.message}</p>}
                     <button onClick={LoginKakao} type="submit">
                         {Img("sample_menu/kakao_login", 240, 50, styles.loginForKakao)}
                     </button>
-                    <button onClick={LoginDefault} type="submit">
+                    <button
+                        onClick={async (e) => {
+                            LoginDefault();
+                            const result = (await login(email, pass, e)) as any;
+                            console.log(result);
+                            setLoginAPI(result.api);
+                            if (result.api) {
+                                setLoginResult(result.result);
+                                setLoginData(result.data);
+                                if (result.result) console.log(result.data);
+                            }
+                            setLoginTry(true);
+                        }}
+                    >
                         로그인
                     </button>
                     <button onClick={autoLogin}>자동로그인</button>
@@ -57,7 +67,7 @@ export default function Login() {
                             회원가입
                         </Link>
                     </div>
-                </form>
+                </div>
             </section>
         </main>
     );

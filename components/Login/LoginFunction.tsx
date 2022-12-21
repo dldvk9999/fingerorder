@@ -28,9 +28,12 @@ export function LoginDefault() {
 // 카카오 로그인 일 때
 export function LoginKakao() {
     localStorage["kakao"] = "true";
+    APIGet("/api/auth/kakao/sign-in").then((res) => {
+        console.log(res);
+    });
 }
 
-// 로그인 함수
+// 로그인 함수 - 동기화
 export function login(email: string, pass: string, e: { preventDefault: () => void }) {
     if (!email || !pass) {
         alert(alertText[0]);
@@ -42,27 +45,42 @@ export function login(email: string, pass: string, e: { preventDefault: () => vo
         alert(alertText[2]);
         e.preventDefault();
     } else {
-        if (isAPI) {
-            APIPost(
-                "/api/auth/sign-up",
+        if (true) {
+            return APIPost(
+                "/api/auth/sign-in",
                 JSON.stringify({
                     email: email,
                     password: pass,
                     nickName: "",
                     type: "MERCHANT",
                 })
-            );
+            ).then((res: any) => {
+                return {
+                    api: true,
+                    result: res.status === 200,
+                    data: res.status === 200 ? res.data : res.response.data,
+                };
+            });
         } else {
             localStorage["login"] = "true";
             localStorage["email"] = email;
         }
     }
+    return { api: false, result: true, data: {} };
 }
 
-// 로그아웃 함수
+// 로그아웃 함수 - 동기화
 export function logout() {
+    let result = { api: false, result: true, data: {} };
+
     if (isAPI) {
-        APIGet("/api/auth/sign-out");
+        APIGet("/api/auth/sign-out").then((res) => {
+            return {
+                api: true,
+                result: res.status === 200,
+                data: res.status === 200 ? res.data : res.response.data,
+            };
+        });
     } else {
         localStorage.removeItem("login");
         localStorage.removeItem("email");
@@ -94,15 +112,15 @@ export function emailSend(email: string) {
     return false;
 }
 
-// 회원가입
+// 회원가입 - 동기화
 export function signup(email: string, pass1: string, pass2: string) {
     if (email === "" || pass1 === "" || pass2 === "") alert(alertText[0]);
     else if (pass1 !== pass2) alert(alertText[5]);
     else if (pass1.length < 8 || pass2.length < 8) alert(alertText[1]);
     else if (!emailRegex.exec(email) || passRegex.exec(pass1) || passRegex.exec(pass2)) alert(alertText[2]);
     else {
-        if (isAPI) {
-            APIPost(
+        if (true) {
+            return APIPost(
                 "/api/auth/sign-up",
                 JSON.stringify({
                     email: email,
@@ -110,11 +128,16 @@ export function signup(email: string, pass1: string, pass2: string) {
                     nickName: "",
                     type: "MERCHANT",
                 })
-            );
+            ).then((res: any) => {
+                return {
+                    api: true,
+                    result: res.status === 200,
+                    data: res.status === 200 ? res.data : res.response.data,
+                };
+            });
         }
-        return true;
     }
-    return false;
+    return { api: false, result: true, data: {} };
 }
 
 // 비밀번호 초기화
@@ -124,18 +147,22 @@ export function passwordReset(uuid: string, pass1: string, pass2: string) {
     else if (pass1.length < 8 || pass2.length < 8) alert(alertText[1]);
     else if (passRegex.exec(pass1) || passRegex.exec(pass2)) alert(alertText[2]);
     else {
-        if (isAPI) {
+        if (true) {
             APIPut(
-                "/api/?",
+                "/api/auth/resetPassword?uuid=" + uuid,
                 JSON.stringify({
-                    uuid: uuid,
                     password: pass1,
                 })
-            );
+            ).then((res: any) => {
+                return {
+                    api: true,
+                    result: res.status === 200,
+                    data: res.status === 200 ? res.data : res.response.data,
+                };
+            });
         }
-        return true;
     }
-    return false;
+    return { api: false, result: true, data: {} };
 }
 
 // 회원 탈퇴

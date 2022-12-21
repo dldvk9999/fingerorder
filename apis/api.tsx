@@ -13,11 +13,11 @@ export async function get(params: string) {
     return await axios
         .get(url + params)
         .then((res: any) => {
-            return res.response;
+            return res;
         })
         .catch((res) => {
             console.log(res);
-            return res.response;
+            return res;
         });
 }
 
@@ -26,11 +26,12 @@ export async function post(params: string, data: Object) {
     return await axios
         .post(url + params, data, header)
         .then((res: any) => {
-            return res.response;
-        })
-        .catch((res) => {
             console.log(res);
-            return res.response;
+            return res;
+        })
+        .catch((res: any) => {
+            console.log(res);
+            return res;
         });
 }
 
@@ -40,11 +41,11 @@ export async function put(params: string, data: Object) {
     await axios
         .put(url + params, data, header)
         .then((res: any) => {
-            return res.response;
+            return res;
         })
         .catch((res) => {
             console.log(res);
-            return res.response;
+            return res;
         });
     return result;
 }
@@ -55,11 +56,11 @@ export async function del(params: string, data: Object) {
     await axios
         .delete(url + params, data)
         .then((res: any) => {
-            return res.response;
+            return res;
         })
         .catch((res) => {
             console.log(res);
-            return res.response;
+            return res;
         });
     return result;
 }
