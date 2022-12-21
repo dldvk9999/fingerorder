@@ -234,30 +234,6 @@
     padding: 0.1rem 0.5rem;
 }
 
-.menuItemPriceRate {
-    display: flex;
-}
-
-.menuItemRate {
-    @include view(flex, center, center);
-    padding: 0 0.5rem;
-
-    p {
-        margin: 0;
-        padding: 0 0.2rem;
-        line-height: 1rem;
-    }
-}
-
-.menuItemRateImage {
-    object-fit: cover;
-}
-@for $i from 0 through 4 {
-    .menuItemRateImage#{$i} {
-        object-position: 0% #{$i * 25% - 25%};
-    }
-}
-
 .menuInputSelect {
     color: var(--black);
     appearance: none;

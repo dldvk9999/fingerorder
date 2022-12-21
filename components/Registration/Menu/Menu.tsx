@@ -25,15 +25,6 @@ export default function Menu() {
     const [searchName, setSearchName] = useState(""); // 검색할 텍스트
     const menuName = useRef<HTMLInputElement>(null);
 
-    // 메뉴 별점에 맞는 별 이미지 스타일링
-    function ratingStyle(rate: number) {
-        if (rate === 5) return styles.menuItemRateImage1;
-        else if (rate > 4) return styles.menuItemRateImage2;
-        else if (rate > 3) return styles.menuItemRateImage3;
-        else if (rate > 2) return styles.menuItemRateImage4;
-        else return styles.menuItemRateImage5;
-    }
-
     // 메뉴 Edit 함수 (추가, 삭제, 품절 처리)
     function changeMenu(type: string, cate: string, index: number = 0) {
         let storeInfo = nowStore[storeID !== -1 ? storeID : 0];
@@ -122,18 +113,7 @@ export default function Menu() {
                                 {cate.soldout && <span className={styles.menuItemSoldout}>품절</span>}
                             </p>
                             {isMobile >= 650 && <p>{cate.desc}</p>}
-                            <div className={styles.menuItemPriceRate}>
-                                {cate.price.toLocaleString()}원
-                                <div className={styles.menuItemRate}>
-                                    {Img(
-                                        "sample_menu/rating",
-                                        isMobile < 600 ? 15 : 75,
-                                        15,
-                                        `${styles.menuItemRateImage} ${ratingStyle(cate.rate)}`
-                                    )}
-                                    <p>{cate.rate ? cate.rate : 0}</p>
-                                </div>
-                            </div>
+                            {cate.price.toLocaleString()}원
                         </div>
                         <div className={styles.menuItemBtns}>
                             <button
