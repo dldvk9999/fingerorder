@@ -29,7 +29,7 @@ export default function Mypage() {
     function exeWithdrawal(pass: string) {
         setShowModal(false);
         withdrawal(pass);
-        logout();
+        logout(localStorage["accessToken"]);
     }
 
     useEffect(() => {
