@@ -14,6 +14,7 @@ export default function FindPassword() {
     const [pass1, setPass1] = useState("");
     const [pass2, setPass2] = useState("");
     const [isSend, setSend] = useState(false);
+    const [isData, setData] = useState<any>({});
     const [sendTry, setSendTry] = useState(false);
 
     useEffect(() => {
@@ -47,9 +48,12 @@ export default function FindPassword() {
                                 aria-required={sendTry}
                                 required={sendTry}
                             />
+                            {isData && <p>{isData.message}</p>}
                             <button
                                 onClick={() => {
-                                    setSend(passwordReset(uuid, pass1, pass2));
+                                    const result = passwordReset(uuid, pass1, pass2);
+                                    setSend(result.api && result.result);
+                                    setData(result.data);
                                     setSendTry(true);
                                 }}
                             >

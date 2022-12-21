@@ -1,4 +1,4 @@
-import { get as APIGet, post as APIPost, put as APIPut, del as APIDel } from "../../apis/api";
+import { get as APIGet, post as APIPost, put as APIPut, del as APIDel, post2 as APIPost2 } from "../../apis/api";
 import { isAPI } from "../../states";
 
 const emailRegex = /[a-zA-Z.].+[@][a-zA-Z].+[.][a-zA-Z]{2,4}$/;
@@ -23,6 +23,7 @@ export function autoLogin() {
 // 일반 로그인 일 때
 export function LoginDefault() {
     localStorage["kakao"] = "false";
+    localStorage["login"] = "true";
 }
 
 // 카카오 로그인 일 때
@@ -89,27 +90,32 @@ export function logout() {
     }
 }
 
-// 비밀번호 재설정 링크 보낼 이메일 입력
+// 비밀번호 재설정 링크 보낼 이메일 입력 - 동기화
 export function emailSend(email: string) {
     if (!email) alert(alertText[3]);
     else if (!emailRegex.exec(email)) alert(alertText[4]);
     else {
-        if (isAPI) {
+        if (true) {
             APIPost(
                 "/api/users/password",
                 JSON.stringify({
                     email: email,
                 })
-            );
+            ).then((res) => {
+                return {
+                    api: true,
+                    result: res.status === 200,
+                    data: res.data,
+                };
+            });
         } else {
             localStorage.removeItem("login");
             localStorage.removeItem("email");
             localStorage.removeItem("kakao");
             location.href = "/";
         }
-        return true;
     }
-    return false;
+    return { api: false, result: true, data: {} };
 }
 
 // 회원가입 - 동기화
@@ -140,7 +146,7 @@ export function signup(email: string, pass1: string, pass2: string) {
     return { api: false, result: true, data: {} };
 }
 
-// 비밀번호 초기화
+// 비밀번호 초기화 - 동기화
 export function passwordReset(uuid: string, pass1: string, pass2: string) {
     if (uuid === "" || pass1 === "" || pass2 === "") alert(alertText[0]);
     else if (pass1 !== pass2) alert(alertText[5]);

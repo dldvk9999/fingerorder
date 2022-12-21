@@ -1,4 +1,6 @@
 import axios from "axios";
+import { useRecoilState } from "recoil";
+import { grantType } from "../states";
 
 const url = "";
 const header = {
@@ -12,10 +14,8 @@ const header = {
 export async function get(params: string) {
     return await axios
         .get(url + params)
-        .then((res: any) => {
-            return res;
-        })
-        .catch((res) => {
+        .then((res: any) => res)
+        .catch((res: any) => {
             console.log(res.response);
             return res.response;
         });
@@ -25,10 +25,7 @@ export async function get(params: string) {
 export async function post(params: string, data: Object) {
     return await axios
         .post(url + params, data, header)
-        .then((res: any) => {
-            console.log(res);
-            return res;
-        })
+        .then((res: any) => res)
         .catch((res: any) => {
             console.log(res.response);
             return res.response;
@@ -37,30 +34,58 @@ export async function post(params: string, data: Object) {
 
 // 수정
 export async function put(params: string, data: Object) {
-    let result = {};
-    await axios
+    return await axios
         .put(url + params, data, header)
-        .then((res: any) => {
-            return res;
-        })
-        .catch((res) => {
+        .then((res: any) => res)
+        .catch((res: any) => {
             console.log(res.response);
             return res.response;
         });
-    return result;
 }
 
 // 삭제
 export async function del(params: string, data: Object) {
-    let result = {};
-    await axios
+    return await axios
         .delete(url + params, data)
-        .then((res: any) => {
-            return res;
-        })
-        .catch((res) => {
+        .then((res: any) => res)
+        .catch((res: any) => {
             console.log(res.response);
             return res.response;
         });
-    return result;
+}
+
+// 등록2
+export async function post2(params: string, data: Object, accessToken: string) {
+    const header2 = {
+        withCredentials: false, // cors 통신 설정
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + accessToken,
+        },
+    };
+    return await axios
+        .post(url + params, data, header2)
+        .then((res: any) => res)
+        .catch((res: any) => {
+            console.log(res.response);
+            return res.response;
+        });
+}
+
+// 수정2
+export async function put2(params: string, data: Object, accessToken: string) {
+    const header2 = {
+        withCredentials: false, // cors 통신 설정
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + accessToken,
+        },
+    };
+    return await axios
+        .put(url + params, data, header2)
+        .then((res: any) => res)
+        .catch((res: any) => {
+            console.log(res.response);
+            return res.response;
+        });
 }

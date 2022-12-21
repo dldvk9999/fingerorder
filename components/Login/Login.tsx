@@ -51,9 +51,7 @@ export default function Login() {
                                 setLoginResult(result.result);
                                 setLoginData(result.data);
                                 if (result.result) {
-                                    localStorage["login"] = "true";
                                     localStorage["email"] = email;
-                                    localStorage["kakao"] = "false";
                                     localStorage["accessToken"] = result.data.accessToken;
                                     localStorage["refreshToken"] = result.data.refreshToken;
                                     location.href = "/";

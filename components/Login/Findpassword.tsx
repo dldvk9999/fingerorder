@@ -8,7 +8,7 @@ import styles from "./Login.module.scss";
 export default function FindPassword() {
     const [darkmode] = useRecoilState<boolean>(isDarkmode);
     const [email, setEmail] = useState("");
-    const [isSend, setSend] = useState(false);
+    const [isAPI, setAPI] = useState(false);
     const [sendTry, setSendTry] = useState(false);
 
     return (
@@ -16,7 +16,7 @@ export default function FindPassword() {
             <section className={styles.login}>
                 {Img("fingerorder", 150, 150, `${darkmode ? styles.loginInvert : ""}`)}
                 <div className={styles.loginForm}>
-                    {!isSend ? (
+                    {!isAPI ? (
                         <>
                             <input
                                 type="email"
@@ -29,7 +29,8 @@ export default function FindPassword() {
                             />
                             <button
                                 onClick={() => {
-                                    setSend(emailSend(email));
+                                    const result = emailSend(email);
+                                    setAPI(result.api);
                                     setSendTry(true);
                                 }}
                             >
