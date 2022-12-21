@@ -2,12 +2,14 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { openNav, closeNav, RouterList, RouterListLogin } from "./HeaderRouter";
 import { useRecoilState } from "recoil";
-import { isDarkmode } from "../../states";
+import { isDarkmode, editNumber, grantType } from "../../states";
 import Img from "../common/Img";
 import styles from "./Header.module.scss";
 
 export default function Header() {
     const [darkmode, setDarkmode] = useRecoilState<boolean>(isDarkmode);
+    const [_, setEditPage] = useRecoilState(editNumber);
+    const [__, setGrant] = useRecoilState(grantType);
     const [isLogin, setLogin] = useState(false);
     const [isMobile, setMobile] = useState(false);
     const nav = useRef<HTMLElement>(null);
@@ -87,14 +89,14 @@ export default function Header() {
                         </div>
                     </div>
                 </Link>
-                {!isMobile && <div className={styles.headerItems}>{RouterList(nav, "header")}</div>}
+                {!isMobile && <div className={styles.headerItems}>{RouterList(nav, "header", setEditPage)}</div>}
             </div>
 
             {!isMobile ? (
                 <div className={`${styles.headerRight} ${styles.headerItems}`}>
                     {printDarkmode()}
                     {isLogin ? (
-                        RouterListLogin(nav, "header", darkmode)
+                        RouterListLogin(nav, "header", darkmode, setGrant)
                     ) : (
                         <Link href={"/login"}>
                             <div>로그인</div>
@@ -134,10 +136,10 @@ export default function Header() {
                         </div>
                         <div className={styles.headerNavList}>
                             <div>
-                                {RouterList(nav, "nav")}
+                                {RouterList(nav, "nav", setEditPage)}
                                 <hr />
                                 {isLogin ? (
-                                    RouterListLogin(nav, "nav", darkmode)
+                                    RouterListLogin(nav, "nav", darkmode, setGrant)
                                 ) : (
                                     <Link href={"/login"} onClick={() => closeNav(nav)}>
                                         로그인

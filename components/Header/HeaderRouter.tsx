@@ -1,6 +1,4 @@
 import Link from "next/link";
-import { useRecoilState } from "recoil";
-import { editNumber } from "../../states";
 import { logout } from "../Login/LoginFunction";
 import Img from "../common/Img";
 import styles from "./Header.module.scss";
@@ -23,13 +21,11 @@ export function closeNav(nav: any) {
 }
 
 // router 가능한 주소 목록 (재사용 가능 함수)
-export function RouterList(nav: any, printWhere: string) {
-    const [_, setEditPage] = useRecoilState(editNumber);
-
+export function RouterList(nav: any, printWhere: string, setEdit: Function) {
     // router click event
     function routerClickEvent(nav: any, printWhere: string) {
         if (printWhere === "nav") closeNav(nav);
-        setEditPage(-1);
+        setEdit(-1);
     }
 
     return router.map((el, i) => (
@@ -40,12 +36,15 @@ export function RouterList(nav: any, printWhere: string) {
 }
 
 // 로그인 후 접근 가능한 주소 목록 (재사용 가능 함수)
-export function RouterListLogin(nav: any, printWhere: string, darkmode: boolean) {
+export function RouterListLogin(nav: any, printWhere: string, darkmode: boolean, setGrant: Function) {
     return routerLogin.map((el, i) => (
         <Link
             href={"/" + el[0]}
             onClick={() => {
-                el[0] === "" && logout();
+                if (el[0] === "") {
+                    logout();
+                    setGrant("");
+                }
                 printWhere === "nav" && closeNav(nav);
             }}
             key={"header-login-profile-" + i}
