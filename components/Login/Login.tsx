@@ -2,12 +2,13 @@ import Img from "../common/Img";
 import Link from "next/link";
 import { useState } from "react";
 import { useRecoilState } from "recoil";
-import { isDarkmode } from "../../states";
+import { isDarkmode, grantType } from "../../states";
 import { LoginDefault, LoginKakao, autoLogin, login } from "./LoginFunction";
 import styles from "./Login.module.scss";
 
 export default function Login() {
     const [darkmode] = useRecoilState<boolean>(isDarkmode);
+    const [_, setGrant] = useRecoilState<string>(grantType);
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
     const [loginTry, setLoginTry] = useState(false);
@@ -37,7 +38,7 @@ export default function Login() {
                         aria-required={loginTry}
                         required={loginTry}
                     />
-                    {loginAPI && <p>{loginData.message}</p>}
+                    {loginAPI && <p>{!loginResult && loginData.message}</p>}
                     <button onClick={LoginKakao} type="submit">
                         {Img("sample_menu/kakao_login", 240, 50, styles.loginForKakao)}
                     </button>
@@ -45,12 +46,19 @@ export default function Login() {
                         onClick={async (e) => {
                             LoginDefault();
                             const result = (await login(email, pass, e)) as any;
-                            console.log(result);
                             setLoginAPI(result.api);
                             if (result.api) {
                                 setLoginResult(result.result);
                                 setLoginData(result.data);
-                                if (result.result) console.log(result.data);
+                                if (result.result) {
+                                    localStorage["login"] = "true";
+                                    localStorage["email"] = email;
+                                    localStorage["kakao"] = "false";
+                                    localStorage["accessToken"] = result.data.accessToken;
+                                    localStorage["refreshToken"] = result.data.refreshToken;
+                                    location.href = "/";
+                                    setGrant(result.data.grantType);
+                                }
                             }
                             setLoginTry(true);
                         }}

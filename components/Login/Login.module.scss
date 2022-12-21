@@ -1,6 +1,6 @@
 .login {
     padding: 10rem;
-    height: calc(90vh - $headerHeight);
+    min-height: calc(90vh - $headerHeight);
 }
 
 .loginInvert {

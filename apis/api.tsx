@@ -16,8 +16,8 @@ export async function get(params: string) {
             return res;
         })
         .catch((res) => {
-            console.log(res);
-            return res;
+            console.log(res.response);
+            return res.response;
         });
 }
 
@@ -30,8 +30,8 @@ export async function post(params: string, data: Object) {
             return res;
         })
         .catch((res: any) => {
-            console.log(res);
-            return res;
+            console.log(res.response);
+            return res.response;
         });
 }
 
@@ -44,8 +44,8 @@ export async function put(params: string, data: Object) {
             return res;
         })
         .catch((res) => {
-            console.log(res);
-            return res;
+            console.log(res.response);
+            return res.response;
         });
     return result;
 }
@@ -59,8 +59,8 @@ export async function del(params: string, data: Object) {
             return res;
         })
         .catch((res) => {
-            console.log(res);
-            return res;
+            console.log(res.response);
+            return res.response;
         });
     return result;
 }

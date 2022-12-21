@@ -58,7 +58,7 @@ export function login(email: string, pass: string, e: { preventDefault: () => vo
                 return {
                     api: true,
                     result: res.status === 200,
-                    data: res.status === 200 ? res.data : res.response.data,
+                    data: res.data,
                 };
             });
         } else {
@@ -71,20 +71,20 @@ export function login(email: string, pass: string, e: { preventDefault: () => vo
 
 // 로그아웃 함수 - 동기화
 export function logout() {
-    let result = { api: false, result: true, data: {} };
-
     if (isAPI) {
         APIGet("/api/auth/sign-out").then((res) => {
             return {
                 api: true,
                 result: res.status === 200,
-                data: res.status === 200 ? res.data : res.response.data,
+                data: res.data,
             };
         });
     } else {
         localStorage.removeItem("login");
         localStorage.removeItem("email");
         localStorage.removeItem("kakao");
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
         location.href = "/";
     }
 }
@@ -132,7 +132,7 @@ export function signup(email: string, pass1: string, pass2: string) {
                 return {
                     api: true,
                     result: res.status === 200,
-                    data: res.status === 200 ? res.data : res.response.data,
+                    data: res.data,
                 };
             });
         }
@@ -157,7 +157,7 @@ export function passwordReset(uuid: string, pass1: string, pass2: string) {
                 return {
                     api: true,
                     result: res.status === 200,
-                    data: res.status === 200 ? res.data : res.response.data,
+                    data: res.data,
                 };
             });
         }
