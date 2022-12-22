@@ -50,7 +50,7 @@ export default function Header() {
         if (localStorage["theme"]) setDarkmode(localStorage["theme"] === "true");
         else {
             localStorage["theme"] = false;
-            setDarkmode(localStorage["theme"]);
+            setDarkmode(false);
         }
 
         // prefers-color-scheme의 변경을 감지하여 다크모드 변경
