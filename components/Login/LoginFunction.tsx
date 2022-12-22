@@ -39,11 +39,13 @@ export function LoginKakao() {
     APIGet("/api/auth/kakao/sign-in").then((res) => {
         let kakao = window.open(res.data.slice(9), "kakaoLogin", "width=500, height=600");
         // let kakao = window.open("/login/kakaologin/test", "kakaoLogin", "width=500, height=600");
+        let count = 0; // setInterval에서의 메모리 누수 방지
         let interval = setInterval(() => {
             if (kakao!.closed) {
                 if (localStorage["kakao"]) location.href = "/";
                 clearInterval(interval);
-            }
+            } else if (count === 60) clearInterval(interval);
+            count++;
         }, 1000);
     });
 }
