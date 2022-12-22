@@ -43,8 +43,10 @@ export default function Header() {
     }
 
     useEffect(() => {
-        // 로그인 체크(추후 함수 구현)
-        setLogin(localStorage["login"] == "true" ? true : false);
+        // 로그인 체크
+        setTimeout(() => {
+            setLogin(localStorage["login"] == "true" ? true : false);
+        }, 500);
 
         // 다크모드 localStorage 체크
         if (localStorage["theme"]) setDarkmode(localStorage["theme"] === "true");

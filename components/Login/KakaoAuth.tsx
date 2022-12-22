@@ -11,6 +11,7 @@ export default function KakaoAuth() {
             localStorage["login"] = true;
             localStorage["email"] = "kakao";
             localStorage["kakao"] = true;
+            window.close();
         }
     }, [params]);
 
