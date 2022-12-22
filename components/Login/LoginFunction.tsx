@@ -37,7 +37,11 @@ export function LoginDefault() {
 export function LoginKakao() {
     localStorage["kakao"] = "true";
     APIGet("/api/auth/kakao/sign-in").then((res) => {
-        window.open(res.data.slice(9), "kakaoLogin", "width=500, height=600");
+        let kakao = window.open(res.data.slice(9), "kakaoLogin", "width=500, height=600");
+        if (kakao?.location.href.includes("/login/kakaologin/")) {
+            kakao.close();
+            window.location.href = "/";
+        }
     });
 }
 
