@@ -81,14 +81,8 @@ export function logout(accessToken: string) {
         }),
         accessToken
     ).then((res) => {
-        if (res.status === 200) {
-            localStorage.removeItem("login");
-            localStorage.removeItem("email");
-            localStorage.removeItem("kakao");
-            localStorage.removeItem("accessToken");
-            localStorage.removeItem("refreshToken");
-            location.href = "/";
-        }
+        localStorage.clear();
+        location.href = "/";
         return {
             api: true,
             result: res.status === 200,
