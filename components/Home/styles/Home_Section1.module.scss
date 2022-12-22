@@ -24,7 +24,7 @@
     transition: transform 0.7s ease-in-out;
 }
 .homeIntroBackgroundActive > .homeIntroBackground1 {
-    transform: translate(220%, -54%) rotate(30deg);
+    transform: translate(max(350vw, 1300px), -54%) rotate(30deg);
 }
 
 .homeIntroSub {
