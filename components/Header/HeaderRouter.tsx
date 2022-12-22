@@ -42,7 +42,7 @@ export function RouterListLogin(nav: any, printWhere: string, darkmode: boolean)
             href={"/" + el[0]}
             onClick={async () => {
                 printWhere === "nav" && closeNav(nav);
-                el[0] === "" && (await logout(localStorage["accessToken"]));
+                el[0] === "" && (await logout(localStorage["accessToken"] ? localStorage["accessToken"] : ""));
             }}
             key={"header-login-profile-" + i}
         >
