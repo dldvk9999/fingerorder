@@ -35,10 +35,16 @@ export function LoginDefault() {
 
 // 카카오 로그인 일 때
 export function LoginKakao() {
-    localStorage["kakao"] = "true";
+    localStorage.clear();
     APIGet("/api/auth/kakao/sign-in").then((res) => {
-        window.open(res.data.slice(9), "kakaoLogin", "width=500, height=600");
-        location.href = "/";
+        let kakao = window.open(res.data.slice(9), "kakaoLogin", "width=500, height=600");
+        // let kakao = window.open("/login/kakaologin/test", "kakaoLogin", "width=500, height=600");
+        let interval = setInterval(() => {
+            if (kakao!.closed) {
+                if (localStorage["kakao"]) location.href = "/";
+                clearInterval(interval);
+            }
+        }, 1000);
     });
 }
 

@@ -38,7 +38,7 @@ export default function Login() {
                         required={loginTry}
                     />
                     {loginAPI && <p>{!loginResult && loginData.message}</p>}
-                    <button onClick={LoginKakao} type="submit">
+                    <button onClick={() => LoginKakao()} type="submit">
                         {Img("sample_menu/kakao_login", 240, 50, styles.loginForKakao)}
                     </button>
                     <button
