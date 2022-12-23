@@ -41,10 +41,16 @@ Root
 
 ### Home 화면
 
-![Home](./public/readme/home.gif)
-
 -   핑거오더 서비스를 소개
 -   6개의 Section으로 분할
+
+![Home](./public/readme/intro.gif "Intro 화면")
+
+<p align="center"><i>Intro 화면</i></p>
+
+![Home_Darkmode](./public/readme/intro_darkmode.gif "Intro 다크모드 화면")
+
+<p align="center"><i>Intro 다크모드 화면</i></p>
 
 ### 로그인 및 회원가입
 
