@@ -7,7 +7,7 @@ import store from "../../../data/store";
 import LoginCheck from "../../common/Login_Check";
 import Img from "../../common/Img";
 import { menuList, menu } from "../../../types/type";
-import { createMenu, editMenu, deleteMenu, getMenu } from "./MenuFunction";
+import { createMenu, editMenu, deleteMenu, getMenu } from "./MenuAPI";
 import styles from "./Menu.module.scss";
 
 // custom한 mock data를 사용해서 상대적으로 코드가 긴 편인데 백엔드와 연동하면 코드가 약 3~50% 정도 감소될 것 같음

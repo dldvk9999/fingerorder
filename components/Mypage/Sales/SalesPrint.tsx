@@ -1,6 +1,6 @@
 import { useRecoilState } from "recoil";
 import { editNumber } from "../../../states";
-import { getSales } from "./SalesFunction";
+import { getSales } from "./SalesAPI";
 import styles from "./Sales.module.scss";
 
 // 매출 목록 출력

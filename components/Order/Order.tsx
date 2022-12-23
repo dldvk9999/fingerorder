@@ -7,7 +7,7 @@ import { PrintRandomMenu } from "./OrderMenu";
 import LoginCheck from "../common/Login_Check";
 import store from "../../data/store";
 import { menuList, menu } from "../../types/type";
-import { deleteOrder } from "./OrderFunction";
+import { deleteOrder } from "./OrderAPI";
 import { isAPI } from "../../states";
 import styles from "./Order.module.scss";
 

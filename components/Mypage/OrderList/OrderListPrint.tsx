@@ -3,7 +3,7 @@ import { useRecoilState } from "recoil";
 import { editNumber } from "../../../states";
 import orderlist from "../../../data/orderlist";
 import { menuOrder } from "../../../types/type";
-import { getOrderList } from "./OrderListFunction";
+import { getOrderList } from "./OrderListAPI";
 import styles from "./OrderList.module.scss";
 
 // 주문 목록 출력

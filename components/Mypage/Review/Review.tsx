@@ -5,7 +5,7 @@ import reviews from "../../../data/reviews";
 import LoginCheck from "../../common/Login_Check";
 import Img from "../../common/Img";
 import { reviewTmp } from "../../../types/type";
-import { editReview, deleteReview, getReview } from "./ReviewFunction";
+import { editReview, deleteReview, getReview } from "./ReviewAPI";
 import styles from "./Review.module.scss";
 
 export default function Review() {
