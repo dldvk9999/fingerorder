@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { emailSend } from "./LoginFunction";
+import { emailSend } from "./LoginAPI";
 import Img from "../common/Img";
 import { useRecoilState } from "recoil";
 import { isDarkmode } from "../../states";

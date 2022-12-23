@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useRecoilState } from "recoil";
 import { isDarkmode } from "../../states";
-import { LoginDefault, LoginKakao, autoLogin, login } from "./LoginFunction";
+import { LoginDefault, LoginKakao, autoLogin, login } from "./LoginAPI";
 import styles from "./Login.module.scss";
 
 export default function Login() {

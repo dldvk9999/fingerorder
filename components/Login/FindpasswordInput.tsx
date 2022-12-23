@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useRecoilState } from "recoil";
 import { isDarkmode } from "../../states";
-import { passwordReset } from "./LoginFunction";
+import { passwordReset } from "./LoginAPI";
 import Img from "../common/Img";
 import styles from "./Login.module.scss";
 import Link from "next/link";

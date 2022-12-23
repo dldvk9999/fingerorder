@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useRecoilState } from "recoil";
 import { isDarkmode } from "../../states";
-import { signup } from "./LoginFunction";
+import { signup } from "./LoginAPI";
 import Img from "../common/Img";
 import styles from "./Login.module.scss";
 

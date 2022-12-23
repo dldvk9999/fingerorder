@@ -3,7 +3,7 @@ import { useRecoilState } from "recoil";
 import { editNumber } from "../../states";
 import Link from "next/link";
 import store from "../../data/store";
-import { getStore, deleteStore } from "../Registration/Store/StoreFunction";
+import { getStore, deleteStore } from "../Registration/Store/StoreAPI";
 import styles from "./Mypage.module.scss";
 
 // 서비스 등록 완료한 매장 목록 출력

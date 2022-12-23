@@ -4,7 +4,7 @@ import { useRecoilState } from "recoil";
 import { homeIntro } from "../../states";
 import Modal from "../../components/Modal/Modal";
 import LoginCheck from "../common/Login_Check";
-import { withdrawal, logout } from "../Login/LoginFunction";
+import { withdrawal, logout } from "../Login/LoginAPI";
 import PrintStoreList from "./MypageStoreList";
 import styles from "./Mypage.module.scss";
 

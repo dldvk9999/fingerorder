@@ -3,7 +3,7 @@ import { useRecoilState } from "recoil";
 import { editNumber, registrationIndex } from "../../../states";
 import LoginCheck from "../../common/Login_Check";
 import styles from "./Store.module.scss";
-import { createStore, editStore } from "./StoreFunction";
+import { createStore, editStore } from "./StoreAPI";
 
 export default function Store(props: {
     name: SetStateAction<string>;

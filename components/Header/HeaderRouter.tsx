@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { logout } from "../Login/LoginFunction";
+import { logout } from "../Login/LoginAPI";
 import Img from "../common/Img";
 import styles from "./Header.module.scss";
 

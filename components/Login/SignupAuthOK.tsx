@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useRecoilState } from "recoil";
 import { isDarkmode } from "../../states";
 import Img from "../common/Img";
-import { signupAuth } from "./LoginFunction";
+import { signupAuth } from "./LoginAPI";
 import styles from "./Login.module.scss";
 
 export default function Signup() {
