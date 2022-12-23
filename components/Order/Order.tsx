@@ -115,7 +115,7 @@ export default function Order() {
         return () => {
             localStorage.removeItem("soundplay");
         };
-    }, [isSoundPlay]);
+    }, []);
 
     useEffect(() => {
         // 주문 목록 호출
