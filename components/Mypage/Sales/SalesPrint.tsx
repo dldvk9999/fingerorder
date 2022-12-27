@@ -2,19 +2,45 @@ import { useRecoilState } from "recoil";
 import { editNumber } from "../../../states";
 import { getSales } from "./SalesAPI";
 import styles from "./Sales.module.scss";
+import { useEffect, useState } from "react";
+
+interface salesType {
+    salesSum: number;
+    createdAt: String;
+}
 
 // 매출 목록 출력
 export default function PrintSalesList(selectDate: Date) {
     const [editPage, _] = useRecoilState(editNumber);
+    const [sales, setSales] = useState<Array<salesType>>([]);
     const days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     let allSum = 0;
     let result = [];
 
+    useEffect(() => {
+        async function initSales() {
+            const apiSales = await getSales(
+                editPage,
+                selectDate.getFullYear().toString(),
+                ("0" + Number(selectDate.getMonth() + 1)).slice(-2)
+            );
+            setSales(apiSales.data);
+        }
+        initSales();
+    }, []);
+
     if (selectDate) {
-        // 매출 내역 API코드인데 실제 API 연동됐을 때의 코드는 백엔드 구축 완료 후 구현 예정
-        const apiSales = getSales(editPage, selectDate);
-        // API 연동 실패 시
-        if (!Object.keys(apiSales).length) {
+        if (sales.length) {
+            for (let i = 0; i < sales.length; i++) {
+                allSum += sales[i].salesSum;
+                result.push(
+                    <tr className={styles.salesTableRow} key={"sales-date-" + i}>
+                        <td>{sales[i].createdAt}</td>
+                        <td>{sales[i].salesSum}원</td>
+                    </tr>
+                );
+            }
+        } else {
             for (let i = 0; i < days[selectDate.getMonth()]; i++) {
                 const sales = Math.floor(Math.random() * 2001 + 500) * 1000;
                 allSum += sales;

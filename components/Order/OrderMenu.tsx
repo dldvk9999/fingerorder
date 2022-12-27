@@ -13,7 +13,7 @@ function changeLabelColor(e: any) {
 }
 
 // 랜덤한 order 중 랜덤한 메뉴 생성
-export function PrintRandomMenu(index: number, menuList: Array<Array<menuList>>, count: Array<Array<number>>) {
+export function PrintRandomMenu(index: number, menuList: Array<Array<string>>, count: Array<Array<number>>) {
     let result = [
         <div className={styles.orderCardMenu} key={"order-random-menu-title"}>
             <p className={styles.orderCardMenuTitle}>이름</p>
@@ -24,7 +24,7 @@ export function PrintRandomMenu(index: number, menuList: Array<Array<menuList>>,
     for (let i = 0; i < menuList[index].length; i++)
         result.push(
             <div className={styles.orderCardMenu} key={"order-random-menu-" + i}>
-                <p>{menuList![index][i].name}</p>
+                <p>{menuList![index][i]}</p>
                 <p>{count![index][i]}개</p>
                 <label
                     htmlFor={"checkbox-" + index + "-" + i}

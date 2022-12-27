@@ -5,16 +5,18 @@ import reviews from "../../../data/reviews";
 import LoginCheck from "../../common/Login_Check";
 import Img from "../../common/Img";
 import { reviewTmp } from "../../../types/type";
-import { editReview, deleteReview, getReview } from "./ReviewAPI";
+import { editReview, deleteReview, getReview, createReview } from "./ReviewAPI";
 import styles from "./Review.module.scss";
 
 export default function Review() {
     const [storeID] = useRecoilState(editNumber);
     const [darkmode] = useRecoilState<boolean>(isDarkmode);
-    const [review, setReview] = useState<Array<reviewTmp>>([]);
+    const [review, setReview] = useState<Array<any>>([]);
     const [tmpReview, setTmpReview] = useState<reviewTmp>();
     const [tmpReviewIndex, setTmpReviewIndex] = useState(-1);
+    const [reviewId, setReviewId] = useState(-1);
     const [reply, setReply] = useState("");
+    const [isNew, setNew] = useState(false);
     const reviewList = useRef<HTMLDivElement>(null);
 
     // 아이콘 이미지 출력
@@ -32,9 +34,6 @@ export default function Review() {
     // 사장님이 답글 삭제 아이콘을 클릭했을 때
     function deleteReply(index: number) {
         if (confirm("리뷰 답글을 삭제하시겠습니까?")) {
-            let tmp = review[index];
-            tmp.reply = "";
-            setReview([...review, tmp]);
             deleteReview(storeID, index);
             alert("삭제되었습니다.");
         }
@@ -44,8 +43,9 @@ export default function Review() {
     function onclickReply(index: number, isReply: string = "") {
         if (!tmpReview || tmpReview.reply !== isReply) {
             setReply(isReply ? isReply : "");
-            setTmpReview(review[index]);
+            setTmpReview(review[index].content);
             setTmpReviewIndex(index);
+            setReviewId(review[index].comment ? review[index].comment.reviewId : review[index].reviewId);
             reviewList.current!.scrollIntoView({ behavior: "smooth" });
         } else {
             setReply("");
@@ -59,7 +59,8 @@ export default function Review() {
         let tmp = review;
         tmp[tmpReviewIndex].reply = reply;
         setReview(tmp);
-        editReview(storeID, tmpReviewIndex, reply);
+        if (isNew) createReview(storeID, reviewId, reply, storeID);
+        else editReview(storeID, reviewId, reply);
         setTmpReview(undefined);
         setReply("");
         setTmpReviewIndex(-1);
@@ -74,29 +75,44 @@ export default function Review() {
                     {type === "profile" && review ? (
                         <>
                             <p>
-                                {reviewIndex !== -1 ? review[reviewIndex].name : tmpReview!.name}
-                                <span>{reviewIndex !== -1 ? review[reviewIndex].time : tmpReview!.time}</span>
+                                {review[reviewIndex !== -1 ? reviewIndex : tmpReviewIndex].nickName}
+                                <span>
+                                    {new Date(
+                                        review[reviewIndex !== -1 ? reviewIndex : tmpReviewIndex].createdAt
+                                    ).toLocaleString()}
+                                </span>
                             </p>
-                            <p>{reviewIndex !== -1 ? review[reviewIndex].comment : tmpReview!.comment}</p>
+                            <p>{review[reviewIndex !== -1 ? reviewIndex : tmpReviewIndex].content}</p>
                         </>
                     ) : (
                         <>
                             {/* 사장님의 답글이 달려있는지 확인 */}
-                            {review[reviewIndex].reply ? (
+                            {review[reviewIndex].comment ? (
                                 <>
                                     <div className={styles.reviewListManagerTitle}>
                                         <p>사장님</p>
-                                        <button onClick={() => onclickReply(reviewIndex, review[reviewIndex].reply)}>
+                                        <button
+                                            onClick={() => {
+                                                onclickReply(reviewIndex, review[reviewIndex].comment.content);
+                                                setNew(false);
+                                            }}
+                                        >
                                             {Img("edit", 30, 30, `${darkmode ? styles.reviewInvert : ""}`)}
                                         </button>
-                                        <button onClick={() => deleteReply(reviewIndex)}>
+                                        <button onClick={() => deleteReply(review[reviewIndex].comment.reviewId)}>
                                             {Img("delete", 20, 20, `${darkmode ? styles.reviewInvert : ""}`)}
                                         </button>
                                     </div>
-                                    <pre>{review[reviewIndex].reply}</pre>
+                                    <pre>{review[reviewIndex].comment.content}</pre>
                                 </>
                             ) : (
-                                <button onClick={() => onclickReply(reviewIndex)} className={styles.reviewListReplyBtn}>
+                                <button
+                                    onClick={() => {
+                                        onclickReply(reviewIndex);
+                                        setNew(true);
+                                    }}
+                                    className={styles.reviewListReplyBtn}
+                                >
                                     답글 달기
                                 </button>
                             )}
@@ -133,14 +149,18 @@ export default function Review() {
 
     // 리뷰 리스트 출력
     function printReviewList() {
-        return review.map((_, i) => (
-            <div className={styles.reviewListItem} key={"review-item-" + i}>
-                <hr />
-                {printReviewItem("profile", i)}
-                <hr />
-                {printReviewItem("reply", i)}
-            </div>
-        ));
+        if (review.length) {
+            return review.map((_, i) => (
+                <div className={styles.reviewListItem} key={"review-item-" + i}>
+                    <hr />
+                    {printReviewItem("profile", i)}
+                    <hr />
+                    {printReviewItem("reply", i)}
+                </div>
+            ));
+        } else {
+            return <h2>리뷰가 없습니다</h2>;
+        }
     }
 
     useEffect(() => {
@@ -148,10 +168,13 @@ export default function Review() {
         if (storeID === -1) {
             alert("마이페이지를 통해 접근해주세요.");
             location.href = "/mypage";
-        } else {
-            const apiReview = getReview(storeID);
-            setReview(Object.keys(apiReview).length ? (apiReview as Array<reviewTmp>) : reviews[storeID].review);
         }
+
+        async function initReview() {
+            const apiReview = await getReview(storeID);
+            setReview(apiReview.data.length ? apiReview.data : []);
+        }
+        initReview();
     }, []);
 
     useEffect(() => {

@@ -34,7 +34,7 @@ export default function Category(props: { category: Array<string> }) {
         const result = inputDataCheck(tmpCategory.trim());
         if (result[0]) {
             setCategory((cate) => cate.map((el, i) => (i !== isEditIndex ? el : tmpCategory.trim())));
-            editCategory(editPage, oldCategory, tmpCategory);
+            editCategory(editPage, oldCategory, tmpCategory, localStorage["accessToken"]);
             setTmpCategory("");
             setIsEdit(false);
         } else alert(result[1]);
@@ -89,6 +89,10 @@ export default function Category(props: { category: Array<string> }) {
         if (e.key === "Enter" && !isSubmitDisable) addCategory();
     };
 
+    useEffect(() => {
+        setCategory(props.category);
+    }, [props.category]);
+
     return (
         <article className={styles.categoryMain}>
             <section className={styles.category}>
@@ -118,7 +122,7 @@ export default function Category(props: { category: Array<string> }) {
                 <div className={styles.categoryMenuList}>
                     <p>메뉴 추가는 다음 Step에서 진행합니다.</p>
                     <div className={styles.categoryMenuListInnerBox}>
-                        {category.length ? (
+                        {category && category.length ? (
                             // 카테고리 리스트 출력
                             category.map((el: string, i: number) => (
                                 <div className={styles.categoryMenuListItem} key={"category-item-" + i}>

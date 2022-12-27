@@ -15,6 +15,16 @@
     }
 }
 
+.orderSelect {
+    @include area(5rem, 1.5rem);
+    color: var(--black);
+    border: 1px solid var(--white);
+    border-radius: 1rem;
+    appearance: none;
+    cursor: pointer;
+    text-align: center;
+}
+
 .order > div > h1 > button {
     @include buttonStyle(fit-content, 2rem, var(--blue), 0.8rem);
     color: var(--blue);

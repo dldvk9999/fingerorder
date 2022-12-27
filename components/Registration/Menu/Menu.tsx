@@ -6,16 +6,15 @@ import { registrationIndex, editNumber } from "../../../states";
 import store from "../../../data/store";
 import LoginCheck from "../../common/Login_Check";
 import Img from "../../common/Img";
-import { menuList, menu } from "../../../types/type";
 import { createMenu, editMenu, deleteMenu, getMenu } from "./MenuAPI";
 import styles from "./Menu.module.scss";
 
-// custom한 mock data를 사용해서 상대적으로 코드가 긴 편인데 백엔드와 연동하면 코드가 약 3~50% 정도 감소될 것 같음
 export default function Menu() {
     const [storeID] = useRecoilState(editNumber);
     const [_, setRegiIndex] = useRecoilState(registrationIndex);
-    const [nowStore, setStore] = useState<any>(store);
+    const [nowStore, setStore] = useState<any>([]);
     const [category, setCategory] = useState(""); // 매장의 카테고리
+    const [categorys, setCategorys] = useState<Array<string>>([]); // 매장의 카테고리들
     const [itemName, setItemName] = useState(""); // 메뉴 이름
     const [itemPrice, setItemPrice] = useState(0); // 메뉴 가격
     const [itemDesc, setItemDesc] = useState(""); // 메뉴 설명
@@ -25,23 +24,33 @@ export default function Menu() {
     const [searchName, setSearchName] = useState(""); // 검색할 텍스트
     const menuName = useRef<HTMLInputElement>(null);
 
+    // 메뉴 불러오기
+    async function initMenu() {
+        const apiMenu = await getMenu(storeID);
+        setStore(apiMenu.data.data.length ? apiMenu.data.data : []);
+    }
+
     // 메뉴 Edit 함수 (추가, 삭제, 품절 처리)
-    function changeMenu(type: string, cate: string, index: number = 0) {
-        let storeInfo = nowStore[storeID !== -1 ? storeID : 0];
-        let menu = storeInfo.menu as unknown as menu;
-        let menuCategory = menu[cate] as Array<menuList>;
+    function changeMenu(
+        type: string,
+        cate: string,
+        id: number,
+        index: number = 0,
+        name: string = "",
+        price: number = 0,
+        desc: string = "",
+        img: string = "",
+        status: string = ""
+    ) {
+        let menu = nowStore.filter((el: { categoryName: string }) => el.categoryName === cate)[0].menus;
 
         // 추가 처리
         if (type === "add") {
             const imagePath =
                 itemImage.trim() === "" || itemImage.length > 100 ? "sample_menu/fingerorder.webp" : itemImage;
 
-            menu[cate] = [
-                ...menu[cate],
-                { name: itemName, price: itemPrice, desc: itemDesc, image: imagePath, soldout: false },
-            ];
-
-            createMenu(storeID, cate, itemName, itemPrice, itemDesc, itemImage);
+            menu.push({ name: itemName, price: itemPrice, desc: itemDesc, image: imagePath, menuStatus: false });
+            createMenu(storeID, cate, itemName, itemPrice, itemDesc, imagePath);
             menuInfoLoad("", "", 0, "", "");
             setItemImage("");
             alert("메뉴 추가 완료하였습니다.");
@@ -49,21 +58,18 @@ export default function Menu() {
 
         // 삭제 처리
         else if (type === "delete") {
-            if (confirm(menuCategory[index].name + " 메뉴를 삭제하시겠습니까?")) {
-                menu[cate] = menuCategory.filter((_, i) => i !== index);
-                deleteMenu(storeID, cate, index);
+            if (confirm("메뉴를 삭제하시겠습니까?")) {
+                menu = menu.filter((_: any, i: number) => i !== index);
+                deleteMenu(storeID, id);
                 alert("메뉴를 삭제하였습니다.");
             }
         }
 
         // 품절 처리
-        else {
-            menuCategory[index].soldout = !menuCategory[index].soldout;
-            menu[cate] = menuCategory;
-            editMenu(storeID, cate, index, itemName, itemPrice, itemDesc, itemImage, !menuCategory[index].soldout);
-        }
-        storeInfo.menu = menu as any;
-        setStore([...store, storeInfo]);
+        else editMenu(storeID, cate, id, name, price, desc, img, status !== "SOLDOUT");
+
+        initMenu();
+        initMenu();
     }
 
     // 수정 버튼 클릭 시 해당 아이템 정보 가져옴
@@ -72,7 +78,7 @@ export default function Menu() {
         setItemName(name);
         setItemPrice(price);
         setItemDesc(desc);
-        setItemImage(image);
+        setItemImage(image ? image : "/");
     }
 
     // 메뉴 추가 함수
@@ -91,41 +97,65 @@ export default function Menu() {
                     setDisableBtn(false);
                     menuName.current!.classList.remove(styles.menuInputRequire);
                 }, 4000);
-            } else changeMenu("add", cate);
+            } else changeMenu("add", cate, 0);
         } else alert("매장 카테고리를 먼저 선택해주세요.");
     }
 
     // 매장에 있는 메뉴 - 세부 아이템 출력
-    function printStoreMenuListItem(category: string) {
-        const menu = nowStore[storeID].menu as unknown as menu;
-
+    function printStoreMenuListItem(menus: Array<Object>, nowCategory: string) {
         // 만약 매장 - 카테고리 내 메뉴의 개수가 1이상일 경우(즉, 메뉴가 존재할 경우)
-        return menu[category].length ? (
-            menu[category]
+        return menus && menus.length ? (
+            menus
                 // 만약 메뉴 이름에 검색하고자 하는 텍스트가 포함되어있을 경우(검색값이 ""일 경우 모두 출력됨)
-                .filter((el: any) => el.name.includes(searchName))
+                .filter((el: any) => el.menuName && el.menuName.includes(searchName))
                 .map((cate: any, i) => (
                     <div className={styles.menuItem} key={"menu-list-" + i}>
-                        {isMobile >= 500 && Img(cate.image, 75, 75, styles.menuItemImage)}
+                        {isMobile >= 500 && Img(cate.imageUrl, 75, 75, styles.menuItemImage)}
                         <div className={styles.menuItemNamePrice}>
                             <p>
-                                {cate.name}
-                                {cate.soldout && <span className={styles.menuItemSoldout}>품절</span>}
+                                {cate.menuName}
+                                {cate.menuStatus === "SOLDOUT" && <span className={styles.menuItemSoldout}>품절</span>}
                             </p>
-                            {isMobile >= 650 && <p>{cate.desc}</p>}
+                            {isMobile >= 650 && <p>{cate.description}</p>}
                             {cate.price.toLocaleString()}원
                         </div>
                         <div className={styles.menuItemBtns}>
                             <button
                                 className={styles.menuItemBtn}
-                                onClick={() => menuInfoLoad(category, cate.name, cate.price, cate.desc, cate.image)}
+                                onClick={() =>
+                                    menuInfoLoad(
+                                        nowCategory,
+                                        cate.menuName,
+                                        cate.price,
+                                        cate.description,
+                                        cate.imageUrl
+                                    )
+                                }
                             >
                                 수정
                             </button>
-                            <button className={styles.menuItemBtn} onClick={() => changeMenu("delete", category, i)}>
+                            <button
+                                className={styles.menuItemBtn}
+                                onClick={() => changeMenu("delete", nowCategory, cate.menuId, i)}
+                            >
                                 삭제
                             </button>
-                            <button className={styles.menuItemBtn} onClick={() => changeMenu("soldout", category, i)}>
+                            <button
+                                className={styles.menuItemBtn}
+                                onClick={() =>
+                                    changeMenu(
+                                        "soldout",
+                                        nowCategory,
+                                        cate.menuId,
+                                        i,
+                                        cate.menuName,
+                                        cate.price,
+                                        cate.description,
+                                        cate.imageUrl,
+                                        cate.menuStatus
+                                    )
+                                }
+                            >
                                 품절
                             </button>
                         </div>
@@ -143,11 +173,11 @@ export default function Menu() {
     function printStoreMenuList() {
         return storeID !== -1 ? (
             // storeID의 값이 default 값인 -1이 아닐 때(즉, 매장 ID가 선택되었을 때)
-            nowStore[storeID].category.map((el: any, i: number) => (
+            nowStore.map((el: any, i: number) => (
                 <div className={styles.menuItemHeader} key={"menu-list-header-" + i}>
                     {i !== 0 && <hr />}
-                    <h3>{el}</h3>
-                    {printStoreMenuListItem(el)}
+                    <h3>{el.categoryName}</h3>
+                    {printStoreMenuListItem(el.menus, el.categoryName)}
                 </div>
             ))
         ) : (
@@ -165,7 +195,7 @@ export default function Menu() {
                 카테고리를 선택해주세요.
             </option>,
         ];
-        const data = storeID !== -1 ? nowStore[storeID].category : nowStore[0].category;
+        const data = storeID !== -1 ? categorys : [];
         for (let i = 0; i < data.length; i++)
             result.push(
                 <option value={data[i]} key={"menu-storeCategory-" + i}>
@@ -194,9 +224,14 @@ export default function Menu() {
     }, []);
 
     useEffect(() => {
-        const apiMenu = getMenu(storeID);
-        setStore(Object.keys(apiMenu).length ? apiMenu : store);
+        initMenu();
     }, [storeID]);
+
+    useEffect(() => {
+        const result = [];
+        for (let i = 0; i < nowStore.length; i++) result.push(nowStore[i].categoryName);
+        setCategorys(result);
+    }, [nowStore]);
 
     return LoginCheck() ? (
         <article className={styles.menuMain}>

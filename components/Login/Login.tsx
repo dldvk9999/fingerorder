@@ -52,6 +52,7 @@ export default function Login() {
                                 if (result.result) {
                                     localStorage["email"] = email;
                                     localStorage["accessToken"] = result.data.accessToken;
+                                    localStorage["id"] = result.data.id;
                                     location.href = "/";
                                 }
                             }

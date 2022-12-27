@@ -1,16 +1,21 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { DownloadTableExcel } from "react-export-table-to-excel";
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import LoginCheck from "../../common/Login_Check";
-import PrintOrderList from "./OrderListPrint";
+import { getOrderList } from "./OrderListAPI";
 import styles from "./OrderList.module.scss";
+import { menuOrder } from "../../../types/type";
 import ko from "date-fns/locale/ko";
+import { useRecoilState } from "recoil";
+import { editNumber } from "../../../states";
 registerLocale("ko", ko);
 
 export default function OrderList() {
+    const [editPage] = useRecoilState(editNumber);
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
+    const [result, setResult] = useState<any>();
     const tableRef = useRef(null);
 
     function datepicker(type: "start" | "end", select: Date, max: Date, min: Date | undefined = undefined) {
@@ -39,6 +44,54 @@ export default function OrderList() {
         );
     }
 
+    async function initOrderList() {
+        let result: JSX.Element[] = [];
+        getOrderList(editPage, convertDate(startDate), convertDate(endDate)).then((res) => {
+            res.data.map((el: any, i: number) => {
+                result.push(
+                    <tr className={styles.orderlistGridBody} key={"orderlist-menu-" + i}>
+                        <td>{el.orderNum}번</td>
+                        <td>
+                            <details className={styles.orderlistDetails}>
+                                <summary>{el.totalPrice.toLocaleString()}원</summary>
+                                <p className={styles.orderlistDetailsHeader}>
+                                    총합 : {el.totalPrice.toLocaleString()}원
+                                </p>
+                                {printOrderListMenu(el.orderMenus)}
+                            </details>
+                        </td>
+                        <td>{new Date(el.orderTime).toLocaleString()}</td>
+                    </tr>
+                );
+            });
+            setResult(result);
+        });
+    }
+
+    function convertDate(date: Date) {
+        let result = "";
+        result += date.getFullYear() + "-";
+        result += ("0" + Number(date.getMonth() + 1)).slice(-2) + "-";
+        result += ("0" + date.getDate()).slice(-2) + " ";
+        result += ("0" + date.getHours()).slice(-2) + ":";
+        result += ("0" + date.getMinutes()).slice(-2) + ":";
+        result += ("0" + date.getSeconds()).slice(-2);
+        return result;
+    }
+
+    // 주문 목록 - 메뉴 출력
+    function printOrderListMenu(menuItem: Array<menuOrder>) {
+        return menuItem.map((el, i) => (
+            <p className={styles.orderlistGridItem} key={"orderlist-menu-item-" + i}>
+                {el.name} * {el.count} = {(el.price * el.count).toLocaleString()}원
+            </p>
+        ));
+    }
+
+    useEffect(() => {
+        initOrderList();
+    }, [startDate, endDate]);
+
     return LoginCheck() ? (
         <main>
             <section className={styles.orderlist}>
@@ -61,15 +114,13 @@ export default function OrderList() {
                     <table className={styles.orderlistTable} ref={tableRef}>
                         <thead>
                             <tr className={styles.orderlistGrid}>
-                                <th>매장 이름</th>
-                                <th>구분</th>
-                                <th>번호</th>
+                                <th>주문번호</th>
                                 <th>총합</th>
                                 <th>주문 시간</th>
                             </tr>
                         </thead>
 
-                        <tbody>{PrintOrderList(startDate, endDate)}</tbody>
+                        <tbody>{result}</tbody>
                     </table>
                 </div>
             </section>

@@ -1,44 +1,24 @@
 import { useEffect, useState } from "react";
-import { useQuery } from "react-query";
-import axios from "axios";
 import { useRecoilState } from "recoil";
-import { soundPlay } from "../../states";
+import { soundPlay, editNumber } from "../../states";
 import { PrintRandomMenu } from "./OrderMenu";
 import LoginCheck from "../common/Login_Check";
-import store from "../../data/store";
-import { menuList, menu } from "../../types/type";
-import { deleteOrder } from "./OrderAPI";
-import { isAPI } from "../../states";
+import { deleteOrder, getOrder } from "./OrderAPI";
 import styles from "./Order.module.scss";
 
 export default function Order() {
     const [isSoundPlay, setSoundPlay] = useRecoilState(soundPlay);
-    const [menuList, setMenuList] = useState<Array<Array<menuList>>>([]);
+    const [editPage, setEditPage] = useRecoilState(editNumber);
+    const [menuList, setMenuList] = useState<Array<Array<string>>>([]);
     const [count, setCount] = useState<Array<Array<number>>>([]);
     const [locate, setLocate] = useState<Array<string>>([]);
     const [table, setTable] = useState<Array<number>>([]);
     const [sum, setSum] = useState<Array<number>>([]);
     const [date, setDate] = useState<Array<Date>>([]);
     const [result, setResult] = useState<Array<any>>([]);
+    const [notiId, setNotiId] = useState<Array<number>>([]);
     const [notiAudio, setAudio] = useState<any>();
     const [isClickNew, setClickNew] = useState(false);
-    let storeID = Math.floor(Math.random() * 3);
-
-    // useQuery를 통해 Interval하게 query를 요청하여 실시간 주문 목록 호출
-    const { isLoading, error, data, isFetching } = useQuery(
-        "getOrder",
-        async () => {
-            await axios
-                .get("/api/store/" + storeID + "/order")
-                .then((res) => res)
-                .catch((e) => console.log(e));
-        },
-        {
-            enabled: isAPI,
-            refetchInterval: 10000, // 1000 = 1초
-            retry: 0, // 재시도 횟수
-        }
-    );
 
     // 주문 내역 삭제
     function delOrder(index: number) {
@@ -46,37 +26,13 @@ export default function Order() {
             let del = [setResult, setMenuList, setCount, setLocate, setSum, setTable, setDate];
             let delValue = [result, menuList, count, locate, sum, table, date];
             del.map((func, i) => func(delValue[i].filter((_: any, i: number) => i !== index)));
-            deleteOrder(storeID);
+            deleteOrder(index);
         }
     }
 
-    // 주문을 랜덤하게 만드는 함수
-    function makeRandomOrder() {
-        storeID = Math.floor(Math.random() * 3);
-        let funcList = [setDate, setLocate, setTable, setMenuList, setCount, setSum];
-        let valList = [new Date(), "", 0, [] as any, [], 0];
-
-        // 주문 중 메뉴의 개수 랜덤
-        for (let i = 0; i < Math.floor(Math.random() * 10) + 1; i++) {
-            const tmpStore = store[storeID];
-            let category = tmpStore.category[Math.floor(Math.random() * tmpStore.category.length)];
-            const storeMenu = (tmpStore.menu as unknown as menu)[category];
-            let menu = storeMenu[Math.floor(Math.random() * storeMenu.length)] as menuList;
-
-            valList[1] = tmpStore.locate;
-            valList[2] = Math.floor(Math.random() * tmpStore.table);
-            valList[3].push(menu);
-            valList[4].push(Math.floor(Math.random() * 10) + 1);
-            valList[5] += valList[4][valList[4].length - 1] * menu.price;
-        }
-
-        funcList.map((func, i) => func((el: any) => [...el, valList[i]]));
-
-        if (localStorage["soundplay"] == "true") notiAudio && notiAudio.play();
-    }
-
-    // 랜덤한 order 생성
+    // order 생성
     function printRandomOrder() {
+        if (localStorage["soundplay"] == "true") notiAudio && notiAudio.play();
         setResult(
             menuList.map((_, i) => (
                 <div
@@ -85,7 +41,7 @@ export default function Order() {
                     }`}
                     key={"order-random-" + i}
                 >
-                    <h2>{store[storeID].name}</h2>
+                    <h2>{menuList[i]}</h2>
                     <div className={styles.orderCardMenu}>{date[i].toLocaleString()}</div>
                     <div className={styles.orderCardLocate}>
                         {locate[i]}
@@ -97,7 +53,7 @@ export default function Order() {
                         className={styles.orderCardClose}
                         onClick={() => {
                             setClickNew(false);
-                            delOrder(i);
+                            delOrder(notiId[i]);
                         }}
                     >
                         삭제
@@ -112,19 +68,52 @@ export default function Order() {
         localStorage["soundplay"] = false;
         setSoundPlay(false);
 
+        async function initOrders() {
+            const result = await getOrder(editPage);
+
+            let ids: number[] = [];
+            let tables: number[] = [];
+            let sums: number[] = [];
+            let dates: Date[] = [];
+            let name: string[][] = [];
+            let count: number[][] = [];
+
+            result.data.map((order: any) => {
+                ids.push(order.id);
+                tables.push(order.tableNum);
+                sums.push(order.totalPrice);
+                dates.push(new Date(order.createdAt));
+
+                let tmpName: string[] = [];
+                let tmpCount: number[] = [];
+                order.orderMenus.map((el: { name: string; count: number }) => {
+                    tmpName.push(el.name);
+                    tmpCount.push(el.count);
+                });
+                name.push(tmpName);
+                count.push(tmpCount);
+            });
+            setNotiId(ids);
+            setTable(tables);
+            setSum(sums);
+            setDate(dates);
+            setMenuList(name);
+            setCount(count);
+        }
+
+        let interval = setInterval(() => {
+            initOrders();
+        }, 3000);
+
         return () => {
             localStorage.removeItem("soundplay");
+            clearInterval(interval);
         };
     }, []);
 
     useEffect(() => {
-        // 주문 목록 호출
-        setResult(isLoading || error || isFetching ? [] : data ? data : []);
-    }, [isLoading, error, isFetching, data]);
-
-    useEffect(() => {
         printRandomOrder();
-    }, [menuList, locate, count, sum, table]);
+    }, [notiId, menuList, locate, count, sum, table]);
 
     return LoginCheck() ? (
         <main className={styles.order}>
@@ -140,14 +129,14 @@ export default function Order() {
                     >
                         {isSoundPlay ? "sound ON" : "sound OFF"}
                     </button>
-                    <button
-                        onClick={() => {
-                            setClickNew(true);
-                            makeRandomOrder();
-                        }}
+                    <select
+                        value={editPage}
+                        onChange={(e) => setEditPage(Number(e.target.value))}
+                        className={styles.orderSelect}
                     >
-                        TestOrder
-                    </button>
+                        <option value="1">1번 매장</option>
+                        <option value="2">2번 매장</option>
+                    </select>
                 </h1>
             </div>
             <p className={styles.orderSubText}>* 상태를 클릭하여 준비 완료 표시로 변경할 수 있습니다.</p>

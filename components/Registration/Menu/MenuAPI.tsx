@@ -3,25 +3,31 @@ import { isAPI } from "../../../states";
 
 // 메뉴 조회
 export function getMenu(id: number) {
-    if (isAPI) {
-        return APIGet("/api/store/" + id + "/menu");
-    }
-    return {};
+    return APIGet("/api/store/" + id + "/menu").then((res) => {
+        return {
+            api: true,
+            result: res.status === 200,
+            data: res.data,
+        };
+    });
 }
 
 // 메뉴 등록
 export function createMenu(id: number, category: string, name: string, price: number, desc: string, image: any) {
-    if (isAPI) {
-        APIPost("/api/store/" + id + "/menu", {
-            category: category,
-            name: name,
-            price: price,
-            desc: desc,
-            image: image,
-            soldout: false,
-        });
-    }
-    return true;
+    return APIPost("/api/store/" + id + "/menu", {
+        categoryName: category,
+        name: name,
+        price: price,
+        description: desc,
+        imageUrl: image,
+        menuStatus: "ONSALE",
+    }).then((res) => {
+        return {
+            api: true,
+            result: res.status === 200,
+            data: res.data,
+        };
+    });
 }
 
 // 메뉴 수정
@@ -35,27 +41,30 @@ export function editMenu(
     image: any,
     soldout: boolean
 ) {
-    if (isAPI) {
-        APIPut("/api/store/" + id + "/menu", {
-            category: category,
-            index: index,
-            name: name,
-            price: price,
-            desc: desc,
-            image: image,
-            soldout: soldout,
-        });
-    }
-    return true;
+    return APIPut("/api/store/" + id + "/menu", {
+        categoryName: category,
+        menuId: index,
+        name: name,
+        price: price,
+        description: desc,
+        imageUrl: image,
+        menuStatus: soldout ? "SOLDOUT" : "ONSALE",
+    }).then((res) => {
+        return {
+            api: true,
+            result: res.status === 200,
+            data: res.data,
+        };
+    });
 }
 
 // 메뉴 삭제
-export function deleteMenu(id: number, category: string, index: number) {
-    if (isAPI) {
-        APIDel("/api/store/" + id + "/menu", {
-            category: category,
-            index: index,
-        });
-    }
-    return true;
+export function deleteMenu(id: number, index: number) {
+    return APIDel("/api/store/" + id + "/menu?menuId=" + index, {}).then((res) => {
+        return {
+            api: true,
+            result: res.status === 200,
+            data: res.data,
+        };
+    });
 }

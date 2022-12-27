@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/router";
 import { useQRCode } from "next-qrcode";
 import { useRecoilState } from "recoil";
 import { editNumber } from "../../../states";
@@ -6,10 +7,11 @@ import store from "../../../data/store";
 import LoginCheck from "../../common/Login_Check";
 import styles from "./Qrcode.module.scss";
 
-export default function QRCode(props: { tableCount: number; type: string }) {
+export default function QRCode() {
+    const router = useRouter();
+    const { params } = router.query;
     const { Image } = useQRCode();
     const [editPage, _] = useRecoilState(editNumber);
-    const [isStoreManager, setStoreManager] = useState(true);
     const [isMobile, setMobile] = useState(true);
     const [tableCount, setTableCount] = useState(0);
     const [storeType, setStoreType] = useState("");
@@ -41,12 +43,7 @@ export default function QRCode(props: { tableCount: number; type: string }) {
 
             result.push(
                 <div className={styles.storeQRItem} key={"store-QR-" + i}>
-                    <Image
-                        text={url}
-                        options={{
-                            width: 100,
-                        }}
-                    />
+                    <Image text={url} options={{ width: 100 }} />
                     <p>TABLE - {i + 1}</p>
                     <p className={styles.storeQRItemText}>QR코드를 스캔하여 자리에서 메뉴를 주문하세요!</p>
                 </div>
@@ -61,21 +58,21 @@ export default function QRCode(props: { tableCount: number; type: string }) {
     }, []);
 
     useEffect(() => {
-        setStoreID(editPage !== -1 ? store[editPage]?.id : 0);
-    }, [editPage]);
+        setTableCount(params ? Number(params[0]) : 0);
+        setStoreType(params ? params[1] : "");
+    }, [params]);
 
     useEffect(() => {
         // 마이페이지를 통해 접근했는지 확인
-        if (!props.tableCount && editPage === -1) {
+        if (editPage === -1) {
             alert("마이페이지를 통해 접근해주세요.");
             location.href = "/mypage";
-        } else {
-            setTableCount(!props.tableCount ? store[editPage].table : props.tableCount);
-            setStoreType(!props.type ? store[editPage].type : props.type);
         }
-    }, [props.tableCount, props.type, editPage]);
 
-    return LoginCheck() && isStoreManager ? (
+        setStoreID(editPage !== -1 ? store[editPage]?.id : 0);
+    }, [editPage]);
+
+    return LoginCheck() ? (
         <article>
             <section className={styles.storeQR} ref={storeQR}>
                 {isMobile ? (

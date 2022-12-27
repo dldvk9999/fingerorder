@@ -36,7 +36,7 @@ export function LoginDefault() {
 // 카카오 로그인 일 때
 export function LoginKakao() {
     localStorage.clear();
-    APIGet("/api/auth/kakao/sign-in").then((res) => {
+    APIGet("/api/auth/kakao/sign-in?type=MERCHANT").then((res) => {
         let kakao = window.open(res.data.slice(9), "kakaoLogin", "width=500, height=600");
         // let kakao = window.open("/login/kakaologin/test", "kakaoLogin", "width=500, height=600");
         let count = 0; // setInterval에서의 메모리 누수 방지

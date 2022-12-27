@@ -51,7 +51,7 @@ export default function Store(props: {
     }
 
     // 매장 등록 함수
-    function storeInput() {
+    async function storeInput() {
         inputList.current.map((el) => (el.style.border = "1px solid #eaeaea"));
 
         let name = inputDataCheck(storeName.trim(), 0);
@@ -64,14 +64,22 @@ export default function Store(props: {
             : setRegiIndex(1);
 
         // 매장 등록 or 수정
-        props.name
-            ? editStore(editPage, storeName, storeLocation, tableCount, storeType)
-            : createStore(storeName, storeLocation, tableCount, storeType);
+        if (props.name) editStore(editPage, storeName, storeLocation, tableCount, storeType);
+        else {
+            const result = await createStore(storeName, storeLocation, tableCount, storeType);
+            setEditPage(result.data.storeId);
+        }
     }
 
     useEffect(() => {
         if (props.type) selectQRType(props.type === "TableNumber" ? 0 : 1, props.type);
     }, [props.type]);
+
+    useEffect(() => {
+        setStoreName(props.name);
+        setStoreLocation(props.location);
+        setTableCount(Number(props.tableCount));
+    }, [props.name, props.location, props.tableCount]);
 
     return LoginCheck() ? (
         <article className={styles.store}>

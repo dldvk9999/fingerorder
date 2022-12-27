@@ -52,6 +52,24 @@ export async function del(params: string, data: Object) {
         });
 }
 
+// 조회2
+export async function get2(params: string, accessToken: string) {
+    const header2 = {
+        withCredentials: false, // cors 통신 설정
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: accessToken,
+        },
+    };
+    return await axios
+        .get(url + params, header2)
+        .then((res: any) => res)
+        .catch((res: any) => {
+            console.log(res.response);
+            return res.response;
+        });
+}
+
 // 등록2
 export async function post2(params: string, data: Object, accessToken: string) {
     const header2 = {
