@@ -192,7 +192,7 @@ export function withdrawal(pass: string) {
     else if (passRegex.exec(pass)) alert(alertText[2]);
     else {
         return APIPost(
-            "/api/users",
+            "/api/users/delete",
             JSON.stringify({
                 email: email,
                 password: pass,
