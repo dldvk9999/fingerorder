@@ -1,5 +1,4 @@
 import { get2 as APIGet2, post2 as APIPost2, put2 as APIPut2, del as APIDel } from "../../../apis/api";
-import { isAPI } from "../../../states";
 
 // 카테고리 조회
 export function getCategory(id: number) {

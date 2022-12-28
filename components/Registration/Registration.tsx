@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import Menu from "./Menu/Menu";
 import Category from "./Category/Category";
 import Store from "./Store/Store";
-import store from "../../data/store";
 import LoginCheck from "../common/Login_Check";
 import { useRecoilState } from "recoil";
 import { registrationIndex, editNumber } from "../../states";

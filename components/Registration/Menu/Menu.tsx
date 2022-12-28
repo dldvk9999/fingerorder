@@ -3,7 +3,6 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { registrationIndex, editNumber } from "../../../states";
-import store from "../../../data/store";
 import LoginCheck from "../../common/Login_Check";
 import Img from "../../common/Img";
 import { createMenu, editMenu, deleteMenu, getMenu } from "./MenuAPI";

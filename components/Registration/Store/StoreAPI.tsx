@@ -1,5 +1,4 @@
 import { get as APIGet, post as APIPost, put as APIPut, del as APIDel } from "../../../apis/api";
-import { isAPI } from "../../../states";
 
 // 매장 조회
 export function getStore() {

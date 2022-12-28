@@ -1,5 +1,4 @@
 import { get2 as APIGet2 } from "../../../apis/api";
-import { isAPI } from "../../../states";
 
 // 주문 내역 조회
 export function getOrderList(id: number, startDate: string, endDate: string) {

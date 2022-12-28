@@ -6,7 +6,6 @@ import {
     put2 as APIPut2,
     post2 as APIPost2,
 } from "../../apis/api";
-import { isAPI } from "../../states";
 
 const emailRegex = /[a-zA-Z.].+[@][a-zA-Z].+[.][a-zA-Z]{2,4}$/;
 const passRegex = /[^0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣~!@#$%^&*()-_=+,.?]/;
@@ -192,16 +191,19 @@ export function withdrawal(pass: string) {
     else if (pass.length < 8) alert(alertText[1]);
     else if (passRegex.exec(pass)) alert(alertText[2]);
     else {
-        if (isAPI) {
-            APIDel(
-                "/api/users",
-                JSON.stringify({
-                    email: email,
-                    password: pass,
-                })
-            );
-        }
-        return true;
+        return APIDel(
+            "/api/users",
+            JSON.stringify({
+                email: email,
+                password: pass,
+            })
+        ).then((res) => {
+            return {
+                api: true,
+                result: res.status === 200,
+                data: res.data,
+            };
+        });
     }
-    return false;
+    return { api: false, result: true, data: {} };
 }

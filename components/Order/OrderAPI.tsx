@@ -1,5 +1,4 @@
 import { get as APIGet, put as APIPut } from "../../apis/api";
-import { isAPI } from "../../states";
 
 // 주문 조회
 export function getOrder(id: number) {

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useRecoilState } from "recoil";
 import { isDarkmode } from "../../states";
-import { LoginDefault, LoginKakao, autoLogin, login } from "./LoginAPI";
+import { LoginDefault, LoginKakao, login } from "./LoginAPI";
 import styles from "./Login.module.scss";
 
 export default function Login() {
@@ -61,7 +61,6 @@ export default function Login() {
                     >
                         로그인
                     </button>
-                    {/* <button onClick={autoLogin}>자동로그인</button> */}
                     <div className={styles.loginFormSub}>
                         <Link className={styles.loginFormFunc} href={"/login/findpassword"}>
                             비밀번호 찾기

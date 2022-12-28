@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { editNumber } from "../../states";
 import Link from "next/link";
-import store from "../../data/store";
 import { getStore, deleteStore } from "../Registration/Store/StoreAPI";
 import styles from "./Mypage.module.scss";
 

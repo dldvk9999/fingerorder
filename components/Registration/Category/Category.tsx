@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { registrationIndex, editNumber } from "../../../states";
-import { createCategory, editCategory, deleteCategory, getCategory } from "./CategoryAPI";
+import { createCategory, editCategory, deleteCategory } from "./CategoryAPI";
 import styles from "./Category.module.scss";
 
 export default function Category(props: { category: Array<string> }) {

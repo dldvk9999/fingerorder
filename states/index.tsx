@@ -1,9 +1,6 @@
 import { atom } from "recoil";
 import { v1 } from "uuid";
 
-// Backend API 통신 할지 (백엔드 서버 안정화되면 연동 예정)
-export const isAPI = false;
-
 // 현재 다크모드 상태
 export const isDarkmode = atom({
     key: "isDarkmode-" + v1(),

@@ -1,5 +1,4 @@
 import { get as APIGet, post as APIPost, put as APIPut, del as APIDel } from "../../../apis/api";
-import { isAPI } from "../../../states";
 
 // 리뷰 조회
 export function getReview(id: number) {

@@ -4,14 +4,6 @@ export interface menuOrder {
     count: number;
 }
 
-export interface menuList {
-    name: string;
-    price: number;
-    desc: string;
-    image: string;
-    rate: number;
-    soldout: boolean;
-}
 export interface menu {
     [key: string]: Array<Object>;
 }

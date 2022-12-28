@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { editNumber, isDarkmode } from "../../../states";
-import reviews from "../../../data/reviews";
 import LoginCheck from "../../common/Login_Check";
 import Img from "../../common/Img";
 import { reviewTmp } from "../../../types/type";
