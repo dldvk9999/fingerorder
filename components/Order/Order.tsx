@@ -5,6 +5,7 @@ import { PrintRandomMenu } from "./OrderMenu";
 import LoginCheck from "../common/Login_Check";
 import { deleteOrder, getOrder } from "./OrderAPI";
 import styles from "./Order.module.scss";
+import { getStore } from "../Registration/Store/StoreAPI";
 
 export default function Order() {
     const [isSoundPlay, setSoundPlay] = useRecoilState(soundPlay);
@@ -19,6 +20,7 @@ export default function Order() {
     const [notiId, setNotiId] = useState<Array<number>>([]);
     const [notiAudio, setAudio] = useState<any>();
     const [isClickNew, setClickNew] = useState(false);
+    const [storeLength, setStoreLength] = useState(0);
 
     // 주문 내역 삭제
     function delOrder(index: number) {
@@ -28,6 +30,19 @@ export default function Order() {
             del.map((func, i) => func(delValue[i].filter((_: any, i: number) => i !== index)));
             deleteOrder(index);
         }
+    }
+
+    // 매장 선택
+    function printSelectStore() {
+        let result = [];
+        for (let i = 0; i < storeLength; i++) {
+            result.push(
+                <option value={i + 1} key={"order-select-store-" + i}>
+                    {i + 1}번 매장
+                </option>
+            );
+        }
+        return result;
     }
 
     // order 생성
@@ -68,6 +83,12 @@ export default function Order() {
         localStorage["soundplay"] = false;
         setSoundPlay(false);
 
+        async function initStore() {
+            const store = await getStore();
+            setStoreLength(store.data.data.length);
+        }
+        initStore();
+
         async function initOrders() {
             const result = await getOrder(editPage);
 
@@ -103,13 +124,13 @@ export default function Order() {
 
         let interval = setInterval(() => {
             initOrders();
-        }, 3000);
+        }, 1000);
 
         return () => {
             localStorage.removeItem("soundplay");
             clearInterval(interval);
         };
-    }, []);
+    }, [editPage]);
 
     useEffect(() => {
         printRandomOrder();
@@ -134,8 +155,7 @@ export default function Order() {
                         onChange={(e) => setEditPage(Number(e.target.value))}
                         className={styles.orderSelect}
                     >
-                        <option value="1">1번 매장</option>
-                        <option value="2">2번 매장</option>
+                        {printSelectStore()}
                     </select>
                 </h1>
             </div>
