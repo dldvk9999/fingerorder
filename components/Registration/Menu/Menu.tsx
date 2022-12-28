@@ -109,7 +109,7 @@ export default function Menu() {
                 .filter((el: any) => el.menuName && el.menuName.includes(searchName))
                 .map((cate: any, i) => (
                     <div className={styles.menuItem} key={"menu-list-" + i}>
-                        {isMobile >= 500 && Img(cate.imageUrl, 75, 75, styles.menuItemImage)}
+                        {isMobile >= 500 && <img src={cate.imageUrl} alt="상품 이미지" width={75} height={75} />}
                         <div className={styles.menuItemNamePrice}>
                             <p>
                                 {cate.menuName}
