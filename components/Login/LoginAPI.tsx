@@ -191,7 +191,7 @@ export function withdrawal(pass: string) {
     else if (pass.length < 8) alert(alertText[1]);
     else if (passRegex.exec(pass)) alert(alertText[2]);
     else {
-        return APIDel(
+        return APIPost(
             "/api/users",
             JSON.stringify({
                 email: email,
