@@ -150,13 +150,15 @@ export default function Order() {
                     >
                         {isSoundPlay ? "sound ON" : "sound OFF"}
                     </button>
-                    <select
-                        value={editPage}
-                        onChange={(e) => setEditPage(Number(e.target.value))}
-                        className={styles.orderSelect}
-                    >
-                        {printSelectStore()}
-                    </select>
+                    {storeLength && (
+                        <select
+                            value={editPage}
+                            onChange={(e) => setEditPage(Number(e.target.value))}
+                            className={styles.orderSelect}
+                        >
+                            {printSelectStore()}
+                        </select>
+                    )}
                 </h1>
             </div>
             <p className={styles.orderSubText}>* 상태를 클릭하여 준비 완료 표시로 변경할 수 있습니다.</p>
