@@ -29,7 +29,7 @@ export default function PrintStoreList() {
         initStore();
     }, []);
 
-    if (nowStore.length) {
+    if (nowStore && nowStore.length) {
         return nowStore.map((el: any, i: number) => (
             <div key={"mypage-storelist-" + i}>
                 <div className={styles.mypageStoreNameDate}>

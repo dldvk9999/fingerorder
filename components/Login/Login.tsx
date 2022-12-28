@@ -61,7 +61,7 @@ export default function Login() {
                     >
                         로그인
                     </button>
-                    <button onClick={autoLogin}>자동로그인</button>
+                    {/* <button onClick={autoLogin}>자동로그인</button> */}
                     <div className={styles.loginFormSub}>
                         <Link className={styles.loginFormFunc} href={"/login/findpassword"}>
                             비밀번호 찾기
