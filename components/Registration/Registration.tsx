@@ -73,11 +73,13 @@ export default function Registration() {
             <div className={styles.registration} ref={registration}>
                 <section className={styles.regiSection}>
                     <Store
-                        name={editPage !== -1 ? storeList.name : ""}
-                        tableCount={editPage !== -1 ? storeList.tableCount : 0}
-                        tmpTableCount={editPage !== -1 ? storeList.tableCount : 0}
-                        location={editPage !== -1 ? storeList.location : ""}
-                        type={editPage !== -1 ? (storeList.orderNumber ? "OrderNumber" : "TableNumber") : ""}
+                        name={editPage !== -1 ? storeList && storeList.name : ""}
+                        tableCount={editPage !== -1 ? storeList && storeList.tableCount : 0}
+                        tmpTableCount={editPage !== -1 ? storeList && storeList.tableCount : 0}
+                        location={editPage !== -1 ? storeList && storeList.location : ""}
+                        type={
+                            editPage !== -1 ? storeList && (storeList.orderNumber ? "OrderNumber" : "TableNumber") : ""
+                        }
                     />
                 </section>
                 <section className={styles.regiSection}>
