@@ -52,11 +52,12 @@ export default function Category(props: { category: Array<string> }) {
     function inputDataCheck(data: string) {
         const naming = /[^a-zA-Z가-힣0-9 ()]/;
         let result = [true, ""];
+        console.log(category);
 
         if (data === "") result = [false, "공백은 입력 할 수 없습니다."];
         else if (naming.exec(data)) result = [false, "이름은 알파벳, 숫자, 한글, 공백, 소괄호로만 지을 수 있습니다."];
         else if (data.length > 40) result = [false, "40자 이내로 입력해야 합니다."];
-        else if (category.indexOf(data) > -1) result = [false, "중복해서 생성할 수 없습니다."];
+        else if (category && category.indexOf(data) > -1) result = [false, "중복해서 생성할 수 없습니다."];
 
         // 해당 input 테두리 및 추가 버튼 테두리 빨간색으로 지정
         if (!result[0]) {
