@@ -72,6 +72,12 @@
     tbody {
         text-align: center;
     }
+    thead > tr,
+    tbody > tr,
+    tfoot > tr {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
 }
 
 .salesTableTotal > td {
@@ -103,5 +109,11 @@
 @media (max-width: 400px) {
     .sales > div > h1 {
         flex-direction: column;
+    }
+}
+
+@media (max-width: 300px) {
+    .sales {
+        padding: 5rem 0;
     }
 }

@@ -35,3 +35,8 @@ export interface reviewTmp {
     comment: string;
     reply: string;
 }
+
+export interface salesType {
+    salesSum: number;
+    yyyymmdd: String;
+}

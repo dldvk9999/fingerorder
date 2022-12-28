@@ -3,18 +3,55 @@ import { DownloadTableExcel } from "react-export-table-to-excel";
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import LoginCheck from "../../common/Login_Check";
-import PrintSalesList from "./SalesPrint";
 import styles from "./Sales.module.scss";
 import ko from "date-fns/locale/ko";
+import { useRecoilState } from "recoil";
+import { editNumber } from "../../../states";
+import { getSales } from "./SalesAPI";
+import { salesType } from "../../../types/type";
 registerLocale("ko", ko);
 
 export default function Sales() {
-    const [selectDate, setSelectDate] = useState<Date>();
+    const [editPage, _] = useRecoilState(editNumber);
     const tableRef = useRef(null);
+    const [selectDate, setSelectDate] = useState<Date>(new Date());
+    const [sales, setSales] = useState<Array<salesType>>([]);
+    const [sum, setSum] = useState(0);
+    const [result, setResult] = useState<any>();
 
     useEffect(() => {
-        setSelectDate(new Date());
-    }, []);
+        async function initSales() {
+            const apiSales = await getSales(
+                editPage,
+                selectDate.getFullYear().toString(),
+                ("0" + Number(selectDate.getMonth() + 1)).slice(-2)
+            );
+            setSales(apiSales.data);
+        }
+        initSales();
+    }, [selectDate]);
+
+    useEffect(() => {
+        let tmpSum = 0;
+        let tmpResult = [];
+        for (let i = 0; i < sales.length; i++) {
+            tmpSum += sales[i].salesSum;
+            tmpResult.push(
+                <tr className={styles.salesTableRow} key={"sales-date-" + i}>
+                    <td>
+                        {new Date(sales[i].yyyymmdd.toString()).toLocaleDateString("ko-KR", {
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                        })}
+                    </td>
+                    <td>{sales[i].salesSum}원</td>
+                </tr>
+            );
+        }
+        setSum(tmpSum);
+        setResult(tmpResult);
+    }, [sales]);
 
     return LoginCheck() ? (
         <main>
@@ -70,7 +107,13 @@ export default function Sales() {
                                 <th>매출</th>
                             </tr>
                         </thead>
-                        {PrintSalesList(selectDate ? selectDate : new Date())}
+                        <tbody>{result}</tbody>
+                        <tfoot>
+                            <tr className={styles.salesTableTotal}>
+                                <td>합계</td>
+                                <td>{sum.toLocaleString()}원</td>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
             </section>
