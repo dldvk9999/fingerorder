@@ -63,6 +63,7 @@ export default function Review() {
         setTmpReview(undefined);
         setReply("");
         setTmpReviewIndex(-1);
+        initReview();
     }
 
     // Review의 Item 요소들은 재활용가능한 코드로 구현
@@ -162,6 +163,12 @@ export default function Review() {
         }
     }
 
+    // 리뷰 불러오기
+    async function initReview() {
+        const apiReview = await getReview(storeID);
+        setReview(apiReview.data.length ? apiReview.data : []);
+    }
+
     useEffect(() => {
         // 마이페이지를 통해 접근했는지 확인
         if (storeID === -1) {
@@ -169,12 +176,8 @@ export default function Review() {
             location.href = "/mypage";
         }
 
-        async function initReview() {
-            const apiReview = await getReview(storeID);
-            setReview(apiReview.data.length ? apiReview.data : []);
-        }
         initReview();
-    }, []);
+    }, [review]);
 
     useEffect(() => {
         // 답글 달기 버튼을 클릭하여 Input 창이 생길 때 모바일에서는 창이 생겼는지 모를 수 있으므로 auto scroll 처리
