@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { emailSend } from "./LoginAPI";
 import Img from "../common/Img";
 import { useRecoilState } from "recoil";
@@ -10,6 +10,13 @@ export default function FindPassword() {
     const [email, setEmail] = useState("");
     const [isAPI, setAPI] = useState(false);
     const [sendTry, setSendTry] = useState(false);
+
+    useEffect(() => {
+        if (localStorage["kakao"] === "true") {
+            alert("카카오 로그인 사용자는 비밀번호 변경을 하실 수 없습니다.");
+            location.href = "/mypage";
+        }
+    }, []);
 
     return (
         <main>
