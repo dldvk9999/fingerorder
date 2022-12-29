@@ -7,7 +7,6 @@ import { useRecoilState } from "recoil";
 import { registrationIndex, editNumber } from "../../states";
 import { getStore } from "./Store/StoreAPI";
 import styles from "./Registration.module.scss";
-import { getCategory } from "./Category/CategoryAPI";
 
 export default function Registration() {
     const [editPage, _] = useRecoilState(editNumber);
@@ -18,7 +17,6 @@ export default function Registration() {
         locate: "",
         type: "",
     });
-    const [categoryList, setCategoryList] = useState([]);
     const registration = useRef<HTMLDivElement>(null);
     const main = useRef<HTMLElement>(null);
 
@@ -40,12 +38,6 @@ export default function Registration() {
             setStoreList(result.data.data.filter((el: { storeId: number }) => el.storeId === editPage)[0]);
         }
         initStore();
-
-        async function initCategory() {
-            const result = await getCategory(editPage);
-            setCategoryList(result.data.names);
-        }
-        initCategory();
     }, [editPage]);
 
     return LoginCheck() ? (
@@ -83,7 +75,7 @@ export default function Registration() {
                     />
                 </section>
                 <section className={styles.regiSection}>
-                    <Category category={editPage !== -1 ? categoryList : []} />
+                    <Category />
                 </section>
                 <section className={styles.regiSection}>
                     <Menu />

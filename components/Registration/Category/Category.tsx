@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { registrationIndex, editNumber } from "../../../states";
-import { createCategory, editCategory, deleteCategory } from "./CategoryAPI";
+import { createCategory, editCategory, deleteCategory, getCategory } from "./CategoryAPI";
 import styles from "./Category.module.scss";
 
-export default function Category(props: { category: Array<string> }) {
+export default function Category() {
     const [editPage, setEditPage] = useRecoilState(editNumber);
-    const [_, setRegiIndex] = useRecoilState(registrationIndex);
-    const [category, setCategory] = useState<Array<string>>(props.category ? props.category : []); // 매장의 메뉴 카테고리
+    const [regiIndex, setRegiIndex] = useRecoilState(registrationIndex);
+    const [category, setCategory] = useState<Array<string>>([]); // 매장의 메뉴 카테고리
     const [tmpCategory, setTmpCategory] = useState(""); // 입력중인 매장의 메뉴 카테고리
     const [oldCategory, setOldCategory] = useState("");
     const [isSubmitDisable, setSubmitDisable] = useState(false);
@@ -90,8 +90,12 @@ export default function Category(props: { category: Array<string> }) {
     };
 
     useEffect(() => {
-        setCategory(props.category);
-    }, [props.category]);
+        async function initCategory() {
+            const result = await getCategory(editPage);
+            setCategory(result.data.names);
+        }
+        initCategory();
+    }, [regiIndex]);
 
     return (
         <article className={styles.categoryMain}>
