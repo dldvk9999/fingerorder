@@ -62,7 +62,6 @@
         padding: 1rem;
         text-align: center;
         border: 1px solid transparent;
-
         &:nth-child(1) {
             border-radius: 1rem 0 0 1rem;
         }
@@ -81,7 +80,9 @@
 .storeTypeActive,
 .storeType > button:hover {
     @include border_backcolor(var(--blue));
-    color: var(--white);
+    & > p {
+        color: white;
+    }
 }
 
 .storeButton {
