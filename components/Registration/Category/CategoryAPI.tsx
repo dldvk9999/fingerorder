@@ -1,4 +1,4 @@
-import { get2 as APIGet2, post2 as APIPost2, put2 as APIPut2, del as APIDel } from "../../../apis/api";
+import { get2 as APIGet2, post2 as APIPost2, put2 as APIPut2, del2 as APIDel2 } from "../../../apis/api";
 
 // 카테고리 조회
 export function getCategory(id: number) {
@@ -28,7 +28,6 @@ export function createCategory(id: number, category: string) {
         },
         localStorage["accessToken"]
     ).then((res) => {
-        console.log(res);
         return {
             api: true,
             result: res.status === 200,
@@ -38,14 +37,14 @@ export function createCategory(id: number, category: string) {
 }
 
 // 카테고리 수정
-export function editCategory(id: number, oldCategory: string, newCategory: string, accessToken: string) {
+export function editCategory(id: number, oldCategory: string, newCategory: string) {
     return APIPut2(
         "/api/store/" + id + "/category",
         {
             categoryName: oldCategory,
             updateName: newCategory,
         },
-        accessToken
+        localStorage["accessToken"]
     ).then((res) => {
         return {
             api: true,
@@ -57,9 +56,7 @@ export function editCategory(id: number, oldCategory: string, newCategory: strin
 
 // 카테고리 삭제
 export function deleteCategory(id: number, oldCategory: string) {
-    return APIDel("/api/store/" + id + "/category", {
-        name: oldCategory,
-    }).then((res) => {
+    return APIDel2("/api/store/" + id + "/category?name=" + oldCategory, localStorage["accessToken"]).then((res) => {
         return {
             api: true,
             result: res.status === 200,

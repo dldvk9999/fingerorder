@@ -105,3 +105,21 @@ export async function put2(params: string, data: Object, accessToken: string) {
             return res.response;
         });
 }
+
+// 삭제2
+export async function del2(params: string, accessToken: string) {
+    const header2 = {
+        withCredentials: false, // cors 통신 설정
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: accessToken,
+        },
+    };
+    return await axios
+        .delete(url + params, header2)
+        .then((res: any) => res)
+        .catch((res: any) => {
+            console.log(res.response);
+            return res.response;
+        });
+}

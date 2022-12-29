@@ -5,7 +5,7 @@ import { createCategory, editCategory, deleteCategory } from "./CategoryAPI";
 import styles from "./Category.module.scss";
 
 export default function Category(props: { category: Array<string> }) {
-    const [editPage, __] = useRecoilState(editNumber);
+    const [editPage, setEditPage] = useRecoilState(editNumber);
     const [_, setRegiIndex] = useRecoilState(registrationIndex);
     const [category, setCategory] = useState<Array<string>>(props.category ? props.category : []); // 매장의 메뉴 카테고리
     const [tmpCategory, setTmpCategory] = useState(""); // 입력중인 매장의 메뉴 카테고리
@@ -34,7 +34,7 @@ export default function Category(props: { category: Array<string> }) {
         const result = inputDataCheck(tmpCategory.trim());
         if (result[0]) {
             setCategory((cate) => cate.map((el, i) => (i !== isEditIndex ? el : tmpCategory.trim())));
-            editCategory(editPage, oldCategory, tmpCategory, localStorage["accessToken"]);
+            editCategory(editPage, oldCategory, tmpCategory);
             setTmpCategory("");
             setIsEdit(false);
         } else alert(result[1]);
@@ -52,7 +52,6 @@ export default function Category(props: { category: Array<string> }) {
     function inputDataCheck(data: string) {
         const naming = /[^a-zA-Z가-힣0-9 ()]/;
         let result = [true, ""];
-        console.log(category);
 
         if (data === "") result = [false, "공백은 입력 할 수 없습니다."];
         else if (naming.exec(data)) result = [false, "이름은 알파벳, 숫자, 한글, 공백, 소괄호로만 지을 수 있습니다."];
@@ -91,7 +90,7 @@ export default function Category(props: { category: Array<string> }) {
     };
 
     useEffect(() => {
-        // setCategory(props.category);
+        setCategory(props.category);
     }, [props.category]);
 
     return (

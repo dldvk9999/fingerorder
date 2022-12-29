@@ -4,13 +4,12 @@ import { useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { registrationIndex, editNumber } from "../../../states";
 import LoginCheck from "../../common/Login_Check";
-import Img from "../../common/Img";
 import { createMenu, editMenu, deleteMenu, getMenu } from "./MenuAPI";
 import styles from "./Menu.module.scss";
 
 export default function Menu() {
     const [storeID] = useRecoilState(editNumber);
-    const [_, setRegiIndex] = useRecoilState(registrationIndex);
+    const [regiIndex, setRegiIndex] = useRecoilState(registrationIndex);
     const [nowStore, setStore] = useState<any>([]);
     const [category, setCategory] = useState(""); // 매장의 카테고리
     const [categorys, setCategorys] = useState<Array<string>>([]); // 매장의 카테고리들
@@ -46,7 +45,7 @@ export default function Menu() {
         // 추가 처리
         if (type === "add") {
             const imagePath =
-                itemImage.trim() === "" || itemImage.length > 100 ? "sample_menu/fingerorder.webp" : itemImage;
+                itemImage.trim() === "" || itemImage.length > 100 ? "/sample_menu/fingerorder.webp" : itemImage;
 
             menu.push({ name: itemName, price: itemPrice, desc: itemDesc, image: imagePath, menuStatus: false });
             createMenu(storeID, cate, itemName, itemPrice, itemDesc, imagePath);
@@ -194,7 +193,7 @@ export default function Menu() {
                 카테고리를 선택해주세요.
             </option>,
         ];
-        const data = storeID !== -1 ? categorys : [];
+        const data = categorys;
         for (let i = 0; i < data.length; i++)
             result.push(
                 <option value={data[i]} key={"menu-storeCategory-" + i}>
@@ -224,7 +223,7 @@ export default function Menu() {
 
     useEffect(() => {
         initMenu();
-    }, [storeID]);
+    }, [storeID, regiIndex]);
 
     useEffect(() => {
         const result = [];
