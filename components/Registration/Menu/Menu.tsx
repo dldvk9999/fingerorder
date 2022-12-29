@@ -108,7 +108,15 @@ export default function Menu() {
                 .filter((el: any) => el.menuName && el.menuName.includes(searchName))
                 .map((cate: any, i) => (
                     <div className={styles.menuItem} key={"menu-list-" + i}>
-                        {isMobile >= 500 && <img src={cate.imageUrl} alt="상품 이미지" width={75} height={75} />}
+                        {isMobile >= 500 && (
+                            <img
+                                src={cate.imageUrl}
+                                onError={handleImgError}
+                                alt="상품 이미지"
+                                width={75}
+                                height={75}
+                            />
+                        )}
                         <div className={styles.menuItemNamePrice}>
                             <p>
                                 {cate.menuName}
@@ -201,6 +209,10 @@ export default function Menu() {
                 </option>
             );
         return result;
+    }
+
+    function handleImgError(e: any) {
+        e.target.src = "/sample_menu/fingerorder.webp";
     }
 
     // 이미지 파일 업로드 시 미리보기 함수
